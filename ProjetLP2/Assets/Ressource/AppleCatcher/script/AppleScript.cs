@@ -12,15 +12,16 @@ public class AppleScript : MonoBehaviour
         if (transform.position.y < -vide)
         {
             if (!isEsthetique)
+            {
                 OnMissed();
-
+            }
             Destroy(gameObject);
         }
     }
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.CompareTag("Panier"))
+        if (col.gameObject.CompareTag("panier"))
         {
             OnCaught();
             Destroy(gameObject);

@@ -42,12 +42,13 @@ public class PanierScript : MonoBehaviour
             direction = 1f;
         }
 
-        if (Keyboard.current.rightArrowKey.isPressed && transform.position.x < bordure)
+        float bordureDirigé = bordure * direction;
+        if (Keyboard.current.rightArrowKey.isPressed && transform.position.x < bordureDirigé) 
         {
             transform.Translate(Vector3.right * Time.deltaTime * translationSpeed * direction);
         }
 
-        if (Keyboard.current.leftArrowKey.isPressed && transform.position.x > -bordure)
+        if (Keyboard.current.leftArrowKey.isPressed && transform.position.x > -bordureDirigé)
         {
             transform.Translate(Vector3.left * Time.deltaTime * translationSpeed * direction);
         }
