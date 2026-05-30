@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AppleScript : MonoBehaviour
@@ -5,11 +6,11 @@ public class AppleScript : MonoBehaviour
     public bool isEsthetique;
     private static int damage = -1;
     private static int score = 1;
-    private static float vide = 10f;
+    private static float seuil = 10f;
 
     void Update()
     {
-        if (transform.position.y < -vide)
+        if (transform.position.y < -seuil)
         {
             if (!isEsthetique)
             {
@@ -41,5 +42,10 @@ public class AppleScript : MonoBehaviour
     public void setIsEsthetique(bool value)
     {
         isEsthetique = value;
+    }
+
+    public static float getSeuil()
+    {
+        return seuil;
     }
 }

@@ -8,7 +8,7 @@ public class AppleSpawner : MonoBehaviour
     public GameObject[] applePrefab;
 
     private float spawnTimer;
-    private static int health = 3;
+    private static int health;
     public TextMeshPro  healthText;
     public bool isEsthetique;
 
@@ -22,6 +22,7 @@ public class AppleSpawner : MonoBehaviour
     void Start()
     {
         spawnTimer = 0f;
+        health = 3;
         healthText.SetText(health + ": health");
     }
 
