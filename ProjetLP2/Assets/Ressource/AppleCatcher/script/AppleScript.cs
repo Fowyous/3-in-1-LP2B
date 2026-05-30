@@ -7,7 +7,7 @@ public class AppleScript : MonoBehaviour
     {
         if (transform.position.y < -10f)
         {
-            if (SceneManager.GetActiveScene().name == "game")
+            if (SceneManager.GetActiveScene().name == "AppleCatcherGame")
             {
                 AppleSpawner.Instance.LoseHealth();
             }

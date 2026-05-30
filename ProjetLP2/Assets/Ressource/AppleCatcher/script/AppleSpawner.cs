@@ -54,7 +54,7 @@ public class AppleSpawner : MonoBehaviour
 
     private IEnumerator LoadEndScene()
     {
-        AsyncOperation load = SceneManager.LoadSceneAsync("end");
+        AsyncOperation load = SceneManager.LoadSceneAsync("GameOver");
         while (!load.isDone)
         {
             yield return null;

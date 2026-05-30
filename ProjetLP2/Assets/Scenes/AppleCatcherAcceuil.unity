@@ -145,7 +145,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 234814067}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 882da2b478d7d9e4faa9d2328db39a75, type: 3}
+  m_Script: {fileID: 11500000, guid: 91607b1e51314e240aae04f0bf1e5543, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::titleScene
 --- !u!4 &234814069
@@ -175,7 +175,7 @@ GameObject:
   - component: {fileID: 497914464}
   - component: {fileID: 497914466}
   m_Layer: 0
-  m_Name: Background_0
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -230,7 +230,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -1955448553306655712, guid: bf3229f8f5d0fe34aa3f722ebace7480, type: 3}
+  m_Sprite: {fileID: -1955448553306655712, guid: a99655060c5862747bf4c04558f95feb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -363,6 +363,7 @@ GameObject:
   - component: {fileID: 548771679}
   - component: {fileID: 548771678}
   - component: {fileID: 548771677}
+  - component: {fileID: 548771680}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -444,6 +445,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &548771680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 548771676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalCameraData
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_TaaSettings:
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
+  m_Version: 2
 --- !u!1 &645792874
 GameObject:
   m_ObjectHideFlags: 0
@@ -484,8 +529,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: press any key to begin
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8c36edb43befdd749985bc9c17202f10, type: 2}
-  m_sharedMaterial: {fileID: -1133341877834035573, guid: 8c36edb43befdd749985bc9c17202f10, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -509,7 +554,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 6
+  m_fontSize: 10.05
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -582,7 +627,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -1133341877834035573, guid: 8c36edb43befdd749985bc9c17202f10, type: 2}
+  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -622,8 +667,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.01, y: -3.24}
-  m_SizeDelta: {x: 11.0231, y: 1.332}
+  m_AnchoredPosition: {x: 0.01, y: -3.3061}
+  m_SizeDelta: {x: 11.0231, y: 1.1998}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2001181764
 GameObject:
@@ -651,10 +696,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2001181764}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c883bc671f89b854289d05f4c542bfc5, type: 3}
+  m_Script: {fileID: 11500000, guid: 259753874748ba143a157e40135e4716, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::apple_spawner
-  applePrefab: {fileID: 3140832056156530121, guid: 4261ce37c40b1d945b7117a3e2f6e75d, type: 3}
+  applePrefab: {fileID: 3140832056156530121, guid: b70e90fd9174e5045bb5b718cebec60e, type: 3}
   healthText: {fileID: 0}
 --- !u!4 &2001181766
 Transform:
@@ -665,7 +710,7 @@ Transform:
   m_GameObject: {fileID: 2001181764}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.44122, y: -0.60901, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -737,7 +782,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -7867219006029776858, guid: 8011dce5768203141a2390b74773c0b7, type: 3}
+  m_Sprite: {fileID: -7867219006029776858, guid: 8e4dbad0224b9dd4b9c7f7c3d236dfa8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -756,7 +801,7 @@ Transform:
   m_GameObject: {fileID: 2059537986}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.03, y: 0.65, z: -1}
+  m_LocalPosition: {x: 0, y: 0.65, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

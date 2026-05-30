@@ -84,7 +84,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -8972608850290470980, guid: 0aa1f9726af29e347a15aeb94b11b298, type: 3}
+  m_Sprite: {fileID: -8972608850290470980, guid: 1c4cf5d0327c6df41bb4af4c8c25a457, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -176,6 +176,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 5584434614024792663}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5608ba5c4ba4e8429d1c764e460b8d6, type: 3}
+  m_Script: {fileID: 11500000, guid: 4739ffedbf0ea154d8898b146ef79ddf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::panier_script
+  scoreText: {fileID: 0}
+  collectedSound: {fileID: 8300000, guid: 24e8ab7a34d41a34da0f893f510be543, type: 3}
