@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class titleScene : MonoBehaviour
 {
-    private bool isTitleScene = true;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -16,9 +15,8 @@ public class titleScene : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Keyboard.current.anyKey.wasPressedThisFrame && isTitleScene)
+        if (Keyboard.current.anyKey.wasPressedThisFrame || Mouse.current.leftButton.wasPressedThisFrame)
         {
-            isTitleScene = false;
             StartCoroutine(LoadMainGame());
         }
     }
