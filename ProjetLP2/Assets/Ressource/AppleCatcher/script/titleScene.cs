@@ -26,7 +26,7 @@ public class titleScene : MonoBehaviour
     private IEnumerator LoadMainGame()
     {
         AsyncOperation load = SceneManager.LoadSceneAsync("AppleCatcherGame");
-        while (load.isDone)
+        while (!load.isDone)
         {
             yield return null;
         }

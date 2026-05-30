@@ -10,6 +10,7 @@ public class AppleSpawner : MonoBehaviour
     private float spawnTimer;
     private int health = 3;
     public TextMeshPro  healthText;
+    public bool isEsthetique;
 
     public static AppleSpawner Instance;
 
@@ -34,11 +35,15 @@ public class AppleSpawner : MonoBehaviour
         }
     }
 
+    // ReSharper disable Unity.PerformanceAnalysis
     private void spawnApple()
     {
         GameObject newApple = Instantiate(applePrefab);
         float newX = Random.Range(-8f, 8f);
         newApple.transform.position = new Vector3(newX, 7f, 0f);
+        
+        AppleScript appleScript = newApple.GetComponent<AppleScript>();
+        appleScript.setIsEsthetique(isEsthetique);
     }
 
     public void LoseHealth()

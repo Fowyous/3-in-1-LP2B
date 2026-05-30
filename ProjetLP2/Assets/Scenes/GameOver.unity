@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 95925764}
   - component: {fileID: 95925763}
   m_Layer: 0
-  m_Name: pomme_0
+  m_Name: pomme
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -185,7 +185,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -3327064287969554200, guid: fe27e1e996c3d91499adf1257ae93155, type: 3}
+  m_Sprite: {fileID: -3327064287969554200, guid: a3d9e2515a9c9f643bd5ae07816d3399, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -342,8 +342,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Game over
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8c36edb43befdd749985bc9c17202f10, type: 2}
-  m_sharedMaterial: {fileID: -1133341877834035573, guid: 8c36edb43befdd749985bc9c17202f10, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -367,7 +367,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
+  m_fontSize: 22.65
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -440,7 +440,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -1133341877834035573, guid: 8c36edb43befdd749985bc9c17202f10, type: 2}
+  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -495,7 +495,7 @@ GameObject:
   - component: {fileID: 1684023060}
   - component: {fileID: 1684023062}
   m_Layer: 0
-  m_Name: Background_0
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -550,7 +550,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -1955448553306655712, guid: bf3229f8f5d0fe34aa3f722ebace7480, type: 3}
+  m_Sprite: {fileID: -1955448553306655712, guid: a99655060c5862747bf4c04558f95feb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -683,7 +683,7 @@ GameObject:
   - component: {fileID: 1720504633}
   - component: {fileID: 1720504632}
   m_Layer: 0
-  m_Name: panier_0
+  m_Name: panier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -738,7 +738,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -8972608850290470980, guid: 0aa1f9726af29e347a15aeb94b11b298, type: 3}
+  m_Sprite: {fileID: -8972608850290470980, guid: 1c4cf5d0327c6df41bb4af4c8c25a457, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -803,8 +803,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'score: '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8c36edb43befdd749985bc9c17202f10, type: 2}
-  m_sharedMaterial: {fileID: -1133341877834035573, guid: 8c36edb43befdd749985bc9c17202f10, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -828,7 +828,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 8
+  m_fontSize: 17.95
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -901,7 +901,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -1133341877834035573, guid: 8c36edb43befdd749985bc9c17202f10, type: 2}
+  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -985,7 +985,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2092693693}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 523645d12e430634c96f879c76389bf7, type: 3}
+  m_Script: {fileID: 11500000, guid: 362223ad5dee67044b9309bede21993f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TotalScore
   TextScore: {fileID: 1830916906}
