@@ -6,10 +6,22 @@ public class AppleScript : MonoBehaviour
     public bool isEsthetique;
     private static int damage = -1;
     private static int score = 1;
-    private static float seuil = 10f;
+    private static float seuil = 6f;
+    protected float speed;
+    protected float seuilAttaque;
+
+    protected virtual void Start()
+    {
+        speed = 8f;
+        seuilAttaque = 0f;
+    }
 
     void Update()
     {
+        UpdateSpeed();
+        
+        transform.Translate(Vector3.down * (speed * Time.deltaTime));
+        
         if (transform.position.y < -seuil)
         {
             if (!isEsthetique)
@@ -20,6 +32,8 @@ public class AppleScript : MonoBehaviour
         }
     }
 
+    protected virtual void UpdateSpeed() { }
+    
     void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.CompareTag("panier"))

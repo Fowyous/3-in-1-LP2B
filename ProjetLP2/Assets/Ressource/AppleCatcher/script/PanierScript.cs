@@ -32,25 +32,29 @@ public class PanierScript : MonoBehaviour
 
     void Update()
     {
-        float direction;
         if (isInverted)
         {
-            direction = -1f;
+            if (Keyboard.current.rightArrowKey.isPressed && transform.position.x > -bordure) 
+            {
+                transform.Translate(Vector3.left * (Time.deltaTime * translationSpeed));
+            }
+
+            if (Keyboard.current.leftArrowKey.isPressed && transform.position.x < bordure)
+            {
+                transform.Translate(Vector3.right * (Time.deltaTime * translationSpeed));
+            }
         }
         else
         {
-            direction = 1f;
-        }
+            if (Keyboard.current.rightArrowKey.isPressed && transform.position.x < bordure) 
+            {
+                transform.Translate(Vector3.right * (Time.deltaTime * translationSpeed));
+            }
 
-        float bordureDirigé = bordure * direction;
-        if (Keyboard.current.rightArrowKey.isPressed && transform.position.x < bordureDirigé) 
-        {
-            transform.Translate(Vector3.right * Time.deltaTime * translationSpeed * direction);
-        }
-
-        if (Keyboard.current.leftArrowKey.isPressed && transform.position.x > -bordureDirigé)
-        {
-            transform.Translate(Vector3.left * Time.deltaTime * translationSpeed * direction);
+            if (Keyboard.current.leftArrowKey.isPressed && transform.position.x > -bordure)
+            {
+                transform.Translate(Vector3.left * (Time.deltaTime * translationSpeed));
+            }
         }
     }
 
