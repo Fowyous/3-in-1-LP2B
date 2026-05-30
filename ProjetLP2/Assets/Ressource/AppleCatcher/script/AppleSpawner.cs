@@ -38,7 +38,8 @@ public class AppleSpawner : MonoBehaviour
     // ReSharper disable Unity.PerformanceAnalysis
     private void spawnApple()
     {
-        GameObject newApple = Instantiate(applePrefab[0]);
+        int i = Random.Range(0, applePrefab.Length);
+        GameObject newApple = Instantiate(applePrefab[i]);
         float newX = Random.Range(-8f, 8f);
         newApple.transform.position = new Vector3(newX, 7f, 0f);
         

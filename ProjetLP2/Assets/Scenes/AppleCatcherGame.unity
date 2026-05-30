@@ -856,7 +856,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 259753874748ba143a157e40135e4716, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::apple_spawner
-  applePrefab: {fileID: 3140832056156530121, guid: b70e90fd9174e5045bb5b718cebec60e, type: 3}
+  applePrefab:
+  - {fileID: 3140832056156530121, guid: b70e90fd9174e5045bb5b718cebec60e, type: 3}
+  - {fileID: 3936830584118350574, guid: e369ad2dac5e4684dba7be896aeb64aa, type: 3}
+  - {fileID: 8314783819603285416, guid: b6ac11c998add354aa114de7ce23dc38, type: 3}
+  - {fileID: 7938522465667178133, guid: 3104c2097eee877469adbf7e652b507a, type: 3}
+  - {fileID: 0}
   healthText: {fileID: 1314835430}
   isEsthetique: 0
 --- !u!1 &1314835429

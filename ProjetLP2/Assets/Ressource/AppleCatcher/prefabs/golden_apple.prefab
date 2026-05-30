@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3140832056156530121
+--- !u!1 &8314783819603285416
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,41 +8,41 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3427676383669219850}
-  - component: {fileID: 4451722703664855210}
-  - component: {fileID: 6170589522439796710}
-  - component: {fileID: 4256786386100544010}
-  - component: {fileID: 7740404017263624381}
+  - component: {fileID: 6473773261173683966}
+  - component: {fileID: 1676587096938945409}
+  - component: {fileID: 1011705546781966828}
+  - component: {fileID: 1275546259463858100}
+  - component: {fileID: 4997725342187676126}
   m_Layer: 0
-  m_Name: pomme
+  m_Name: golden_apple
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3427676383669219850
+--- !u!4 &6473773261173683966
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3140832056156530121}
+  m_GameObject: {fileID: 8314783819603285416}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.502, y: 1.545, z: 0}
-  m_LocalScale: {x: 0.46114704, y: 0.43291157, z: 1}
+  m_LocalPosition: {x: -12.4967, y: -0.4962, z: 0}
+  m_LocalScale: {x: 1.5968624, y: 1.503369, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &4451722703664855210
+--- !u!212 &1676587096938945409
 SpriteRenderer:
   serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3140832056156530121}
+  m_GameObject: {fileID: 8314783819603285416}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -84,23 +84,23 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -3327064287969554200, guid: a3d9e2515a9c9f643bd5ae07816d3399, type: 3}
+  m_Sprite: {fileID: -7231559296163984513, guid: fa59d0fb0ecdea94f8475bcb5e9e63b7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2.18, y: 2.49}
+  m_Size: {x: 0.62, y: 0.66}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!58 &6170589522439796710
-CircleCollider2D:
+--- !u!70 &1011705546781966828
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3140832056156530121}
+  m_GameObject: {fileID: 8314783819603285416}
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
@@ -128,16 +128,17 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 1.245
---- !u!50 &4256786386100544010
+  m_Offset: {x: 0, y: -0.017718554}
+  m_Size: {x: 0.62, y: 0.6954371}
+  m_Direction: 0
+--- !u!50 &1275546259463858100
 Rigidbody2D:
   serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3140832056156530121}
+  m_GameObject: {fileID: 8314783819603285416}
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
@@ -157,16 +158,16 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &7740404017263624381
+--- !u!114 &4997725342187676126
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3140832056156530121}
+  m_GameObject: {fileID: 8314783819603285416}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98a7d4e6fb10edf42bb93330fb62cbce, type: 3}
+  m_Script: {fileID: 11500000, guid: 78993e57d31399441844e47440c7f25e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::appleScript
+  m_EditorClassIdentifier: Assembly-CSharp::GoldenAppleScript
   isEsthetique: 0
