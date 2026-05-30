@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 115422339880945790}
   - component: {fileID: 6616082249364112129}
   m_Layer: 0
-  m_Name: Ennemi2
+  m_Name: BulletShower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
