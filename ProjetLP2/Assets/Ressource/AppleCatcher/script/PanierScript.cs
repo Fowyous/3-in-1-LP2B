@@ -33,16 +33,6 @@ public class PanierScript : MonoBehaviour
             transform.Translate(Vector3.left * Time.deltaTime * translationSpeed);
 
         }
-
-        if (Keyboard.current.upArrowKey.isPressed && transform.position.y < 3.8)
-        {
-            transform.Translate(Vector3.up * Time.deltaTime * verticalSpeed);
-        }
-
-        if (Keyboard.current.downArrowKey.isPressed && transform.position.y > -3.8)
-        {
-            transform.Translate(Vector3.down * Time.deltaTime * verticalSpeed);
-        }
     }
 
     void OnCollisionEnter2D(Collision2D col)

@@ -159,8 +159,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: text du score
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 1e53f72f59a8e0848ab961d5275252b3, type: 2}
+  m_sharedMaterial: {fileID: 1198813782383803405, guid: 1e53f72f59a8e0848ab961d5275252b3, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -184,7 +184,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 8.75
+  m_fontSize: 8
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -257,7 +257,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: 1198813782383803405, guid: 1e53f72f59a8e0848ab961d5275252b3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -858,6 +858,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::apple_spawner
   applePrefab: {fileID: 3140832056156530121, guid: b70e90fd9174e5045bb5b718cebec60e, type: 3}
   healthText: {fileID: 1314835430}
+  isEsthetique: 0
 --- !u!1 &1314835429
 GameObject:
   m_ObjectHideFlags: 0
@@ -898,8 +899,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: textPV
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 1e53f72f59a8e0848ab961d5275252b3, type: 2}
+  m_sharedMaterial: {fileID: 1198813782383803405, guid: 1e53f72f59a8e0848ab961d5275252b3, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -923,7 +924,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 13.9
+  m_fontSize: 8
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -996,7 +997,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: 1198813782383803405, guid: 1e53f72f59a8e0848ab961d5275252b3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
