@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class AngelAppelScript : AppleScript
+public class AngelAppleScript : AppleScript
 {
     private static int bonusLife = 1;
     
