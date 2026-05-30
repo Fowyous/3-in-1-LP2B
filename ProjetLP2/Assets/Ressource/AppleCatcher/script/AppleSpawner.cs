@@ -5,10 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class AppleSpawner : MonoBehaviour
 {
-    public GameObject applePrefab;
+    public GameObject[] applePrefab;
 
     private float spawnTimer;
-    private int health = 3;
+    private static int health = 3;
     public TextMeshPro  healthText;
     public bool isEsthetique;
 
@@ -34,21 +34,21 @@ public class AppleSpawner : MonoBehaviour
             spawnTimer = Random.Range(0.5f, 2f);
         }
     }
-
+    
     // ReSharper disable Unity.PerformanceAnalysis
     private void spawnApple()
     {
-        GameObject newApple = Instantiate(applePrefab);
+        GameObject newApple = Instantiate(applePrefab[0]);
         float newX = Random.Range(-8f, 8f);
         newApple.transform.position = new Vector3(newX, 7f, 0f);
         
         AppleScript appleScript = newApple.GetComponent<AppleScript>();
         appleScript.setIsEsthetique(isEsthetique);
     }
-
-    public void LoseHealth()
+    
+    public void editHealth(int value)
     {
-        health -= 1;
+        health += value;
         healthText.SetText(health + ": health");
 
         if (health <= 0)

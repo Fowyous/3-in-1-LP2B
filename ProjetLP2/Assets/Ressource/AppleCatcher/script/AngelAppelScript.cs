@@ -1,7 +1,9 @@
 using UnityEngine;
 
-public class AngelAppelScript : MonoBehaviour
+public class AngelAppelScript : AppleScript
 {
+    private static int bonusLife = 1;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -13,4 +15,10 @@ public class AngelAppelScript : MonoBehaviour
     {
         
     }
+    
+    protected override void OnCaught()
+    {
+        AppleSpawner.Instance.editHealth(bonusLife);
+    }
+    
 }

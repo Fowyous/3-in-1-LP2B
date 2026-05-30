@@ -1,23 +1,18 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class AppleScript: MonoBehaviour
+public class AppleScript : MonoBehaviour
 {
     public bool isEsthetique;
+    private static int damage = -1;
+    private static int score = 1;
+    private static float vide = 10f;
 
-    void Start()
-    {
-        
-    }
-    
     void Update()
     {
-        if (transform.position.y < -10f)
+        if (transform.position.y < -vide)
         {
-            if (! isEsthetique)
-            {
-                AppleSpawner.Instance.LoseHealth();
-            }
+            if (!isEsthetique)
+                OnMissed();
 
             Destroy(gameObject);
         }
@@ -25,11 +20,25 @@ public class AppleScript: MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        Destroy(gameObject);
+        if (col.gameObject.CompareTag("Panier"))
+        {
+            OnCaught();
+            Destroy(gameObject);
+        }
     }
-    
-    public void setIsEsthetique(bool isEsthetique)
+
+    protected virtual void OnCaught()
     {
-        this.isEsthetique = isEsthetique;
+        PanierScript.Instance.AddScore(score);
+    }
+
+    protected virtual void OnMissed()
+    {
+        AppleSpawner.Instance.editHealth(damage);
+    }
+
+    public void setIsEsthetique(bool value)
+    {
+        isEsthetique = value;
     }
 }

@@ -1,7 +1,10 @@
 using UnityEngine;
 
-public class TronionScript : MonoBehaviour
+public class TronionScript : AppleScript
 {
+    private static int malusScore = -1;
+    private static float malusSpeed = 0.5f;
+    private static float malusDuration = 3f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -12,5 +15,11 @@ public class TronionScript : MonoBehaviour
     void Update()
     {
         
+    }
+    
+    protected override void OnCaught()
+    {
+        PanierScript.Instance.AddScore(malusScore);
+        PanierScript.Instance.editSpeed(malusSpeed, malusDuration);
     }
 }

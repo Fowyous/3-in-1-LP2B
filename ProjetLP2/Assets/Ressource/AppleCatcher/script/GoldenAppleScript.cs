@@ -1,7 +1,10 @@
 using UnityEngine;
 
-public class GoldenAppleScript : MonoBehaviour
+public class GoldenAppleScript : AppleScript
 {
+    private static int bonusScore = 2;
+    private static float bonusSpeed = 1.5f;
+    private static float bonusDuration = 20f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -12,5 +15,10 @@ public class GoldenAppleScript : MonoBehaviour
     void Update()
     {
         
+    }
+    protected override void OnCaught()
+    {
+        PanierScript.Instance.AddScore(bonusScore);
+        PanierScript.Instance.editSpeed(bonusSpeed,  bonusDuration);
     }
 }

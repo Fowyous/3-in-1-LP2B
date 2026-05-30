@@ -1,7 +1,8 @@
 using UnityEngine;
 
-public class PourrieScript : MonoBehaviour
+public class PourrieScript : AppleScript
 {
+    private static float malusDuration = 5f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -12,5 +13,10 @@ public class PourrieScript : MonoBehaviour
     void Update()
     {
         
+    }
+    
+    protected override void OnCaught()
+    {
+        PanierScript.Instance.ApplyInvertedControls(malusDuration);
     }
 }

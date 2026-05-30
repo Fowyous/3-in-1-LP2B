@@ -1,49 +1,96 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 public class PanierScript : MonoBehaviour
 {
     private float translationSpeed;
-    private float verticalSpeed;
     private static int score;
     public TextMeshPro scoreText;
     public AudioClip collectedSound;
     private AudioSource audioSource;
 
+    private bool isInverted = false;
+    private static float baseSpeed = 7f;
+    private static float bordure = 7.2f;
+
+    public static PanierScript Instance;
+
+    void Awake()
+    {
+        Instance = this;
+    }
+
     void Start()
     {
         score = 0;
-        translationSpeed = 7f;
-        verticalSpeed = 1f;
+        translationSpeed = baseSpeed;
         scoreText.SetText("score : " + score);
         audioSource = GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (Keyboard.current.rightArrowKey.isPressed && transform.position.x < 7.2)
+        float direction;
+        if (isInverted)
         {
-            transform.Translate(Vector3.right * Time.deltaTime * translationSpeed);
+            direction = -1f;
+        }
+        else
+        {
+            direction = 1f;
         }
 
-        if (Keyboard.current.leftArrowKey.isPressed && transform.position.x > -7.2)
+        if (Keyboard.current.rightArrowKey.isPressed && transform.position.x < bordure)
         {
-            transform.Translate(Vector3.left * Time.deltaTime * translationSpeed);
+            transform.Translate(Vector3.right * Time.deltaTime * translationSpeed * direction);
+        }
 
+        if (Keyboard.current.leftArrowKey.isPressed && transform.position.x > -bordure)
+        {
+            transform.Translate(Vector3.left * Time.deltaTime * translationSpeed * direction);
         }
     }
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        score++;
-        scoreText.SetText("score : " + score);
         audioSource.PlayOneShot(collectedSound);
+    }
+    
+    public void AddScore(int value)
+    {
+        score += value;
+        scoreText.SetText("score : " + score);
+    }
+
+    public void editSpeed(float  value, float duration)
+    {
+        StartCoroutine(SpeedEffect(baseSpeed * value, duration));
+    }
+    
+    public void ApplyInvertedControls(float duration)
+    {
+        StartCoroutine(InvertEffect(duration));
+    }
+
+
+    private IEnumerator SpeedEffect(float newSpeed, float duration)
+    {
+        translationSpeed = newSpeed;
+        yield return new WaitForSeconds(duration);
+        translationSpeed = baseSpeed;
+    }
+
+    private IEnumerator InvertEffect(float duration)
+    {
+        isInverted = true;
+        yield return new WaitForSeconds(duration);
+        isInverted = false;
     }
 
     public static int scoreGet()
     {
-        return score; 
+        return score;
     }
 }
