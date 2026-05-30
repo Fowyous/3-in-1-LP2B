@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class titleScene : MonoBehaviour
 {
     private bool isTitleScene = true;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
