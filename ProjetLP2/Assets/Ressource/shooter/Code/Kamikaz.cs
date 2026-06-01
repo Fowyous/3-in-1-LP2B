@@ -56,9 +56,9 @@ public class Kamikaz : MonoBehaviour, IEnemy
     //NULL checks
     if (rb == null || target == null)
     {
-      Debug.Log("null check failed");
-      Debug.Log("rb : " + rb);
-      Debug.Log("target : " + target);
+      Debug.LogError("null check failed");
+      Debug.LogError("rb : " + rb);
+      Debug.LogError("target : " + target);
       return;
     }
 
