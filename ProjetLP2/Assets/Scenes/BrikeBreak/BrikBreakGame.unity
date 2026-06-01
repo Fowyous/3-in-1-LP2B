@@ -1212,8 +1212,8 @@ MonoBehaviour:
   simpleBlockPrefab: {fileID: 4766869989981982780, guid: 70923567f733b5c4db1eccded6e18f7f, type: 3}
   hardBlockPrefab: {fileID: 7359978639656360737, guid: d4f27a36fac008248b64716c4eba6fa8, type: 3}
   scoreText: {fileID: 533865279}
-  rows: 5
-  cols: 7
+  rows: 10
+  cols: 10
   blockWidth: 1.76
   blockHeight: 0.92
   startX: -8.5
