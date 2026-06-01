@@ -15,8 +15,8 @@ public class BlockSpawner : MonoBehaviour
     private int score = 0;
 
     [Header("Taille de la grille")]
-    [SerializeField] private int rows = 5;
-    [SerializeField] private int cols = 7;
+    [SerializeField] private int rows = 10;
+    [SerializeField] private int cols = 10;
 
     [Header("Espacement des blocs")]
     [SerializeField] private float blockWidth  = 1.76f;
