@@ -4,6 +4,18 @@ using static ShooterConstants;
 
 public class EnemySpawner : MonoBehaviour
 {
+
+  private void OnValidate()
+  {
+    for (int i = enemiesPrefabs.Count - 1; i >= 0; i--)
+    {
+      if (enemiesPrefabs[i] != null && enemiesPrefabs[i].GetComponent<IEnemy>() == null)
+      {
+        Debug.LogWarning($"'{enemiesPrefabs[i].name}' doesn't implement IEnemy. Removed from list.");
+        enemiesPrefabs.RemoveAt(i);
+      }
+    }
+  }
   //this is the list of enemies that will be added through the unity editor
   [SerializeField] private List<GameObject> enemiesPrefabs = new List<GameObject>();
   public GameObject player;
