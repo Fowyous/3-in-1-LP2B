@@ -92,7 +92,7 @@ public class AppleSpawner : MonoBehaviour
 
     private IEnumerator LoadEndScene()
     {
-        AsyncOperation load = SceneManager.LoadSceneAsync("GameOver");
+        AsyncOperation load = SceneManager.LoadSceneAsync("GameOverAppleCatcher");
         while (!load.isDone)
         {
             yield return null;

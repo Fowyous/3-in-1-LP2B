@@ -1,9 +1,9 @@
 using System.Collections;
-using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-public class Acceuil : MonoBehaviour
+public class ControlAcceui : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -14,17 +14,15 @@ public class Acceuil : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-    }
-
-    public void StartAppleCatcher()
-    {
-        StartCoroutine(LoadAppleCatcher());
+        if (Keyboard.current.anyKey.wasPressedThisFrame || Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            StartCoroutine(LoadMainGame());
+        }
     }
     
-    private IEnumerator LoadAppleCatcher()
+    private IEnumerator LoadMainGame()
     {
-        AsyncOperation load = SceneManager.LoadSceneAsync("AppleCatcherAcceuil");
+        AsyncOperation load = SceneManager.LoadSceneAsync("BrikBreakGame");
         while (!load.isDone)
         {
             yield return null;

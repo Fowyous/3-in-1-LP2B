@@ -1,9 +1,10 @@
 using UnityEngine;
 using static ShooterConstants;
+
 ///<summary>
 ///the Kamikaz enemy, charges at the player then explodes on touch.
 ///</summary>
-public class Kamikaz : MonoBehaviour, IEnemy
+public class Kamikaz : MonoBehaviour
 {
   public float Health { get; set; } = 1;
   public float Damage { get; set; } = 5;
@@ -73,12 +74,9 @@ public class Kamikaz : MonoBehaviour, IEnemy
     // - After Phase 2: stop following and keep last direction
     if (transform.position.x >= p1)
     {
-
       Debug.Log("p1");
       moveDirection = Vector3.left;
       lastDirection = moveDirection;
-
-
     }
     else if (transform.position.x < p1 && transform.position.x >= p2)
     {

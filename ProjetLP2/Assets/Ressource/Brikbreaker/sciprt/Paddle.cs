@@ -16,11 +16,11 @@ public class Paddle : MonoBehaviour
     {
         if (Keyboard.current.rightArrowKey.isPressed && transform.position.x < 9.5)
         {
-            transform.Translate(Vector3.right * Time.deltaTime * translationSpeed);
+            transform.Translate(Vector3.right * (Time.deltaTime * translationSpeed));
         }
         if (Keyboard.current.leftArrowKey.isPressed && transform.position.x > -9.5)
         {
-            transform.Translate(Vector3.left * Time.deltaTime * translationSpeed);
+            transform.Translate(Vector3.left * (Time.deltaTime * translationSpeed));
 
         }
     }

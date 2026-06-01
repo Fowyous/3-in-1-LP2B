@@ -129,10 +129,10 @@ GameObject:
   m_Component:
   - component: {fileID: 96675003}
   - component: {fileID: 96675002}
-  - component: {fileID: 96675005}
   - component: {fileID: 96675004}
+  - component: {fileID: 96675005}
   m_Layer: 0
-  m_Name: Space1_0
+  m_Name: bord_droit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -187,7 +187,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -6773648561096643331, guid: 4e40428f3749f574bba7bb2f0cc4a531, type: 3}
+  m_Sprite: {fileID: -6773648561096643331, guid: e2bc6ed7a85c6d24390770fe457171ff, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -228,7 +228,7 @@ Rigidbody2D:
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: d424093c576d9904e817e7a19964cc98, type: 2}
+  m_Material: {fileID: 6200000, guid: d4ee4da23cac08d4da03b9d241c3c3d6, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -249,7 +249,7 @@ BoxCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: d424093c576d9904e817e7a19964cc98, type: 2}
+  m_Material: {fileID: 6200000, guid: d4ee4da23cac08d4da03b9d241c3c3d6, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -359,7 +359,7 @@ SpriteRenderer:
   m_Size: {x: 0.64, y: 0.64}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
 --- !u!4 &371020793
 Transform:
@@ -416,8 +416,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: affichage vie
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f01645de6e7767944867e1466c89c9d7, type: 2}
-  m_sharedMaterial: {fileID: 2445667077917220787, guid: f01645de6e7767944867e1466c89c9d7, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9f9aa7acc3a01414182ea34a4c3d8603, type: 2}
+  m_sharedMaterial: {fileID: 2445667077917220787, guid: 9f9aa7acc3a01414182ea34a4c3d8603, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -514,7 +514,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2445667077917220787, guid: f01645de6e7767944867e1466c89c9d7, type: 2}
+  - {fileID: 2445667077917220787, guid: 9f9aa7acc3a01414182ea34a4c3d8603, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -571,7 +571,7 @@ GameObject:
   - component: {fileID: 417791582}
   - component: {fileID: 417791586}
   m_Layer: 0
-  m_Name: Paddle_0
+  m_Name: Paddle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -587,7 +587,7 @@ CapsuleCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: b0b688f43ba926b41a053f09be38261c, type: 2}
+  m_Material: {fileID: 6200000, guid: 7063bfadb960bc34591df57b9bc25ea3, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -630,7 +630,7 @@ Rigidbody2D:
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: b0b688f43ba926b41a053f09be38261c, type: 2}
+  m_Material: {fileID: 6200000, guid: 7063bfadb960bc34591df57b9bc25ea3, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -690,7 +690,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -3011869301351494817, guid: 90d7de39a8737f54aabf2dde0a03a978, type: 3}
+  m_Sprite: {fileID: -3011869301351494817, guid: c339f63ede309f84e8cecb7237071570, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -767,8 +767,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: affichage score
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f01645de6e7767944867e1466c89c9d7, type: 2}
-  m_sharedMaterial: {fileID: 2445667077917220787, guid: f01645de6e7767944867e1466c89c9d7, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9f9aa7acc3a01414182ea34a4c3d8603, type: 2}
+  m_sharedMaterial: {fileID: 2445667077917220787, guid: 9f9aa7acc3a01414182ea34a4c3d8603, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -865,7 +865,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2445667077917220787, guid: f01645de6e7767944867e1466c89c9d7, type: 2}
+  - {fileID: 2445667077917220787, guid: 9f9aa7acc3a01414182ea34a4c3d8603, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -921,7 +921,7 @@ GameObject:
   - component: {fileID: 984222069}
   - component: {fileID: 984222068}
   m_Layer: 0
-  m_Name: Wall Piece_0 (2)
+  m_Name: plafond_de_jeu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -976,7 +976,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 9093119825424441089, guid: 78a7b95052e27254495d1eeea9d4a29b, type: 3}
+  m_Sprite: {fileID: 9093119825424441089, guid: 4ef92049a542a6245ad800350276bdee, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1017,7 +1017,7 @@ Rigidbody2D:
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: d4ee4da23cac08d4da03b9d241c3c3d6, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1038,7 +1038,7 @@ BoxCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: d4ee4da23cac08d4da03b9d241c3c3d6, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1085,7 +1085,7 @@ GameObject:
   - component: {fileID: 1099624660}
   - component: {fileID: 1099624659}
   m_Layer: 0
-  m_Name: Wall Piece_0 (1)
+  m_Name: fond_de_jeu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1140,7 +1140,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 9093119825424441089, guid: 78a7b95052e27254495d1eeea9d4a29b, type: 3}
+  m_Sprite: {fileID: 9093119825424441089, guid: 4ef92049a542a6245ad800350276bdee, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1370,7 +1370,7 @@ GameObject:
   - component: {fileID: 1684660533}
   - component: {fileID: 1684660532}
   m_Layer: 0
-  m_Name: Space2_0
+  m_Name: bord_gauhce
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1425,7 +1425,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 3630864051893544540, guid: f6566763d3262f24d910e911b60d9d00, type: 3}
+  m_Sprite: {fileID: 3630864051893544540, guid: 07cc3ffdb47f9a54dab78b50bd4b0d65, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1460,7 +1460,7 @@ BoxCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: d424093c576d9904e817e7a19964cc98, type: 2}
+  m_Material: {fileID: 6200000, guid: d4ee4da23cac08d4da03b9d241c3c3d6, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1512,7 +1512,7 @@ Rigidbody2D:
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: d424093c576d9904e817e7a19964cc98, type: 2}
+  m_Material: {fileID: 6200000, guid: d4ee4da23cac08d4da03b9d241c3c3d6, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
