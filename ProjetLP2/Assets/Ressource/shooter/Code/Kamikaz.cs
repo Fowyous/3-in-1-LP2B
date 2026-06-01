@@ -4,7 +4,7 @@ using static ShooterConstants;
 ///<summary>
 ///the Kamikaz enemy, charges at the player then explodes on touch.
 ///</summary>
-public class Kamikaz : MonoBehaviour
+public class Kamikaz : MonoBehaviour, IEnemy
 {
   public float Health { get; set; } = 1;
   public float Damage { get; set; } = 5;
