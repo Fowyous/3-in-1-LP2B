@@ -40,7 +40,6 @@ public class UFO : MonoBehaviour
   {
     HandleMovement();
 
-    Debug.Log("bb");
 
 
 

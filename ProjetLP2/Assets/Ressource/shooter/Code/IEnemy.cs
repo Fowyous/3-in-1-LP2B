@@ -13,4 +13,5 @@ public interface IEnemy
   void Shoot(GameObject bullet);
   bool IsAlive { get; }
   void NextMove(GameObject Target);
+  public GameObject Target { get; set; }
 }

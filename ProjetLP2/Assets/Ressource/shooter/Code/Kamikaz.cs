@@ -1,5 +1,5 @@
 using UnityEngine;
-using ShooterConstants;
+using static ShooterConstants;
 ///<summary>
 ///the Kamikaz enemy, charges at the player then explodes on touch.
 ///</summary>
@@ -7,19 +7,32 @@ public class Kamikaz : MonoBehaviour, IEnemy
 {
   public float Health { get; set; } = 1;
   public float Damage { get; set; } = 5;
-  public bool IsAlive { get; } = true;
-  static float SPEED { get; set; } = 7.0f;
+  public bool IsAlive { get; private set; } = true;
+  private float SPEED { get; set; } = 7.0f;
+  private Vector3 moveDirection = Vector3.left;
+  private Vector3 lastDirection;
 
-  public Rigidbody rb;
-  // Start is called once before the first execution of Update after the MonoBehaviour is created
+  public GameObject Target { get; set; }
+  private Rigidbody2D rb;
   void Start()
   {
+    Debug.Log("Kamikaz spawned");
+    rb = GetComponent<Rigidbody2D>();
+    //Verify rb was found  
+    if (rb == null)
+    {
+      Debug.LogError("RIGIDBODY NOT FOUND! Make sure this GameObject has a Rigidbody component.");
+    }
+    else
+    {
+      Debug.Log("Rigidbody successfully assigned");
+    }
   }
 
-  // Update is called once per frame
   void Update()
   {
 
+    NextMove(Target);
   }
   public void TakeDamage(float damage)
   {
@@ -28,24 +41,60 @@ public class Kamikaz : MonoBehaviour, IEnemy
   }
 
 
+  ///<summary>
+  ///Here the enemy has to explode on the player when the distance is close enough.
+  ///This method gets called when we detect that we are too close to the player.
+  ///</summary>
   public void Shoot(GameObject bullet)
   {
   }
 
-  ///<summary>
-  ///Here the Kamikaz enemy will continue in a straight line through phase 1 and then will follow the player during all of phase 2 then will 
-  ///stop following and keep the same direction.
-  ///</summary>
-  public void NextMove(GameObject Target)
+  ///Determines and applies the next move of the enemy Kamikaz.
+  public void NextMove(GameObject target)
   {
-    if (transform.position.x <= ShooterConstants.Phase1limit)
+    //NULL checks
+    if (rb == null || target == null)
+    {
+      Debug.Log("null check failed");
+      Debug.Log("rb : " + rb);
+      Debug.Log("target : " + target);
+      return;
+    }
+
+    Vector3 toTarget = (target.transform.position - transform.position).normalized;
+
+    // phase boundaries 
+    float p1 = ShooterConstants.Phase1limit;
+    float p2 = ShooterConstants.Phase2limit;
+
+    // Determine move direction per phase:
+    // - Phase 1: continue straight along current forward
+    // - Phase 2: follow the player
+    // - After Phase 2: stop following and keep last direction
+    if (transform.position.x >= p1)
     {
 
-      // we use moveDirection.normalized so that the speed doesn't change when we go diagonally
-      rb.velocity = transform.TransformDirection(moveDirection.normalized) * SPEED * Time.Deltatime;
+      Debug.Log("p1");
+      moveDirection = Vector3.left;
+      lastDirection = moveDirection;
 
 
     }
+    else if (transform.position.x < p1 && transform.position.x >= p2)
+    {
+      Debug.Log("p2");
+      moveDirection = toTarget;
+      lastDirection = moveDirection;
+    }
+    else
+    {
+      Debug.Log("p3");
+      // keep whatever direction we had at end of phase 2 (if that direction is not 0)
+      moveDirection = lastDirection != Vector3.zero ? lastDirection : transform.forward;
+    }
+    // apply velocity for the actual direction of the enemy.
+    rb.linearVelocity = new Vector2(moveDirection.x, moveDirection.y).normalized * SPEED;
+
 
   }
 
