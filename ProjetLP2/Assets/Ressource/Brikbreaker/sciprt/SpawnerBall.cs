@@ -10,9 +10,7 @@ public class SpawnerBall : MonoBehaviour
     [SerializeField] private int maxLives = 3;
     [SerializeField] private float respawnDelay = 2f;
     [SerializeField] private TextMeshPro livesText;
-
-    private static readonly Vector3 SpawnPosition = new Vector3(0f, -5f, 0f);
-
+    [SerializeField] public GameObject paddle;
     private int currentLives;
     private List<GameObject> activeBalls = new List<GameObject>();
 
@@ -60,7 +58,10 @@ public class SpawnerBall : MonoBehaviour
 
     public void SpawnBall()
     {
-        GameObject ball = Instantiate(ballPrefab, SpawnPosition, Quaternion.identity);
+        float paddleX = paddle.transform.position.x;
+        float paddleY = paddle.transform.position.y + 3.5f;
+        Vector3 spawnPosition = new Vector3(paddleX, paddleY, 0);
+        GameObject ball = Instantiate(ballPrefab, spawnPosition, Quaternion.identity);
         activeBalls.Add(ball);
     }
 
