@@ -31,7 +31,7 @@ public class AngelAppleScript : AppleScript
     protected override void UpdateSpeed()
     {
         if (transform.position.y < seuilAttaque)
-            speed = Mathf.Lerp(speed, 8f, Time.deltaTime * 0.5f);
+            speed = 8f;
     }
     
     protected override void OnCaught()

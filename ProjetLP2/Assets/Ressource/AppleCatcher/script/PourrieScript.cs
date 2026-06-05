@@ -31,7 +31,7 @@ public class PourrieScript : AppleScript
     protected override void UpdateSpeed()
     {
         if (transform.position.y < seuilAttaque)
-            speed = Mathf.Lerp(speed, 4f, Time.deltaTime * 0.5f);
+            speed = 4f;
     }
     
     protected override void OnCaught()
