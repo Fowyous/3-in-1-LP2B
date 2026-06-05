@@ -17,5 +17,17 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/AppleCatcher/GameOverAppleCatcher.unity
     guid: 96e59785686eded44b2792a0bf577e3e
+  - enabled: 1
+    path: Assets/Scenes/BrikeBreak/BrikeBreakAcceuil.unity
+    guid: f764745bbd014dc429715df04968ddc4
+  - enabled: 1
+    path: Assets/Scenes/BrikeBreak/BrikBreakGame.unity
+    guid: 7b90df516f7943e41b13e6dd682cbe47
+  - enabled: 1
+    path: Assets/Scenes/BrikeBreak/GameOverBrikeBreak.unity
+    guid: 35d8fb50fe0378f438e1805c8a0a939a
+  - enabled: 1
+    path: Assets/Scenes/Shooter/Shooter.unity
+    guid: b73e55a15484f9ee68904ab31b84c372
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

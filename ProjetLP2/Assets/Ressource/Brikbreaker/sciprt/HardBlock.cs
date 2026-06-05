@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class HardBlock : MonoBehaviour
 {
-    private int   health     = 2;
-    private int   pointValue = 25;
+    private static int health     = 2;
+    private static int pointValue = 25;
     private Color baseColor;
 
     private void Start()
@@ -28,6 +28,8 @@ public class HardBlock : MonoBehaviour
         else
         {
             Debug.Log("Points gagnés : " + pointValue);
+            BlockSpawner.setCoefficient(2);
+            BlockSpawner.Instance.AddScore(pointValue);
             Destroy(gameObject);
         }
     }

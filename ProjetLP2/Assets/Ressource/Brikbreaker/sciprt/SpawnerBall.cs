@@ -11,7 +11,7 @@ public class SpawnerBall : MonoBehaviour
     [SerializeField] private float respawnDelay = 2f;
     [SerializeField] private TextMeshPro livesText;
     [SerializeField] public GameObject paddle;
-    private int currentLives;
+    private static int currentLives;
     private List<GameObject> activeBalls = new List<GameObject>();
 
     void Start()
@@ -78,5 +78,16 @@ public class SpawnerBall : MonoBehaviour
         {
             yield return null;
         }
+    }
+
+    public static void healLives(int lives)
+    {
+        currentLives += lives;
+    }
+
+    public static void healMaxLives(int maxLives)
+    {
+        maxLives += maxLives;
+        currentLives +=  maxLives;
     }
 }
