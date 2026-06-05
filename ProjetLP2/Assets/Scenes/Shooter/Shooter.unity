@@ -568,8 +568,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
   enemiesPrefabs:
-  - {fileID: 6236802763043699279, guid: 7615c6fa1e9c52690b24a67bba1a1a63, type: 3}
-  - {fileID: 2875724930945104898, guid: 53a10a873ed220daba6de3864250f1b0, type: 3}
+  - {fileID: 7573689468843734864, guid: 27f865d636e4a53ceaf002fa1242489f, type: 3}
   player: {fileID: 499223574}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
