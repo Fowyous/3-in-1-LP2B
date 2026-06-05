@@ -50,7 +50,7 @@ public class SpawnerBall : MonoBehaviour
     }
 
     /// <summary>Spawn une balle avec un délai configurable.</summary>
-    private IEnumerator RespawnWithDelay()
+    public IEnumerator RespawnWithDelay()
     {
         yield return new WaitForSeconds(respawnDelay);
         SpawnBall();

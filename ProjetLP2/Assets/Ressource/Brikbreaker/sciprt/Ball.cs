@@ -6,14 +6,14 @@ public class Ball : MonoBehaviour
     private bool isDead = false;
     private float speed;
     private Vector2 direction;
-    private Rigidbody2D rb;
+    private Rigidbody2D balle;
     private int lastBounceFrame = -1;
-
+    
     protected virtual void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        rb.bodyType = RigidbodyType2D.Kinematic;
-        speed = 32f;
+        balle = GetComponent<Rigidbody2D>();
+        balle.bodyType = RigidbodyType2D.Kinematic;
+        speed = 35f;
         direction = new Vector2(0f, -1f).normalized;
     }
 
@@ -26,7 +26,7 @@ public class Ball : MonoBehaviour
             return;
         }
 
-        rb.MovePosition(rb.position + direction * (speed * Time.deltaTime));
+        balle.MovePosition(balle.position + direction * (speed * Time.deltaTime));
     }
 
     void OnCollisionEnter2D(Collision2D collision)

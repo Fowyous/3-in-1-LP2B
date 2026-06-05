@@ -62,6 +62,7 @@ public class BlockSpawner  : MonoBehaviour
         if (activeBlocks.Count == 0)
         {
             levelCleared = true;
+            /*il faut mettre une fonction pour que la balle réaparaisse devant le paddel*/
             SpawnerBall.healLives(1);
             SpawnRandomLevel();
         }

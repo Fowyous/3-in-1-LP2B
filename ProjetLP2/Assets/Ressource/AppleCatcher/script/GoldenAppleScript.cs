@@ -40,7 +40,7 @@ public class GoldenAppleScript : AppleScript
     
     protected override void OnCaught()
     {
-        PanierScript.Instance.AddScore(bonusScore);
-        PanierScript.Instance.editSpeed(bonusSpeed,  bonusDuration);
+        Catchboy.Instance.AddScore(bonusScore);
+        Catchboy.Instance.editSpeed(bonusSpeed,  bonusDuration);
     }
 }

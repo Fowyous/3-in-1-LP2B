@@ -1047,6 +1047,7 @@ MonoBehaviour:
   blockArray:
   - {fileID: 4766869989981982780, guid: 70923567f733b5c4db1eccded6e18f7f, type: 3}
   - {fileID: 7359978639656360737, guid: d4f27a36fac008248b64716c4eba6fa8, type: 3}
+  - {fileID: 689256108565384799, guid: a9f4640d06a8ddc4bba64fc4776e1e3c, type: 3}
   scoreText: {fileID: 533865279}
   rows: 10
   cols: 11
@@ -1055,7 +1056,7 @@ MonoBehaviour:
   startX: -8.5
   startY: 7.2
   chanceEmpty: 90
-  chanceSimple: 10
+  chanceSimple: 12
   chanceHard: 10
 --- !u!1 &1574038392
 GameObject:

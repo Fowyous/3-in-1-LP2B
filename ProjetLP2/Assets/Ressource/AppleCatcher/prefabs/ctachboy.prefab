@@ -12,9 +12,8 @@ GameObject:
   - component: {fileID: 7240729199238346589}
   - component: {fileID: 4181903635064395747}
   - component: {fileID: 680756223786011329}
-  - component: {fileID: 3730248631357688393}
   m_Layer: 0
-  m_Name: pannier
+  m_Name: ctachboy
   m_TagString: panier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.03, y: -3.22, z: 0}
-  m_LocalScale: {x: 0.7266, y: 0.7095, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -84,7 +83,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -8972608850290470980, guid: 1c4cf5d0327c6df41bb4af4c8c25a457, type: 3}
+  m_Sprite: {fileID: -6579122849739801080, guid: dcb10b39a9ddf924db767ff130c26658, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -159,7 +158,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 4.9, y: 3.54}
+    oldSize: {x: 1.78, y: 2.08}
     newSize: {x: 4.9, y: 3.54}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -167,17 +166,3 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 4.9, y: 0.7586149}
   m_EdgeRadius: 0
---- !u!114 &3730248631357688393
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5584434614024792663}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4739ffedbf0ea154d8898b146ef79ddf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::panier_script
-  scoreText: {fileID: 0}
-  collectedSound: {fileID: 8300000, guid: 24e8ab7a34d41a34da0f893f510be543, type: 3}

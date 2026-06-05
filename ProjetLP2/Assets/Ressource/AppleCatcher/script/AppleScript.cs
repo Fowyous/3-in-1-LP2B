@@ -36,7 +36,7 @@ public class AppleScript : MonoBehaviour
     
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.CompareTag("panier"))
+        if (col.gameObject.CompareTag("catchboy"))
         {
             OnCaught();
             Destroy(gameObject);
@@ -45,7 +45,7 @@ public class AppleScript : MonoBehaviour
 
     protected virtual void OnCaught()
     {
-        PanierScript.Instance.AddScore(score);
+        Catchboy.Instance.AddScore(score);
     }
 
     protected virtual void OnMissed()

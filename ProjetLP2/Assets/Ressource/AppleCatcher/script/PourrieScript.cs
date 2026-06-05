@@ -36,6 +36,6 @@ public class PourrieScript : AppleScript
     
     protected override void OnCaught()
     {
-        PanierScript.Instance.ApplyInvertedControls(malusDuration);
+        Catchboy.Instance.ApplyInvertedControls(malusDuration);
     }
 }
