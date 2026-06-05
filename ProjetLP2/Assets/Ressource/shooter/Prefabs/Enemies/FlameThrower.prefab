@@ -103,6 +103,7 @@ GameObject:
   - component: {fileID: 7293713863004055389}
   - component: {fileID: -7352754677458053477}
   - component: {fileID: 734446319009871686}
+  - component: {fileID: 9192133749047573659}
   m_Layer: 0
   m_Name: FlameThrower
   m_TagString: Untagged
@@ -258,3 +259,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &9192133749047573659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7573689468843734864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d7fa6f1dce55dbd08b1feacb3997fcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FlameThrower
+  _health: 1
+  _damage: 5
+  _speed: 3.5
+  _target: {fileID: 3384449957238118544, guid: 911fc59e7fa4bfe4da59b453b0ba6166, type: 3}

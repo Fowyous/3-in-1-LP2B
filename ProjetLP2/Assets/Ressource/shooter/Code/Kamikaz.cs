@@ -13,6 +13,7 @@ public class Kamikaz : MonoBehaviour, IEnemy
   private Vector3 moveDirection = Vector3.left;
   private Vector3 lastDirection;
 
+  //the target is set externally by the spawner
   public GameObject Target { get; set; }
   private Rigidbody2D rb;
   void Start()

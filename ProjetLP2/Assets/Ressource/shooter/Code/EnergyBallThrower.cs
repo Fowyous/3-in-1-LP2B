@@ -17,9 +17,10 @@ public class EnergyBallThrower : MonoBehaviour, IEnemy
   private float introProgress;
   private Vector2 startPos;
 
+  //target set externally by the spawner
   public GameObject Target { get; set; }
   private Rigidbody2D rb;
-  // Start is called once before the first execution of Update after the MonoBehaviour is created
+
   void Start()
   {
     startPos = transform.position;
