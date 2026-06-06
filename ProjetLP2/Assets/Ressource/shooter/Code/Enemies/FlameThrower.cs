@@ -19,6 +19,10 @@ public class FlameThrower : MonoBehaviour, IEnemy
 
   [SerializeField]
   private GameObject _target;
+  [SerializeField] private GameObject flameConePrefab;
+[SerializeField] private Transform firePoint;
+private float nextFireTime = 0f;
+private float fireRate = 1.5f;
 
   private bool _isAlive = true;  // Private backing field (NOT serialized)
 
@@ -78,6 +82,14 @@ public class FlameThrower : MonoBehaviour, IEnemy
   void Update()
   {
     NextMove(Target);
+    if (!intro && Vector3.Distance(transform.position, Target.transform.position) <= 4.0f)
+{
+    if (Time.time >= nextFireTime)
+    {
+        Shoot(flameConePrefab);
+        nextFireTime = Time.time + fireRate;
+    }
+}
 
 
   }
@@ -88,15 +100,17 @@ public class FlameThrower : MonoBehaviour, IEnemy
     Debug.Log($"Kamikaz took {damage} damage. Health: {Health}");
   }
 
-
-  ///<summary>
-  ///Here the enemy has to shoot the player when they get close enough.
-  ///
-  ///This method gets called when we detect that we are too close to the player.
-  ///</summary>
-  public void Shoot(GameObject bullet)
-  {
-  }
+///<summary>
+///This method gets called when we detect that we are too close to the player.
+///Instantiates the flame cone projectile at the fire point.
+///</summary>
+public void Shoot(GameObject bullet)
+{
+    if (bullet != null && firePoint != null)
+    {
+        Instantiate(bullet, firePoint.position, firePoint.rotation);
+    }
+}
 
   ///Determines and applies the next move of the enemy Flame Thrower.
   public void NextMove(GameObject target)
