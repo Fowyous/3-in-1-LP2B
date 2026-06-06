@@ -8,7 +8,7 @@ public class TotalScore : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        score = PanierScript.scoreGet();
+        score = Catchboy.scoreGet();
         TextScore.SetText("score : " + score);
     }
 
