@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2135537408994688672}
   - component: {fileID: -3597282703315491459}
   - component: {fileID: -8150724300484461733}
+  - component: {fileID: 6649746353899790086}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Untagged
@@ -33,6 +34,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8838590267556888655}
+  - {fileID: 5162430890473021807}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2135537408994688672
@@ -124,7 +126,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -167,6 +169,57 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &6649746353899790086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9220156320453972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c57bcd16c69b5b47b042030a8232cbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BossMonster
+  health: 15
+  damage: 5
+  speed: 1.5
+  electricPrefab: {fileID: 7224374330915536827, guid: 4541c9fccd1a2944b892b6eb6283cb38, type: 3}
+  flamePrefab: {fileID: 9215838183743743439, guid: 012bc48b63c74e940aa8edbf480fddb7, type: 3}
+  laserPrefab: {fileID: 5077717204571046528, guid: 4ee243283a6d63449bd8848b0600ae6a, type: 3}
+  sniperPrefab: {fileID: 2495090382121322527, guid: 24ccf8639132e354092715c7f2345a04, type: 3}
+  firePoint: {fileID: 5162430890473021807}
+--- !u!1 &1637631284401199286
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5162430890473021807}
+  m_Layer: 0
+  m_Name: BossFirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5162430890473021807
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637631284401199286}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.028, y: 0.008, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3827454396133375131}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2351528277574652841
 GameObject:
   m_ObjectHideFlags: 0
