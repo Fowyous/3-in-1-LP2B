@@ -1055,9 +1055,10 @@ MonoBehaviour:
   blockHeight: 0.92
   startX: -8.5
   startY: 7.2
-  chanceEmpty: 90
-  chanceSimple: 12
-  chanceHard: 10
+  chanceEmpty: 50
+  chanceSimple: 25
+  chanceHard: 15
+  chanceLucky: 10
 --- !u!1 &1574038392
 GameObject:
   m_ObjectHideFlags: 0
