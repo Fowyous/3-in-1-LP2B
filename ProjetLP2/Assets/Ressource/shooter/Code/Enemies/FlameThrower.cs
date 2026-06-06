@@ -1,173 +1,209 @@
 using UnityEngine;
 using static ShooterConstants;
+
 ///<summary>
-///The flamethrower enemy. We don't have a flame prefab for the moment so i think we should improvise with the enemy shot 1 prefab.
-///the beam should disappear at short distance and the damage should last a bit (an effect of burn).
-///Movement: The enemy should follow the player from their front and start shooting when they get in range to shoot.
+///The flamethrower enemy. Follows the player from their front and starts shooting when in range.
 ///</summary>
 public class FlameThrower : MonoBehaviour, IEnemy
 {
-  [Header("Enemy main variables")]
-  [SerializeField]
-  private float _health = 1f;  // Backing field (serialized)
+    [Header("Enemy main variables")]
+    [SerializeField] private float _health = 1f;
+    [SerializeField] private float _damage = 5f;
+    [SerializeField] private float _speed = 3.5f;
+    [SerializeField] private GameObject _target;
+    
+    [Header("Weapon Setup")]
+    [SerializeField] private GameObject flameConePrefab;
+    [SerializeField] private Transform firePoint;
+    private float nextFireTime = 0f;
+    private float fireRate = 1.5f;
 
-  [SerializeField]
-  private float _damage = 5f;
+    [Space(10)]
+    [Header("FlameThrower specific variables")]
+    [Tooltip("The distance to maintain to the right of the player")]
+    [SerializeField] private float distancetomaintain = 2.0f;
 
-  [SerializeField]
-  private float _speed = 3.5f;
+    private bool intro = true;
 
-  [SerializeField]
-  private GameObject _target;
-  [SerializeField] private GameObject flameConePrefab;
-[SerializeField] private Transform firePoint;
-private float nextFireTime = 0f;
-private float fireRate = 1.5f;
+    // Variables used to stabilize vertical variations and prevent jittering
+    private float randomYOffset = 0f;
+    private float offsetTimer = 0f;
 
-  private bool _isAlive = true;  // Private backing field (NOT serialized)
-
-  [Space(10)]
-  [Header("FlameThrower specific variables")]
-  [Tooltip("The distance to maintain to the right of the player")]
-  private float distancetomaintain = 2.0f;
-
-  private bool intro = true;
-
-  public float Health
-  {
-    get => _health;
-    set => _health = value;
-  }
-
-  public float Damage
-  {
-    get => _damage;
-    set => _damage = value;
-  }
-
-  public float SPEED
-  {
-    get => _speed;
-    set => _speed = value;
-  }
-
-  public GameObject Target
-  {
-    get => _target;
-    set => _target = value;
-  }
-  private Vector3 moveDirection = Vector3.left;
-  private Vector3 lastDirection;
-
-  public bool IsAlive { get; private set; } = true;
-  private Rigidbody2D rb;
-
-  void Start()
-  {
-    Debug.Log("FlameThrower spawned");
-    rb = GetComponent<Rigidbody2D>();
-    //Verify rb was found  
-    if (rb == null)
+    public float Health
     {
-      Debug.LogError("RIGIDBODY NOT FOUND! Make sure this GameObject has a Rigidbody component.");
+        get => _health;
+        set => _health = value;
     }
-    else
+
+    public float Damage
     {
-      Debug.Log("Rigidbody successfully assigned");
+        get => _damage;
+        set => _damage = value;
     }
 
-  }
-
-  // Update is called once per frame
-  void Update()
-  {
-    NextMove(Target);
-    if (!intro && Vector3.Distance(transform.position, Target.transform.position) <= 4.0f)
-{
-    if (Time.time >= nextFireTime)
+    public float SPEED
     {
-        Shoot(flameConePrefab);
-        nextFireTime = Time.time + fireRate;
+        get => _speed;
+        set => _speed = value;
     }
-}
 
-
-  }
-
-  public void TakeDamage(float damage)
-  {
-    Health -= damage;
-    Debug.Log($"Kamikaz took {damage} damage. Health: {Health}");
-  }
-
-///<summary>
-///This method gets called when we detect that we are too close to the player.
-///Instantiates the flame cone projectile at the fire point.
-///</summary>
-public void Shoot(GameObject bullet)
-{
-    if (bullet != null && firePoint != null)
+    public GameObject Target
     {
-        Instantiate(bullet, firePoint.position, firePoint.rotation);
+        get => _target;
+        set => _target = value;
     }
-}
+    
+    private Vector3 moveDirection = Vector3.left;
+    private Vector3 lastDirection;
 
-  ///Determines and applies the next move of the enemy Flame Thrower.
-  public void NextMove(GameObject target)
-  {
-    //NULL checks
-    if (rb == null || target == null)
+    public bool IsAlive { get; private set; } = true;
+    private Rigidbody2D rb;
+
+    ///<summary>
+    ///Initializes physics and references.
+    ///</summary>
+    void Start()
     {
-      Debug.LogError("null check failed");
-      Debug.LogError("rb : " + rb);
-      Debug.LogError("target : " + target);
-      return;
+        Debug.Log("FlameThrower spawned");
+        rb = GetComponent<Rigidbody2D>();
+        
+        if (rb == null)
+        {
+            Debug.LogError("RIGIDBODY NOT FOUND! Make sure this GameObject has a Rigidbody component.");
+        }
     }
 
-    Vector3 toTarget = (target.transform.position - transform.position);
-
-    //the target that the enemy should go to is right in front of the player and not on top
-    toTarget.x += distancetomaintain;
-
-    //since the shooting range is large (but short) we try to not be directly in front of the player to make things harder.
-    toTarget.y += Random.Range(-1.0f, 1.0f);
-
-    // Normalize AFTER making adjustments
-    toTarget = toTarget.normalized;
-
-
-    // phase boundaries 
-    float p1 = ShooterConstants.Phase1limit;
-    float p2 = ShooterConstants.Phase2limit;
-
-    // Determine move direction:
-    // - intro: continue straight along current forward
-    // - attack:
-    //    - Step 1 : follow the player while staying in front and maintaining distance(if player in front move forward/ if player behind move back)
-    //    - Step 2 : if the distance is good start shooting (a bit behind the player or in front)
-    //    -
-    if (transform.position.x >= p1 && intro)
+    ///<summary>
+    ///Updates AI combat behaviors and shooting checks.
+    ///</summary>
+    void Update()
     {
-      Debug.Log("intro");
-      moveDirection = Vector3.left;
-      lastDirection = moveDirection;
+        // Safety check: wait until the spawner injects the target reference
+        if (Target == null) return;
+
+        NextMove(Target);
+
+        if (!intro && Vector3.Distance(transform.position, Target.transform.position) <= 4.0f)
+        {
+            if (Time.time >= nextFireTime)
+            {
+                Shoot(flameConePrefab);
+                nextFireTime = Time.time + fireRate;
+            }
+        }
     }
-    else if (transform.position.x < p1 && intro)
+
+    ///<summary>
+    ///Applies health reduction and handles monster death.
+    ///</summary>
+    public void TakeDamage(float damage)
     {
-      intro = false;
-      Debug.Log("intro done");
+        if (!IsAlive) return;
+
+        Health -= damage;
+        Debug.Log($"FlameThrower took {damage} damage. Health: {Health}");
+
+        if (Health <= 0)
+        {
+            IsAlive = false;
+            Destroy(gameObject);
+        }
     }
-    else
-    {// if(!intro) : move to target
-      Debug.Log("moving to target");
-      moveDirection = toTarget;
-      lastDirection = moveDirection;
 
+    ///<summary>
+    ///Instantiates the flame cone projectile at the designated fire point.
+    ///</summary>
+    public void Shoot(GameObject bullet)
+    {
+        if (bullet != null && firePoint != null)
+        {
+            Instantiate(bullet, firePoint.position, firePoint.rotation);
+        }
     }
-    // apply velocity for the actual direction of the enemy.
-    rb.linearVelocity = new Vector2(moveDirection.x, moveDirection.y).normalized * SPEED;
 
+    ///<summary>
+    ///Determines tracking movement vectors toward the player's front position with a stabilized variation interval.
+    ///</summary>
+    public void NextMove(GameObject target)
+    {
+        if (rb == null || target == null) return;
 
-  }
+        // Update the vertical offset every 1 second instead of every single frame to prevent shaking
+        offsetTimer += Time.deltaTime;
+        if (offsetTimer >= 1.0f)
+        {
+            randomYOffset = Random.Range(-1.5f, 1.5f);
+            offsetTimer = 0f;
+        }
 
+        Vector3 targetPosition = target.transform.position;
+        
+        // Compute the final target coordinates with a fixed horizontal margin and stabilized vertical shifting
+        Vector3 desiredPosition = new Vector3(
+            targetPosition.x + distancetomaintain, 
+            targetPosition.y + randomYOffset, 
+            0f
+        );
+
+        Vector3 toTarget = desiredPosition - transform.position;
+
+        float p1 = ShooterConstants.Phase1limit;
+        
+        if (transform.position.x >= p1 && intro)
+        {
+            moveDirection = Vector3.left;
+            lastDirection = moveDirection;
+        }
+        else if (transform.position.x < p1 && intro)
+        {
+            intro = false;
+            Debug.Log("FlameThrower: Intro completed, entering combat state.");
+        }
+        else
+        {
+            // Deadzone security: if the enemy is precisely close enough to its desired anchor point, stop pushing forces
+            if (toTarget.magnitude < 0.15f)
+            {
+                rb.linearVelocity = Vector2.zero;
+                return;
+            }
+
+            moveDirection = toTarget.normalized;
+            lastDirection = moveDirection;
+        }
+        
+        rb.linearVelocity = new Vector2(moveDirection.x, moveDirection.y).normalized * SPEED;
+    }
+
+    ///<summary>
+    ///Detects collision contact with either the player UFO or the defensive Base structure.
+    ///</summary>
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        // Case 1: Crashing into the Player UFO
+        if (collision.CompareTag("Joueur"))
+        {
+            UFO player = collision.GetComponent<UFO>();
+            if (player != null)
+            {
+                player.TakeDamage(Damage);
+                Debug.Log("FlameThrower crashed into the Player UFO!");
+            }
+            IsAlive = false;
+            Destroy(gameObject);
+        }
+        // Case 2: Crashing into the allied defensive Base
+        else if (collision.CompareTag("Base"))
+        {
+            BaseManager baseScript = collision.GetComponent<BaseManager>();
+            if (baseScript != null)
+            {
+                // Optional: Apply base damage here if BaseManager supports it
+                // baseScript.TakeDamage(Damage);
+                Debug.Log("FlameThrower crashed into the defensive Base!");
+            }
+            IsAlive = false;
+            Destroy(gameObject);
+        }
+    }
 }
