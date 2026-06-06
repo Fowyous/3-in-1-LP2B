@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 342778382992932682}
   - component: {fileID: 4358745813646261870}
   - component: {fileID: -6568892844457400229}
-  - component: {fileID: 7282263869632267858}
+  - component: {fileID: 6282751527697676220}
   m_Layer: 0
   m_Name: EnergyBallThrower
   m_TagString: Untagged
@@ -125,6 +125,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8631389651548928308}
+  - {fileID: 9091234583626998734}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &342778382992932682
@@ -216,7 +217,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -242,7 +243,7 @@ Rigidbody2D:
   m_GameObject: {fileID: 6236802763043699279}
   m_BodyType: 1
   m_Simulated: 1
-  m_UseFullKinematicContacts: 0
+  m_UseFullKinematicContacts: 1
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDamping: 0
@@ -259,7 +260,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &7282263869632267858
+--- !u!114 &6282751527697676220
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -268,6 +269,43 @@ MonoBehaviour:
   m_GameObject: {fileID: 6236802763043699279}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60745522363e8be649a755ec423bb4d1, type: 3}
+  m_Script: {fileID: 11500000, guid: 65c792a3cf606c14dbac36b2705c4831, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: '::'
+  m_EditorClassIdentifier: Assembly-CSharp::ElectricMonster
+  health: 3
+  damage: 2
+  speed: 3
+  electricBallPrefab: {fileID: 7224374330915536827, guid: 4541c9fccd1a2944b892b6eb6283cb38, type: 3}
+  firePoint: {fileID: 9091234583626998734}
+  fireRate: 2
+--- !u!1 &7129093365981165899
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9091234583626998734}
+  m_Layer: 0
+  m_Name: EnemyFirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9091234583626998734
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7129093365981165899}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.799, y: -0.096, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1631746847329407704}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
