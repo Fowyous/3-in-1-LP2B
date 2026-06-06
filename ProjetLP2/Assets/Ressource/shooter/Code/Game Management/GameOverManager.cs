@@ -23,6 +23,7 @@ public class GameOverManager : MonoBehaviour
     {
       Debug.LogWarning("Multiple GameOverManager instances detected!");
     }
+    gameOverCanvas.gameObject.SetActive(false);
   }
 
   private System.Collections.IEnumerator CaptureScreenAndShowGameOver()
