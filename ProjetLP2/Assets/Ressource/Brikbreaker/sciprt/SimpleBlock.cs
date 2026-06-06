@@ -1,22 +1,29 @@
 using UnityEngine;
 
-public class SimpleBlock : MonoBehaviour
+public class SimpleBlock : Block
 {
-    private int health     = 1;
+    private int health = 1;
     private static int pointValue = 10;
+    private static int coefficient = 1;
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    protected void OnCollisionEnter2D(Collision2D collision)
     {
-        TakeDamage();
+        healBlock();
+        OneShoot();
+        if (!Ball.IsOneShot)
+        {
+            takeDamage();
+        }
     }
-
-    private void TakeDamage()
+    
+    protected override void takeDamage()
     {
         health--;
+        
         if (health <= 0)
         {
             Debug.Log("Points gagnés : " + pointValue);
-            BlockSpawner.setCoefficient(1);
+            BlockSpawner.setCoefficient(coefficient);
             BlockSpawner.Instance.AddScore(pointValue);
             Destroy(gameObject);
         }

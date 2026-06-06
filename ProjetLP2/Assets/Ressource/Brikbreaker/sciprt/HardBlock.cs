@@ -1,22 +1,28 @@
 using UnityEngine;
 
-public class HardBlock : MonoBehaviour
+public class HardBlock : Block
 {
-    private static int health     = 2;
+    private int health     = 2;
     private static int pointValue = 25;
+    private static int coefficient = 2;
     private Color baseColor;
 
     private void Start()
     {
         baseColor = GetComponent<SpriteRenderer>().color;
     }
-
-    private void OnCollisionEnter2D(Collision2D collision)
+    
+    protected void OnCollisionEnter2D(Collision2D collision)
     {
-        TakeDamage();
+        healBlock();
+        OneShoot();
+        if (!Ball.IsOneShot)
+        {
+            takeDamage();
+        }
     }
 
-    private void TakeDamage()
+    protected override void takeDamage()
     {
         health--;
 
@@ -28,7 +34,7 @@ public class HardBlock : MonoBehaviour
         else
         {
             Debug.Log("Points gagnés : " + pointValue);
-            BlockSpawner.setCoefficient(2);
+            BlockSpawner.setCoefficient(coefficient);
             BlockSpawner.Instance.AddScore(pointValue);
             Destroy(gameObject);
         }

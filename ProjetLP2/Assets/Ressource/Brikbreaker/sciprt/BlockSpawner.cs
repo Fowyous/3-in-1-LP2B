@@ -11,6 +11,7 @@ public class BlockSpawner  : MonoBehaviour
     private const int EMPTY  = -1;
     private const int SIMPLE = 0;
     private const int HARD   = 1;
+    private const int Lucky  = 2;
 
     [Header("Prefabs")]
     [SerializeField] private GameObject[] blockArray;
@@ -32,6 +33,7 @@ public class BlockSpawner  : MonoBehaviour
     [Range(0, 100)] [SerializeField] private int chanceEmpty;
     [Range(0, 100)] [SerializeField] private int chanceSimple;
     [Range(0, 100)] [SerializeField] private int chanceHard;
+    [Range(0, 100)] [SerializeField] private int chanceLucky;
 
 
     private List<GameObject> activeBlocks = new List<GameObject>();
@@ -104,7 +106,7 @@ public class BlockSpawner  : MonoBehaviour
     {
         int roll = Random.Range(0, 100);
         
-        if (roll <= chanceEmpty)
+        if (0 <= roll && roll <= chanceEmpty)
         {
             return EMPTY;
         }
@@ -115,6 +117,10 @@ public class BlockSpawner  : MonoBehaviour
         else if (chanceEmpty+chanceSimple <= roll &&  roll <= chanceEmpty+chanceSimple+chanceHard)
         {
             return HARD;
+        }
+        else if (chanceEmpty + chanceSimple + chanceHard <= roll && roll <= chanceEmpty + chanceSimple + chanceHard + chanceLucky)
+        {
+            return Lucky;
         }
         else
         {
@@ -129,14 +135,12 @@ public class BlockSpawner  : MonoBehaviour
             for (int col = 0; col < grid[row].Length; col++)
             {
                 int cellType = grid[row][col];
-                if (cellType == EMPTY) continue;
-
-                Vector3 position = new Vector3(
-                    startX + col * blockWidth,
-                    startY - row * blockHeight,
-                    0f
-                );
-
+                
+                if (cellType == EMPTY)
+                {
+                    continue;
+                }
+                Vector3 position = new Vector3(startX + col * blockWidth, startY - row * blockHeight, 0f);
                 GameObject block;
                 GameObject prefab = blockArray[cellType];
                 block = Instantiate(prefab, position, Quaternion.identity);
