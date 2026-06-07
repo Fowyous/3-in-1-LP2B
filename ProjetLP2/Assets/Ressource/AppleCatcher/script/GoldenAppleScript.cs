@@ -2,10 +2,11 @@ using UnityEngine;
 
 public class GoldenAppleScript : AppleScript
 {
-    private static int bonusScore = 2;
-    private static float bonusSpeed = 1.5f;
-    private static float bonusDuration = 20f;
-    
+    private static int bonusScore;
+    private static float bonusSpeed;
+    private static float bonusDuration;
+    private static float speed;
+    private static int damage;
     private static float seuil;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected override void Start()
@@ -14,6 +15,11 @@ public class GoldenAppleScript : AppleScript
         seuil = getSeuil();
         speed = 4f;
         seuilAttaque = 0f;
+        coefficient = 3;
+        bonusScore = 2;
+        bonusSpeed = 1.5f;
+        bonusDuration = 20f;
+        damage = 0;
     }
 
 
@@ -26,6 +32,10 @@ public class GoldenAppleScript : AppleScript
         
         if (transform.position.y < -seuil)
         {
+            if (!isEsthetique)
+            {
+                OnMissed();
+            }
             Destroy(gameObject);
         }
     }
@@ -40,7 +50,15 @@ public class GoldenAppleScript : AppleScript
     
     protected override void OnCaught()
     {
+        Statistiques.editNumberCatchGolden(1);
+        Catchboy.Instance.editCoefficient(coefficient);
         Catchboy.Instance.AddScore(bonusScore);
         Catchboy.Instance.editSpeed(bonusSpeed,  bonusDuration);
+    }
+    
+    protected override void OnMissed()
+    {
+        Catchboy.Instance.editCoefficient(0);
+        AppleSpawner.Instance.editHealth(damage);
     }
 }

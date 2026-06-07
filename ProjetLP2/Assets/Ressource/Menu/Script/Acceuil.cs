@@ -58,4 +58,18 @@ public class Acceuil : MonoBehaviour
             yield return null;
         }
     }
+    
+    public void StartRulesAppleCatcher()
+    {
+        StartCoroutine(LoadRulesAppleCatcher());
+    }
+    
+    private IEnumerator LoadRulesAppleCatcher()
+    {
+        AsyncOperation load = SceneManager.LoadSceneAsync("RulesAppleCatcher");
+        while (!load.isDone)
+        {
+            yield return null;
+        }
+    }
 }

@@ -13,8 +13,10 @@ public class AppleSpawner : MonoBehaviour
     private float spawnTimerMalus1;
     private float spawnTimerMalus2;
     private static int health;
-    public TextMeshPro  healthText;
+    private static int healthMax;
     public bool isEsthetique;
+    public TextMeshPro Health;
+    public TextMeshPro EmptyHeath;
 
     public static AppleSpawner Instance;
 
@@ -31,7 +33,8 @@ public class AppleSpawner : MonoBehaviour
         spawnTimerMalus1 = Random.Range(0f, 30f);
         spawnTimerMalus2 = Random.Range(0f, 30f);
         health = 3;
-        healthText.SetText(health + ": health");
+        healthMax = health;
+        RefreshHearts();
     }
 
     void Update()
@@ -68,7 +71,6 @@ public class AppleSpawner : MonoBehaviour
         }
     }
     
-    // ReSharper disable Unity.PerformanceAnalysis
     private void spawnApple(int index)
     {
         GameObject newApple = Instantiate(applePrefab[index]);
@@ -82,7 +84,7 @@ public class AppleSpawner : MonoBehaviour
     public void editHealth(int value)
     {
         health += value;
-        healthText.SetText(health + ": health");
+        RefreshHearts();
 
         if (health <= 0)
         {
@@ -97,5 +99,21 @@ public class AppleSpawner : MonoBehaviour
         {
             yield return null;
         }
+    }
+
+    private void RefreshHearts()
+    {
+        string healthString = "";
+        string EmptyHeathString = "";
+        for (int i = 0; i < health; i++)
+        {
+            healthString += "<sprite name=\"pixil-frame-0_0\">";
+        }
+        Health.text = healthString;
+        for (int j = 0; j < healthMax; j++)
+        {
+            EmptyHeathString += "<sprite name=\"pixil-frame-0 (2)_0\">";
+        }
+        EmptyHeath.text = EmptyHeathString;
     }
 }

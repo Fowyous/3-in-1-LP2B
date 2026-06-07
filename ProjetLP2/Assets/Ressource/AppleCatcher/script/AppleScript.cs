@@ -3,16 +3,23 @@ using UnityEngine;
 public class AppleScript : MonoBehaviour
 {
     public bool isEsthetique;
-    private static int damage = -1;
-    private static int score = 1;
-    private static float seuil = 6f;
-    protected float speed;
+    private int damage;
+    private int score;
+    private float seuil;
+    public int coefficient;
+    protected static float speed;
     protected float seuilAttaque;
+    protected static int numberCatch;
 
     protected virtual void Start()
     {
         speed = 8f;
         seuilAttaque = 0f;
+        coefficient = 1;
+        seuil = 6f;
+        score = 1;
+        damage = -1;
+        numberCatch = 0;
     }
 
     void Update()
@@ -44,11 +51,14 @@ public class AppleScript : MonoBehaviour
 
     protected virtual void OnCaught()
     {
+        Statistiques.editNumberApple(1);
+        Catchboy.Instance.editCoefficient(coefficient);
         Catchboy.Instance.AddScore(score);
     }
 
     protected virtual void OnMissed()
     {
+        Catchboy.Instance.editCoefficient(0);
         AppleSpawner.Instance.editHealth(damage);
     }
 
@@ -57,7 +67,7 @@ public class AppleScript : MonoBehaviour
         isEsthetique = value;
     }
 
-    public static float getSeuil()
+    public float getSeuil()
     {
         return seuil;
     }

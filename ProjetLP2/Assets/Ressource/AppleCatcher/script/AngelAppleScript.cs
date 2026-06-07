@@ -2,9 +2,12 @@ using UnityEngine;
 
 public class AngelAppleScript : AppleScript
 {
-    private static int bonusLife = 1;
-    
+    private static int bonusLife;
+    private static float speed;
     private static float seuil;
+    private static int damage;
+    private static int numberCatchAngel;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected override void Start()
     {
@@ -12,6 +15,10 @@ public class AngelAppleScript : AppleScript
         seuil = getSeuil();
         speed = 4f;
         seuilAttaque = 0f;
+        coefficient = 5;
+        damage = 0;
+        bonusLife = 1;
+        numberCatchAngel = 0;
     }
 
 
@@ -24,6 +31,10 @@ public class AngelAppleScript : AppleScript
         
         if (transform.position.y < -seuil)
         {
+            if (!isEsthetique)
+            {
+                OnMissed();
+            }
             Destroy(gameObject);
         }
     }
@@ -36,7 +47,14 @@ public class AngelAppleScript : AppleScript
     
     protected override void OnCaught()
     {
+        Statistiques.editNumberCatchAngel(1);
+        Catchboy.Instance.editCoefficient(coefficient);
         AppleSpawner.Instance.editHealth(bonusLife);
     }
     
+    protected override void OnMissed()
+    {
+        Catchboy.Instance.editCoefficient(0);
+        AppleSpawner.Instance.editHealth(damage);
+    }
 }

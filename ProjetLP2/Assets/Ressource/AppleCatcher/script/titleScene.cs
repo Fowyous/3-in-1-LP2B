@@ -15,7 +15,7 @@ public class titleScene : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Keyboard.current.anyKey.wasPressedThisFrame || Mouse.current.leftButton.wasPressedThisFrame)
+        if (Keyboard.current.anyKey.wasPressedThisFrame)
         {
             StartCoroutine(LoadMainGame());
         }

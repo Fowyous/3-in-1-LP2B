@@ -2,9 +2,12 @@ using UnityEngine;
 
 public class TronionScript : AppleScript
 {
-    private static int malusScore = -1;
-    private static float malusSpeed = 0.5f;
-    private static float malusDuration = 3f;
+    private static int malusScore;
+    private static float malusSpeed;
+    private static float malusDuration;
+    private static float speed;
+    private static int damage;
+    private static int numberCatchTronion;
 
     private static float seuil;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -14,6 +17,12 @@ public class TronionScript : AppleScript
         seuil = getSeuil();
         speed = 12f;
         seuilAttaque = 0f;
+        coefficient = -2;
+        malusScore = -1;
+        malusSpeed = 0.5f;
+        malusDuration = 3f;
+        damage = 0;
+        numberCatchTronion = 0;
     }
 
     
@@ -27,6 +36,10 @@ public class TronionScript : AppleScript
         
         if (transform.position.y < -seuil)
         {
+            if (!isEsthetique)
+            {
+                OnMissed();
+            }
             Destroy(gameObject);
         }
     }
@@ -39,7 +52,15 @@ public class TronionScript : AppleScript
     
     protected override void OnCaught()
     {
-        PanierScript.Instance.AddScore(malusScore);
-        PanierScript.Instance.editSpeed(malusSpeed, malusDuration);
+        Statistiques.editNumberCatchTronion(1);
+        Catchboy.Instance.editCoefficient(coefficient);
+        Catchboy.Instance.AddScore(malusScore);
+        Catchboy.Instance.editSpeed(malusSpeed, malusDuration);
+    }
+    
+    protected override void OnMissed()
+    {
+        Catchboy.Instance.editCoefficient(0);
+        AppleSpawner.Instance.editHealth(damage);
     }
 }

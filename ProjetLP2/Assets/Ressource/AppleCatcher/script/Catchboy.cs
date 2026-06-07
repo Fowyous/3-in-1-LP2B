@@ -8,6 +8,7 @@ public class Catchboy : MonoBehaviour
     public Animator ref_animator;
     private float translationSpeed;
     private static int score;
+    private static int coefficient;
     public TextMeshPro scoreText;
     public AudioClip collectedSound;
     private AudioSource audioSource;
@@ -31,6 +32,7 @@ public class Catchboy : MonoBehaviour
     void Start()
     {
         score = 0;
+        coefficient = 0;
         translationSpeed = baseSpeed;
         scoreText.SetText("score : " + score);
         audioSource = GetComponent<AudioSource>();
@@ -78,20 +80,45 @@ public class Catchboy : MonoBehaviour
     {
         audioSource.PlayOneShot(collectedSound);
     }
-    
+
+    public void editCoefficient(int coef)
+    {
+        if (coef == 0)
+        {
+            coefficient = 0;
+        }
+        else
+        {
+            coefficient += coef;
+            if (coefficient <= 0)
+            {
+                coefficient = 1;
+            }
+        }
+    }
     public void AddScore(int value)
     {
-        score += value;
-        scoreText.SetText("score : " + score);
+        score += value * coefficient;
+        if (coefficient <= 1)
+        {
+            scoreText.SetText("score : " + score);
+        }
+        else
+        {
+            scoreText.SetText("score : " + score + "*" + coefficient);
+        }
     }
 
     public void editSpeed(float  value, float duration)
     {
+        string label = value > 1f ? "⚡ Vitesse x" + value : "🐢 Vitesse x" + value;
+        BonusPrint.Instance.ShowEffect(label, duration);
         StartCoroutine(SpeedEffect(baseSpeed * value, duration));
     }
     
     public void ApplyInvertedControls(float duration)
     {
+        BonusPrint.Instance.ShowEffect("↔ Contrôles inversés", duration);
         StartCoroutine(InvertEffect(duration));
     }
 
