@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
-using System.Collections.Generic;
 using static ShooterConstants;
 
 public class UFO : MonoBehaviour
@@ -20,9 +19,11 @@ public class UFO : MonoBehaviour
     private float nextFireTime = 0f;
     private Rigidbody2D rb;
 
-    // Stun & Burn state flags
+    // Status flags
     private bool _isStunned = false;
     private bool _isBurning = false;
+    private bool _isInvincible = false;
+    private bool _isActive = true; // False while the respawn cinematic is playing
 
     ///<summary>
     ///Initializes player health and caches the Rigidbody2D component.
@@ -39,9 +40,11 @@ public class UFO : MonoBehaviour
 
     ///<summary>
     ///Frame-rate independent updates for movement and shooting.
+    ///Skipped entirely while the UFO is inactive (respawn cinematic).
     ///</summary>
     void Update()
     {
+        if (!_isActive) return;
         HandleMovement();
         HandleShooting();
     }
@@ -88,7 +91,6 @@ public class UFO : MonoBehaviour
         if (laserPrefab != null && firePoint != null)
         {
             Instantiate(laserPrefab, firePoint.position, firePoint.rotation);
-            Debug.Log("UFO fired a laser!");
         }
         else
         {
@@ -97,17 +99,77 @@ public class UFO : MonoBehaviour
     }
 
     ///<summary>
-    ///Inflicts a specific amount of damage to the player and checks for death condition.
+    ///Inflicts damage to the player. Ignored if invincible or inactive.
     ///</summary>
     public void TakeDamage(float damageAmount)
     {
+        if (_isInvincible || !_isActive) return;
+
         CurrentHealth -= damageAmount;
         Debug.Log($"UFO took {damageAmount} damage. Remaining Health: {CurrentHealth}");
+
         if (CurrentHealth <= 0)
         {
             Die();
         }
     }
+
+    ///<summary>
+    ///Triggers the respawn cinematic via RespawnManager.
+    ///Game Over only occurs if no respawn is available (base destroyed).
+    ///</summary>
+    private void Die()
+    {
+        Debug.Log("UFO destroyed! Starting respawn sequence...");
+
+        if (RespawnManager.Instance != null)
+        {
+            RespawnManager.Instance.TriggerRespawn(this);
+        }
+        else
+        {
+            Debug.LogError("UFO: RespawnManager not found in scene! Falling back to GameOver.");
+            if (GameOverManager.Instance != null)
+                GameOverManager.Instance.TriggerGameOver();
+        }
+    }
+
+    // Methods called by RespawnManager to control the UFO during the cinematic  
+
+    ///<summary>
+    ///Activates or deactivates UFO controls and collisions during the respawn cinematic.
+    ///</summary>
+    public void SetActive(bool active)
+    {
+        _isActive = active;
+        GetComponent<SpriteRenderer>().enabled = active;
+
+        // Disable the collider so enemies don't hit an invisible UFO
+        Collider2D col = GetComponent<Collider2D>();
+        if (col != null) col.enabled = active;
+
+        // Stop physics movement
+        if (rb != null) rb.linearVelocity = Vector2.zero;
+    }
+
+    ///<summary>
+    ///Restores UFO health to maximum. Called by RespawnManager on reappearance.
+    ///</summary>
+    public void RestoreHealth()
+    {
+        CurrentHealth = maxHealth;
+        Debug.Log($"UFO health restored to {maxHealth}.");
+    }
+
+    ///<summary>
+    ///Enables or disables invincibility frames. Called by RespawnManager after respawn.
+    ///</summary>
+    public void SetInvincible(bool invincible)
+    {
+        _isInvincible = invincible;
+    }
+
+    // Status effects
 
     ///<summary>
     ///Immobilizes the player for a given duration. Ignored if already stunned.
@@ -117,9 +179,6 @@ public class UFO : MonoBehaviour
         if (!_isStunned) StartCoroutine(StunRoutine(duration));
     }
 
-    ///<summary>
-    ///Coroutine that sets the stun flag for the specified duration then clears it.
-    ///</summary>
     private IEnumerator StunRoutine(float duration)
     {
         _isStunned = true;
@@ -137,9 +196,6 @@ public class UFO : MonoBehaviour
         if (!_isBurning) StartCoroutine(BurnRoutine(dps, duration));
     }
 
-    ///<summary>
-    ///Coroutine that ticks burn damage every frame for the specified duration.
-    ///</summary>
     private IEnumerator BurnRoutine(float dps, float duration)
     {
         _isBurning = true;
@@ -153,20 +209,5 @@ public class UFO : MonoBehaviour
         }
         _isBurning = false;
         Debug.Log("UFO burn ended.");
-    }
-
-    ///<summary>
-    ///Handles player destruction logic and prepares the respawn sequence.
-    ///</summary>
-    private void Die()
-    {
-        Debug.Log("UFO destroyed! Triggering respawn sequence...");
-        // TODO: Disable player control and call the respawn cutscene manager here
-        if (GameOverManager.Instance == null)
-        {
-            Debug.LogError("GameOverManager Instance is NULL! GameOverManager not found in scene.");
-            return;
-        }
-        GameOverManager.Instance.TriggerGameOver();
     }
 }

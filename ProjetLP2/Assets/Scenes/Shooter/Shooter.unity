@@ -1178,6 +1178,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1184672214}
   m_CullTransparentMesh: 1
+--- !u!1 &1248734204
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1248734206}
+  - component: {fileID: 1248734205}
+  m_Layer: 0
+  m_Name: RespawnManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1248734205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1248734204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4e3200004ba405498aa72d1f3740975, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RespawnManager
+  respawnPosition: {x: -6, y: 0, z: 0}
+  respawnDelay: 2
+  invincibilityDuration: 2
+  blinkInterval: 0.15
+  explosionPrefab: {fileID: 6460029486616987351, guid: 150bba7fe84dbb54b89f479d4f11de7e, type: 3}
+  explosionDuration: 1
+--- !u!4 &1248734206
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1248734204}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.15241, y: 0.27642, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1308550680
 GameObject:
   m_ObjectHideFlags: 0
@@ -1354,8 +1404,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9184c1b0d51cef014949e24e7ec166df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
-  enemiesPrefabs:
-  - {fileID: 9220156320453972, guid: 5e34d5e2d48f05b168825bcba6be36a4, type: 3}
+  enemyEntries: []
+  spawnInterval: 3
   player: {fileID: 0}
 --- !u!1 &1603546595
 GameObject:
@@ -1750,6 +1800,65 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1930521028}
   m_CullTransparentMesh: 1
+--- !u!1 &2080301126
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2080301128}
+  - component: {fileID: 2080301127}
+  m_Layer: 0
+  m_Name: EnemySpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2080301127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2080301126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9184c1b0d51cef014949e24e7ec166df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
+  enemyEntries:
+  - prefab: {fileID: 2875724930945104898, guid: 53a10a873ed220daba6de3864250f1b0, type: 3}
+    weight: 10
+  - prefab: {fileID: 5812400168598625813, guid: caa09ca2df17a00d8aaa857ee2b55aab, type: 3}
+    weight: 5
+  - prefab: {fileID: 1242048767278209705, guid: c19b2678c3992abe9bf724420e1d1424, type: 3}
+    weight: 6
+  - prefab: {fileID: 7573689468843734864, guid: 27f865d636e4a53ceaf002fa1242489f, type: 3}
+    weight: 5
+  - prefab: {fileID: 6236802763043699279, guid: 7615c6fa1e9c52690b24a67bba1a1a63, type: 3}
+    weight: 4
+  - prefab: {fileID: 9220156320453972, guid: 5e34d5e2d48f05b168825bcba6be36a4, type: 3}
+    weight: 1
+  spawnInterval: 2
+  player: {fileID: 0}
+--- !u!4 &2080301128
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2080301126}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.66673, y: 0.28692, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1761,3 +1870,5 @@ SceneRoots:
   - {fileID: 1603546599}
   - {fileID: 7334394}
   - {fileID: 760998373}
+  - {fileID: 2080301128}
+  - {fileID: 1248734206}
