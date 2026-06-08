@@ -4,8 +4,8 @@ public class ElectricBall : MonoBehaviour
 {
     [Header("Projectile Settings")]
     [SerializeField] private float speed = 6f;
-    [SerializeField] private float damage = 2f;         // 2 damage as specified for M1 
-    [SerializeField] private float stunDuration = 2f;    // 2s immobilization 
+    [SerializeField] private float damage = 2f;         // 2 damage as specified for M1
+    [SerializeField] private float stunDuration = 2f;   // 2s immobilization
     [SerializeField] private float lifeTime = 4f;
 
     ///<summary>
@@ -25,7 +25,7 @@ public class ElectricBall : MonoBehaviour
     }
 
     ///<summary>
-    ///Detects collision with the UFO, applies damage, and triggers stun/immobilization.
+    ///Detects collision with the UFO, applies damage and stun, then destroys the projectile.
     ///</summary>
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -33,10 +33,8 @@ public class ElectricBall : MonoBehaviour
         if (player != null)
         {
             player.TakeDamage(damage);
-            
-            // TODO: Call player.Immobilize(stunDuration) once the UFO stun mechanic is linked
-            Debug.Log($"UFO hit by ElectricBall! Applied {damage} damage and {stunDuration}s stun.");
-            
+            player.ApplyStun(stunDuration);
+            Debug.Log($"ElectricBall: {damage} dégâts + stun {stunDuration}s appliqué.");
             Destroy(gameObject);
         }
     }
