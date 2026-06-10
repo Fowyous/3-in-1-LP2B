@@ -104,6 +104,8 @@ GameObject:
   - component: {fileID: 5749950196091650864}
   - component: {fileID: 5810109832156751096}
   - component: {fileID: 2015173260810882200}
+  - component: {fileID: 386348244531772924}
+  - component: {fileID: 2239325953849246753}
   m_Layer: 0
   m_Name: LazerShooter
   m_TagString: Untagged
@@ -274,6 +276,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnergyBallThrower
   laserPrefab: {fileID: 5077717204571046528, guid: 4ee243283a6d63449bd8848b0600ae6a, type: 3}
   firePoint: {fileID: 8153250895736325800}
+--- !u!114 &386348244531772924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5812400168598625813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b072835b3c5204643a932b20d4b2ea9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DeathExplosion
+  explosionPrefab: {fileID: 6460029486616987351, guid: 7cc8d5bcbdbcce143a0caed52bcd108b, type: 3}
+  explosionDuration: 1
+--- !u!114 &2239325953849246753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5812400168598625813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7df41b1de598184e89c0b7c7221977f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LaserChargeEffect
+  chargeSprite: {fileID: 0}
+  chargeDuration: 1
 --- !u!1 &7176022933317799687
 GameObject:
   m_ObjectHideFlags: 0

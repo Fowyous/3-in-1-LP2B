@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7356351780011382406}
   - component: {fileID: 5327247785595612914}
   - component: {fileID: 8396249338162749848}
+  - component: {fileID: 6779322832263708159}
   m_Layer: 0
   m_Name: BulletShower
   m_TagString: Untagged
@@ -186,6 +187,20 @@ MonoBehaviour:
   speed: 5
   bulletPrefab: {fileID: 2495090382121322527, guid: 24ccf8639132e354092715c7f2345a04, type: 3}
   firePoint: {fileID: 478429846593347107}
+--- !u!114 &6779322832263708159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1242048767278209705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b072835b3c5204643a932b20d4b2ea9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DeathExplosion
+  explosionPrefab: {fileID: 6460029486616987351, guid: 7cc8d5bcbdbcce143a0caed52bcd108b, type: 3}
+  explosionDuration: 1
 --- !u!1 &5140458595996471095
 GameObject:
   m_ObjectHideFlags: 0

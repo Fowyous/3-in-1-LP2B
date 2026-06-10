@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -9133290401934069595}
   - component: {fileID: 7193932892171913144}
   - component: {fileID: -5766517274206519518}
+  - component: {fileID: 5439054422467143084}
   m_Layer: 0
   m_Name: Kamikaz
   m_TagString: Untagged
@@ -180,6 +181,20 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.28, y: 1.28}
   m_EdgeRadius: 0
+--- !u!114 &5439054422467143084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2875724930945104898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b072835b3c5204643a932b20d4b2ea9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DeathExplosion
+  explosionPrefab: {fileID: 6460029486616987351, guid: 7cc8d5bcbdbcce143a0caed52bcd108b, type: 3}
+  explosionDuration: 1
 --- !u!1 &3730867512262555719
 GameObject:
   m_ObjectHideFlags: 0

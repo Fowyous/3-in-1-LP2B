@@ -3,118 +3,144 @@ using System.Collections;
 using static ShooterConstants;
 
 ///<summary>
-///The EnergyBallThrower (M5) enemy. It tracks the player vertically, locks, charges, 
+///The EnergyBallThrower (M5) enemy. Tracks the player vertically, locks, charges,
 ///and instantiates an independent horizontal laser prefab.
 ///</summary>
 public class EnergyBallThrower : MonoBehaviour, IEnemy
 {
-  [Header("Enemy Stats")]
-  public float Health { get; set; } = 4;
-  public float Damage { get; set; } = 2; // Pass-through requirement value
-  public bool IsAlive { get; private set; } = true;
-  private float SPEED { get; set; } = 3.0f;
+    [Header("Enemy Stats")]
+    public float Health { get; set; } = 4;
+    public float Damage { get; set; } = 2;
+    public bool IsAlive { get; private set; } = true;
+    private float SPEED { get; set; } = 3.0f;
 
-  [Header("Shooting Setup")]
-  [SerializeField] private GameObject laserPrefab; // Drag your HorizontalLaser prefab here
-  [SerializeField] private Transform firePoint;
+    [Header("Shooting Setup")]
+    [SerializeField] private GameObject laserPrefab;
+    [SerializeField] private Transform firePoint;
 
-  private Vector3 moveDirection = Vector3.left;
-  private bool intro = true;
-  private static float introDuration = 2.0f;
-  private float introProgress;
-  private Vector2 startPos;
+    private Vector3 moveDirection = Vector3.left;
+    private bool intro = true;
+    private static float introDuration = 2.0f;
+    private float introProgress;
+    private Vector2 startPos;
 
-  private bool isLockedAndShooting = false;
-  public GameObject Target { get; set; }
-  private Rigidbody2D rb;
+    private bool isLockedAndShooting = false;
 
-  void Start()
-  {
-    startPos = transform.position;
-    rb = GetComponent<Rigidbody2D>();
-  }
+    public GameObject Target { get; set; }
+    private Rigidbody2D rb;
+    private LaserChargeEffect chargeEffect;
 
-  void Update()
-  {
-    NextMove(Target);
-  }
-
-  public void TakeDamage(float damage)
-  {
-    if (!IsAlive) return;
-    Health -= damage;
-    if (Health <= 0)
+    void Start()
     {
-      IsAlive = false;
-      Destroy(gameObject);
-    }
-  }
-
-  ///<summary>
-  ///Instantiates the independent laser prefab at the designated fire point.
-  ///</summary>
-  public void Shoot(GameObject bullet)
-  {
-    if (bullet != null && firePoint != null)
-    {
-      // Spawn the laser as a child or independent object in the scene
-      // The laser should, through it's own code aim at the target directly
-      Instantiate(bullet, firePoint.position, firePoint.rotation);
-      Debug.Log("M5: Fired a separate Horizontal Laser Prefab!");
-    }
-  }
-
-  public void NextMove(GameObject target)
-  {
-    if (rb == null || target == null || !IsAlive) return;
-
-    if (isLockedAndShooting)
-    {
-      rb.linearVelocity = Vector2.zero;
-      return;
+        startPos = transform.position;
+        rb = GetComponent<Rigidbody2D>();
+        chargeEffect = GetComponent<LaserChargeEffect>();
     }
 
-    float positionY = ShooterConstants.Phase1limit + 1;
-
-    if (intro)
+    void Update()
     {
-      introProgress += Time.deltaTime / introDuration;
-      transform.position = Vector2.Lerp(startPos, new Vector2(positionY, transform.position.y), introProgress);
-      if (introProgress >= 1f) intro = false;
-    }
-    else
-    {
-      float targetY = target.transform.position.y;
-
-      if (Mathf.Abs(targetY - transform.position.y) > 0.15f)
-      {
-        float directionY = Mathf.Sign(targetY - transform.position.y);
-        moveDirection = new Vector3(0, directionY, 0);
-      }
-      else
-      {
-        moveDirection = Vector3.zero;
-        StartCoroutine(LockAndShootRoutine());
-      }
+        NextMove(Target);
     }
 
-    rb.linearVelocity = new Vector2(moveDirection.x, moveDirection.y).normalized * SPEED;
-  }
+    public void TakeDamage(float damage)
+    {
+        if (!IsAlive) return;
+        Health -= damage;
+        if (Health <= 0)
+        {
+            IsAlive = false;
+            if (chargeEffect != null) chargeEffect.StopChargeEffect();
+            Destroy(gameObject);
+        }
+    }
 
-  private IEnumerator LockAndShootRoutine()
-  {
-    isLockedAndShooting = true;
-    rb.linearVelocity = Vector2.zero;
+    public void Shoot(GameObject bullet)
+    {
+        if (bullet != null && firePoint != null)
+        {
+            Instantiate(bullet, firePoint.position, firePoint.rotation);
+            Debug.Log("M5: Fired Horizontal Laser!");
+        }
+    }
 
-    // 1 second charging lock delay
-    yield return new WaitForSeconds(1.0f);
+    public void NextMove(GameObject target)
+    {
+        if (rb == null || target == null || !IsAlive) return;
 
-    // Fires the projectile laser prefab
-    Shoot(laserPrefab);
+        if (isLockedAndShooting)
+        {
+            rb.linearVelocity = Vector2.zero;
+            return;
+        }
 
-    // Wait 3.5 seconds before being allowed to move/track again (time for laser to finish + cooldown)
-    yield return new WaitForSeconds(3.5f);
+        float combatPositionX = ShooterConstants.Phase1limit - 1f;
 
-    isLockedAndShooting = false;
-  }
+        // Phase intro : glisse vers la position de combat en X
+        if (intro)
+        {
+            introProgress += Time.deltaTime / introDuration;
+            transform.position = Vector2.Lerp(
+                startPos,
+                new Vector2(combatPositionX, transform.position.y),
+                introProgress
+            );
+            if (introProgress >= 1f) intro = false;
+            return;
+        }
+
+        float targetY = target.transform.position.y;
+        float diff = targetY - transform.position.y;
+
+        if (Mathf.Abs(diff) > 0.15f)
+        {
+            // Suit le joueur verticalement
+            float directionY = Mathf.Sign(diff);
+            moveDirection = new Vector3(0, directionY, 0);
+            rb.linearVelocity = new Vector2(moveDirection.x, moveDirection.y).normalized * SPEED;
+        }
+        else
+        {
+            // Aligné : stoppe et lance le cycle de tir une seule fois
+            rb.linearVelocity = Vector2.zero;
+            if (!isLockedAndShooting)
+                StartCoroutine(LockAndShootRoutine());
+        }
+    }
+
+    ///<summary>
+    ///Lance l'effet de charge, attend 1s, tire le laser, attend 3.5s puis reprend le tracking.
+    ///</summary>
+    private IEnumerator LockAndShootRoutine()
+    {
+        isLockedAndShooting = true;
+        rb.linearVelocity = Vector2.zero;
+
+        if (chargeEffect != null) chargeEffect.PlayChargeEffect();
+        yield return new WaitForSeconds(1.0f);
+
+        Shoot(laserPrefab);
+        yield return new WaitForSeconds(3.5f);
+
+        isLockedAndShooting = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        UFO player = collision.GetComponent<UFO>();
+        if (player != null)
+        {
+            player.TakeDamage(Damage);
+            IsAlive = false;
+            Destroy(gameObject);
+            return;
+        }
+
+        if (collision.CompareTag("Base"))
+        {
+            BaseManager baseScript = collision.GetComponent<BaseManager>();
+            if (baseScript != null) baseScript.TakeDamage(Damage);
+            IsAlive = false;
+            Destroy(gameObject);
+        }
+    }
 }

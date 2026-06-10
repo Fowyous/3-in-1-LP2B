@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: -7352754677458053477}
   - component: {fileID: 734446319009871686}
   - component: {fileID: 9192133749047573659}
+  - component: {fileID: 511490125966791403}
   m_Layer: 0
   m_Name: FlameThrower
   m_TagString: Untagged
@@ -309,3 +310,18 @@ MonoBehaviour:
   _target: {fileID: 3384449957238118544, guid: 911fc59e7fa4bfe4da59b453b0ba6166, type: 3}
   flameConePrefab: {fileID: 9215838183743743439, guid: 012bc48b63c74e940aa8edbf480fddb7, type: 3}
   firePoint: {fileID: 4256895836124213405}
+  distancetomaintain: 2
+--- !u!114 &511490125966791403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7573689468843734864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b072835b3c5204643a932b20d4b2ea9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DeathExplosion
+  explosionPrefab: {fileID: 6460029486616987351, guid: 7cc8d5bcbdbcce143a0caed52bcd108b, type: 3}
+  explosionDuration: 1
