@@ -5,10 +5,13 @@ public class Block : MonoBehaviour
     private int health;
     private static int pointValue;
     private static int coefficient;
+    public  AudioClip CollisionBlockSong;
+    private static AudioSource audioSource; 
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -48,6 +51,8 @@ public class Block : MonoBehaviour
         health--;
         if (health <= 0)
         {
+            if (audioSource != null && CollisionBlockSong != null)
+                audioSource.PlayOneShot(CollisionBlockSong);
             BlockSpawner.Instance.AddScore(pointValue);
             Destroy(gameObject);
         }

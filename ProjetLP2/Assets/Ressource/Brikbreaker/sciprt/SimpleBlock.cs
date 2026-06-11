@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SimpleBlock : Block
 {
-    private int health = 1;
+    private int healthSimple = 1;
     private static int pointValue = 10;
     private static int coefficient = 1;
 
@@ -18,9 +18,9 @@ public class SimpleBlock : Block
     
     protected override void takeDamage()
     {
-        health--;
+        healthSimple--;
         
-        if (health <= 0)
+        if (healthSimple <= 0)
         {
             Debug.Log("Points gagnés : " + pointValue);
             BlockSpawner.setCoefficient(coefficient);

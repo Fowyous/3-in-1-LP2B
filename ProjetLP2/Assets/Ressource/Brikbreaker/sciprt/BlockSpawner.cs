@@ -18,6 +18,10 @@ public class BlockSpawner  : MonoBehaviour
     [SerializeField]  private TextMeshPro scoreText;
     private static int score;
     private static int coefficient;
+    
+    [Header("Song")]
+    [SerializeField] public AudioClip PointWingSong;
+    private static AudioSource audioSource; 
 
     [Header("Taille de la grille")]
     [SerializeField] private int rows;
@@ -49,6 +53,7 @@ public class BlockSpawner  : MonoBehaviour
         int score = 0;
         SpawnRandomLevel();
         scoreText.SetText(score + "points");
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -165,6 +170,8 @@ public class BlockSpawner  : MonoBehaviour
     {
         score += points * coefficient;
         scoreText.SetText($"{score} * {coefficient} points");
+        if (audioSource != null && PointWingSong != null)
+            audioSource.PlayOneShot(PointWingSong);
     }
     
     /// <summary>Détruit tous les blocs restants, utile en cas de game over.</summary>

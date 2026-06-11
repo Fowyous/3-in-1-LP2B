@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class luckyBlock : Block
 {
-    private int health = 4;
+    private int healthLucky = 4;
     private static int pointValue   = 50;
     private static int coefficient  = 5;
     
@@ -26,8 +26,9 @@ public class luckyBlock : Block
 
     protected override void takeDamage()
     {
-        health--;
-        if (health <= 0)
+        healthLucky--;
+        
+        if (healthLucky <= 0)
         {
             EditBonusMalus();
             BlockSpawner.setCoefficient(coefficient);

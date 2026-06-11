@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class HardBlock : Block
 {
-    private int health     = 2;
+    private int healthHard = 2;
     private static int pointValue = 25;
     private static int coefficient = 2;
     private Color baseColor;
@@ -24,9 +24,9 @@ public class HardBlock : Block
 
     protected override void takeDamage()
     {
-        health--;
+        healthHard--;
 
-        if (health > 0)
+        if (healthHard > 0)
         {
             Color c = GetComponent<SpriteRenderer>().color;
             GetComponent<SpriteRenderer>().color = new Color(c.r * 0.5f, c.g * 0.5f, c.b * 0.5f);

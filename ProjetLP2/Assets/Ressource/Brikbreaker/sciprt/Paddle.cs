@@ -7,6 +7,8 @@ public class Paddle : MonoBehaviour
     public static Paddle Instance { get; private set; }
 
     private float translationSpeed;
+    public AudioClip paddleSong;
+    private static AudioSource audioSource; 
 
     void Awake()
     {
@@ -16,6 +18,7 @@ public class Paddle : MonoBehaviour
     void Start()
     {
         translationSpeed = 7f;
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -34,6 +37,8 @@ public class Paddle : MonoBehaviour
     protected void OnCollisionEnter2D(Collision2D collision)
     {
         BlockSpawner.setCoefficient(0);
+        if (audioSource != null && paddleSong != null)
+            audioSource.PlayOneShot(paddleSong);
     }
     public void BonusSpeed(float percent, float duration)
     {

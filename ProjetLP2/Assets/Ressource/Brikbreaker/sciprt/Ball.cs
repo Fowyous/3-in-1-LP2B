@@ -9,6 +9,8 @@ public class Ball : MonoBehaviour
     private Vector2 direction;
     private Rigidbody2D balle;
     private int lastBounceFrame = -1;
+    public  AudioClip loosPoint;
+    private static AudioSource audioSource; 
     public static Ball Instance { get; private set; }
     public bool countsAsLife = true;
 
@@ -25,6 +27,7 @@ public class Ball : MonoBehaviour
         balle.bodyType = RigidbodyType2D.Kinematic;
         speed = 35f;
         direction = new Vector2(0f, -1f).normalized;
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
