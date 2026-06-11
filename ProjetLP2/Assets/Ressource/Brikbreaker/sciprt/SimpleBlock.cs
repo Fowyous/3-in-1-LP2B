@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SimpleBlock : Block
+public class SimpleBlock : MonoBehaviour
 {
     private int healthSimple = 1;
     private static int pointValue = 10;
@@ -16,7 +16,7 @@ public class SimpleBlock : Block
         }
     }
     
-    protected override void takeDamage()
+    protected void takeDamage()
     {
         healthSimple--;
         
@@ -24,6 +24,23 @@ public class SimpleBlock : Block
         {
             Debug.Log("Points gagnés : " + pointValue);
             BlockSpawner.setCoefficient(coefficient);
+            BlockSpawner.Instance.AddScore(pointValue);
+            Destroy(gameObject);
+        }
+    }
+    
+    protected void healBlock()
+    {
+        if (Ball.IsHealingBall)
+        {
+            healthSimple++;
+        }
+    }
+
+    protected void OneShoot()
+    {
+        if (Ball.IsOneShot)
+        {
             BlockSpawner.Instance.AddScore(pointValue);
             Destroy(gameObject);
         }

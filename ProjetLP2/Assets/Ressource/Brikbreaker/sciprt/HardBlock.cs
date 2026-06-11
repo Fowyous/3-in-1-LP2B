@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HardBlock : Block
+public class HardBlock : MonoBehaviour
 {
     private int healthHard = 2;
     private static int pointValue = 25;
@@ -22,7 +22,7 @@ public class HardBlock : Block
         }
     }
 
-    protected override void takeDamage()
+    protected void takeDamage()
     {
         healthHard--;
 
@@ -35,6 +35,23 @@ public class HardBlock : Block
         {
             Debug.Log("Points gagnés : " + pointValue);
             BlockSpawner.setCoefficient(coefficient);
+            BlockSpawner.Instance.AddScore(pointValue);
+            Destroy(gameObject);
+        }
+    }
+    
+    protected void healBlock()
+    {
+        if (Ball.IsHealingBall)
+        {
+            healthHard++;
+        }
+    }
+
+    protected void OneShoot()
+    {
+        if (Ball.IsOneShot)
+        {
             BlockSpawner.Instance.AddScore(pointValue);
             Destroy(gameObject);
         }

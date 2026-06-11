@@ -6,7 +6,7 @@ public class Ball : MonoBehaviour
     private const float DeathThreshold = -8f;
     private bool isDead = false;
     private float speed;
-    private Vector2 direction;
+    public Vector2 direction;
     private Rigidbody2D balle;
     private int lastBounceFrame = -1;
     public  AudioClip loosPoint;
@@ -84,5 +84,10 @@ public class Ball : MonoBehaviour
         speed += speedBonus;
         yield return new WaitForSeconds(duration);
         speed -= speedBonus;
+    }
+    
+    public void SetDirection(Vector2 dir)
+    {
+        direction = dir.normalized;
     }
 }
