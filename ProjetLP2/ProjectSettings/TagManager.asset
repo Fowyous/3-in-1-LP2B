@@ -7,6 +7,8 @@ TagManager:
   - Ball
   - catchboy
   - panier
+  - joueur
+  - Base
   layers:
   - Default
   - TransparentFX
