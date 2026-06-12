@@ -5,6 +5,8 @@ public class luckyBlock : MonoBehaviour
     private int healthLucky = 4;
     private static int pointValue   = 50;
     private static int coefficient  = 5;
+    public Sprite[] spriteBlock;
+    private SpriteRenderer blockSprite;
     
     private const int BonusMaxhealt  = 0;
     private const int BonusSpeed = 1;
@@ -14,9 +16,13 @@ public class luckyBlock : MonoBehaviour
     private const int MalusHealingBlock = 5;
     private const int Duplicate = 6;
 
+    private void Start()
+    {
+        blockSprite = GetComponent<SpriteRenderer>();
+    }
+    
     protected void OnCollisionEnter2D(Collision2D collision)
     {
-        healBlock();
         OneShoot();
         if (!Ball.IsOneShot)
         {
@@ -26,14 +32,33 @@ public class luckyBlock : MonoBehaviour
 
     protected void takeDamage()
     {
-        healthLucky--;
-        
-        if (healthLucky <= 0)
+        if (!Ball.IsHealingBall)
         {
-            EditBonusMalus();
+            healthLucky -= 1;
+        }
+        else
+        {
+            healthLucky += 1;
+        }
+
+        if (healthLucky > 0)
+        {
+            if (healthLucky >= 4)
+            {
+                blockSprite.sprite = spriteBlock[3];
+            }
+            else
+            {
+                blockSprite.sprite = spriteBlock[healthLucky - 1];
+            }
+        }
+        else
+        {
+            Debug.Log("Points gagnés : " + pointValue);
             BlockSpawner.setCoefficient(coefficient);
             BlockSpawner.Instance.AddScore(pointValue);
             controllerTexte.editNumberLucky(1);
+            EditBonusMalus();
             Destroy(gameObject);
         }
     }
@@ -72,13 +97,6 @@ public class luckyBlock : MonoBehaviour
                 SpawnerBall.Instance.DuplicateBall();
                 BonusManager.Instance.Register("Duplication", 1f);
                 break;
-        }
-    }
-    protected void healBlock()
-    {
-        if (Ball.IsHealingBall)
-        {
-            healthLucky++;
         }
     }
 

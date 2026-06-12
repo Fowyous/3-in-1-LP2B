@@ -30,7 +30,7 @@ public class SpawnerBall : MonoBehaviour
         maxLives     = maxLivesDefault;
         currentLives = maxLives;
         RefreshHearts();
-        SpawnBall();
+        SpawnBall(paddle.transform.position.x,  paddle.transform.position.y, 0f);
     }
 
     void Update()
@@ -62,18 +62,16 @@ public class SpawnerBall : MonoBehaviour
             StartCoroutine(RespawnWithDelay());
     }
 
+    // ReSharper disable Unity.PerformanceAnalysis
     public IEnumerator RespawnWithDelay()
     {
         yield return new WaitForSeconds(respawnDelay);
-        SpawnBall();
+        SpawnBall(paddle.transform.position.x,  paddle.transform.position.y, 0f);
     }
 
-    public void SpawnBall()
+    private void SpawnBall(float positionx, float positiony, float positionz)
     {
-        Vector3 spawnPos = new Vector3(
-            paddle.transform.position.x,
-            paddle.transform.position.y + 3.5f,
-            0);
+        Vector3 spawnPos = new Vector3(positionx, positiony + 3.5f, positionz);
 
         GameObject ball = Instantiate(ballPrefab, spawnPos, Quaternion.identity);
         ball.GetComponent<Ball>().countsAsLife = true;
@@ -84,7 +82,11 @@ public class SpawnerBall : MonoBehaviour
     public void DuplicateBall()
     {
         GameObject existingBall = GameObject.FindWithTag("Ball");
-        if (existingBall == null) return;
+        if (existingBall == null)
+        {
+            Debug.Log("Ball doesn't exist");
+            return;
+        }
 
         Ball       originalBall  = existingBall.GetComponent<Ball>();
         GameObject newBall       = Instantiate(ballPrefab, existingBall.transform.position, Quaternion.identity);

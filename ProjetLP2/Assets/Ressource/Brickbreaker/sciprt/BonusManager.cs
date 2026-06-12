@@ -32,7 +32,6 @@ public class BonusManager : MonoBehaviour
 
     void Update()
     {
-        // Décrémenter les timers et supprimer les expirés
         for (int i = activeBonuses.Count - 1; i >= 0; i--)
         {
             activeBonuses[i].TimeRemaining -= Time.deltaTime;
@@ -42,10 +41,8 @@ public class BonusManager : MonoBehaviour
         RefreshUI();
     }
 
-    // Pour les bonus/malus avec une durée
     public void Register(string name, float duration)
     {
-        // Si le bonus est déjà actif, on refresh sa durée
         var existing = activeBonuses.Find(b => b.Name == name);
         if (existing != null)
             existing.TimeRemaining = duration;
@@ -66,8 +63,7 @@ public class BonusManager : MonoBehaviour
         var sb = new System.Text.StringBuilder();
         foreach (var b in activeBonuses)
         {
-            // Les instantanés n'affichent pas de timer
-            sb.AppendLine(b.IsInstant ? b.Name : $"{b.Name}  {b.TimeRemaining:F1}s");
+            sb.AppendLine(b.IsInstant ? b.Name : $"{b.Name}  {b.TimeRemaining:F1} s");
         }
         bonusText.text = sb.ToString();
     }

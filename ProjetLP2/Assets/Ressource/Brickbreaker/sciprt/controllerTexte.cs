@@ -17,6 +17,7 @@ public class controllerTexte : MonoBehaviour
     {
         score = BlockSpawner.GetScore();
         TextScore.SetText("score : " + score);
+        BlockSpawner.SetScore(0);
     }
 
     // Update is called once per frame

@@ -188,4 +188,9 @@ public class BlockSpawner  : MonoBehaviour
     {
         return score;
     }
+
+    public static void SetScore(int newscore)
+    {
+        score = newscore;
+    }
 }

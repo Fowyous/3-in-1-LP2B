@@ -5,16 +5,17 @@ public class HardBlock : MonoBehaviour
     private int healthHard = 2;
     private static int pointValue = 25;
     private static int coefficient = 2;
-    private Color baseColor;
+    [SerializeField] private Sprite NormalSprite; 
+    [SerializeField] private Sprite damageSprite;
+    private SpriteRenderer blockSprite;
 
     private void Start()
     {
-        baseColor = GetComponent<SpriteRenderer>().color;
+        blockSprite = GetComponent<SpriteRenderer>();
     }
     
     protected void OnCollisionEnter2D(Collision2D collision)
     {
-        healBlock();
         OneShoot();
         if (!Ball.IsOneShot)
         {
@@ -24,12 +25,25 @@ public class HardBlock : MonoBehaviour
 
     protected void takeDamage()
     {
-        healthHard--;
+        if (!Ball.IsHealingBall)
+        {
+            healthHard -= 1;
+        }
+        else
+        {
+            healthHard += 1;
+        }
 
         if (healthHard > 0)
         {
-            Color c = GetComponent<SpriteRenderer>().color;
-            GetComponent<SpriteRenderer>().color = new Color(c.r * 0.5f, c.g * 0.5f, c.b * 0.5f);
+            if (!Ball.IsHealingBall)
+            {
+                blockSprite.sprite = damageSprite;
+            }
+            else
+            {
+                blockSprite.sprite = NormalSprite;
+            }
         }
         else
         {
@@ -41,14 +55,6 @@ public class HardBlock : MonoBehaviour
         }
     }
     
-    protected void healBlock()
-    {
-        if (Ball.IsHealingBall)
-        {
-            healthHard++;
-        }
-    }
-
     protected void OneShoot()
     {
         if (Ball.IsOneShot)
