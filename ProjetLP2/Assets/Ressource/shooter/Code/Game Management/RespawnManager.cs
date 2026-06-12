@@ -8,6 +8,8 @@ using System.Collections;
 ///</summary>
 public class RespawnManager : MonoBehaviour
 {
+
+  SpriteRenderer[] spriteRenderers;
   public static RespawnManager Instance { get; private set; }
 
   [Header("Respawn Settings")]
@@ -75,8 +77,15 @@ public class RespawnManager : MonoBehaviour
       Destroy(explosion, explosionDuration);
     }
 
+
+    spriteRenderers = player.GetComponentsInChildren<SpriteRenderer>();
+
     // Step 2: Hide the UFO and disable its controls
     player.SetActive(false);
+    foreach (SpriteRenderer sr in spriteRenderers)
+    {
+      if (sr != null) sr.enabled = false;
+    }
 
     // Step 3: Wait before reappearing (game continues, enemies keep moving)
     yield return new WaitForSeconds(respawnDelay);
@@ -99,7 +108,6 @@ public class RespawnManager : MonoBehaviour
   {
     player.SetInvincible(true);
 
-    SpriteRenderer[] spriteRenderers = player.GetComponentsInChildren<SpriteRenderer>();
     float elapsed = 0f;
 
     while (elapsed < invincibilityDuration)

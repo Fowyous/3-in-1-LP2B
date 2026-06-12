@@ -1028,6 +1028,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player Starter
       objectReference: {fileID: 0}
+    - target: {fileID: 3384449957238118544, guid: 911fc59e7fa4bfe4da59b453b0ba6166, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -1311,6 +1315,7 @@ GameObject:
   - component: {fileID: 1413083812}
   - component: {fileID: 1413083811}
   - component: {fileID: 1413083813}
+  - component: {fileID: 1413083814}
   m_Layer: 0
   m_Name: Decor
   m_TagString: Untagged
@@ -1407,6 +1412,31 @@ MonoBehaviour:
   enemyEntries: []
   spawnInterval: 3
   player: {fileID: 0}
+--- !u!114 &1413083814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1413083810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41979cc68a4a77349a2e8c35e1306617, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AsteroidSpawner
+  Asteroids:
+  - {fileID: 6543484964734828652, guid: 1d5b3cb20a7570af2b9ae4e71293a88b, type: 3}
+  - {fileID: 5812059288352557074, guid: af56f3bde8385c423bc4c9dc29cec06e, type: 3}
+  - {fileID: 8234384771285453439, guid: 6f93df93caea70883ae9a5e7e6cc35b8, type: 3}
+  - {fileID: 5188480467923447975, guid: b34cd197ff9143d6fa0170243a346f1e, type: 3}
+  - {fileID: 2311548280625257722, guid: 0e47005bd91542cdd849dfae01d80618, type: 3}
+  - {fileID: 5968663889130407774, guid: 68f2010a46d72c700a250ab0c5cd111f, type: 3}
+  - {fileID: 2733105183874647460, guid: 6404b6137c496eb5baef3def904f6a11, type: 3}
+  - {fileID: 5638220353449405155, guid: 3ddd42afd9c65eb288c7e46030afc1a0, type: 3}
+  - {fileID: 2372006867996459247, guid: 1c3045626ec5bf9e5abf0ad15d6e57b5, type: 3}
+  - {fileID: 3654290459096927439, guid: c42a7002362ae9c4a8b2f05530a4ad5c, type: 3}
+  - {fileID: 1493423832983243856, guid: b6c9a5e05caee08ef8c6afd1852dbeff, type: 3}
+  spawnInterval: 3
 --- !u!1 &1603546595
 GameObject:
   m_ObjectHideFlags: 0
