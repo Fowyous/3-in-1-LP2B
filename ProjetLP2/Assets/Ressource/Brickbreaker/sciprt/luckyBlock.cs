@@ -33,6 +33,7 @@ public class luckyBlock : MonoBehaviour
             EditBonusMalus();
             BlockSpawner.setCoefficient(coefficient);
             BlockSpawner.Instance.AddScore(pointValue);
+            controllerTexte.editNumberLucky(1);
             Destroy(gameObject);
         }
     }

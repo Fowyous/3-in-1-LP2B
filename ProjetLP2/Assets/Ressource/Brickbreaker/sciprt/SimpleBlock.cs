@@ -25,6 +25,7 @@ public class SimpleBlock : MonoBehaviour
             Debug.Log("Points gagnés : " + pointValue);
             BlockSpawner.setCoefficient(coefficient);
             BlockSpawner.Instance.AddScore(pointValue);
+            controllerTexte.editNumberSimple(1);
             Destroy(gameObject);
         }
     }

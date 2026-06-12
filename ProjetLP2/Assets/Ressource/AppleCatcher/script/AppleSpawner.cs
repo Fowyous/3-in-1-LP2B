@@ -105,6 +105,7 @@ public class AppleSpawner : MonoBehaviour
     {
         string healthString = "";
         string EmptyHeathString = "";
+        
         for (int i = 0; i < health; i++)
         {
             healthString += "<sprite name=\"pixil-frame-0_0\">";

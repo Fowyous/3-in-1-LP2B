@@ -319,6 +319,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Statistiques
   TextStatistique: {fileID: 1183090105}
+  TextScore: {fileID: 1830916906}
 --- !u!4 &226817275
 Transform:
   m_ObjectHideFlags: 0

@@ -11,10 +11,14 @@ public class Statistiques : MonoBehaviour
     private static int numberCatchTronion = 0;
     private static int numberCatchAngel = 0;
     
+    private int score;
+    public TextMeshPro TextScore;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        score = Catchboy.scoreGet();
+        TextScore.SetText("score : " + score);
     }
 
     // Update is called once per frame

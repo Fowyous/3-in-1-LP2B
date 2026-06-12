@@ -2024,7 +2024,7 @@ MonoBehaviour:
   ballPrefab: {fileID: 4907802335246445828, guid: a169e757f976828448cb54c6d9592719, type: 3}
   maxLivesDefault: 3
   respawnDelay: 1.5
-  livesText: {fileID: 0}
+  livesText: {fileID: 408601961}
   paddle: {fileID: 417791581}
 --- !u!4 &2102543090
 Transform:

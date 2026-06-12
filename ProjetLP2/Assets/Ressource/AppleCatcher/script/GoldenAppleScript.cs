@@ -8,6 +8,7 @@ public class GoldenAppleScript : AppleScript
     private static float speed;
     private static int damage;
     private static float seuil;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected override void Start()
     {

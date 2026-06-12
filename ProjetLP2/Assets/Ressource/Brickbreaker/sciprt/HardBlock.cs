@@ -36,6 +36,7 @@ public class HardBlock : MonoBehaviour
             Debug.Log("Points gagnés : " + pointValue);
             BlockSpawner.setCoefficient(coefficient);
             BlockSpawner.Instance.AddScore(pointValue);
+            controllerTexte.editNumberHard(1);
             Destroy(gameObject);
         }
     }

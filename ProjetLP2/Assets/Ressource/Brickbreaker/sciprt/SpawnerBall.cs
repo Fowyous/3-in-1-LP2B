@@ -11,10 +11,10 @@ public class SpawnerBall : MonoBehaviour
     [SerializeField] private GameObject    ballPrefab;
     [SerializeField] private int           maxLivesDefault = 3;
     [SerializeField] private float         respawnDelay    = 2f;
-    [SerializeField] private TextMeshProUGUI livesText;        // ✅ Fix 3
+    [SerializeField] private TextMeshPro livesText;        
     [SerializeField] public  GameObject    paddle;
-
-    private static int maxLives;                               // ✅ Fix 2 : static
+    
+    private static int maxLives;                               
     private static int currentLives;
 
     private List<GameObject>            activeBalls   = new();
@@ -29,7 +29,7 @@ public class SpawnerBall : MonoBehaviour
     {
         maxLives     = maxLivesDefault;
         currentLives = maxLives;
-        UpdateText();
+        RefreshHearts();
         SpawnBall();
     }
 
@@ -53,7 +53,7 @@ public class SpawnerBall : MonoBehaviour
         if (countsAsLife)
         {
             currentLives--;
-            UpdateText();
+            RefreshHearts();
         }
 
         if (currentLives <= 0)
@@ -103,13 +103,7 @@ public class SpawnerBall : MonoBehaviour
         activeBalls.Add(newBall);
         ballLifeCost[newBall] = costLife;
     }
-
-    private void UpdateText()
-    {
-        if (livesText != null)
-            livesText.SetText("Vies : " + currentLives);
-    }
-
+    
     private IEnumerator LoadGameOver()
     {
         AsyncOperation load = SceneManager.LoadSceneAsync("GameOverBrikeBreak");
@@ -119,12 +113,23 @@ public class SpawnerBall : MonoBehaviour
     public static void healLives(int amount)
     {
         currentLives = Mathf.Min(currentLives + amount, maxLives);
-        Instance.UpdateText();
+        Instance.RefreshHearts();
     }
 
     public static void healMaxLives(int amount)
     {
         maxLives += amount;
         healLives(amount);  
+    }
+    
+    private void RefreshHearts()
+    {
+        string healthString = "";
+        
+        for (int i = 0; i < currentLives; i++)
+        {
+            healthString += "<sprite name=\"Ball_0\">";
+        }
+        livesText.text = healthString;
     }
 }

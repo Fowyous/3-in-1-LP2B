@@ -183,4 +183,9 @@ public class BlockSpawner  : MonoBehaviour
         }
         activeBlocks.Clear();
     }
+
+    public static int GetScore()
+    {
+        return score;
+    }
 }
