@@ -1468,9 +1468,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e04054e0a64594f42a1b459374bf5a1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BaseManager
-  maxHealth: 300
+  maxHealth: 50
   regenAmountPerSecond: 5
-  regenDelay: 5
+  regenDelay: 20
 --- !u!61 &1603546597
 BoxCollider2D:
   m_ObjectHideFlags: 0
