@@ -38,8 +38,9 @@ public class BlockSpawner  : MonoBehaviour
     [Range(0, 100)] [SerializeField] private int chanceSimple;
     [Range(0, 100)] [SerializeField] private int chanceHard;
     [Range(0, 100)] [SerializeField] private int chanceLucky;
-
-
+    
+    private bool isEstetique;
+    
     private List<GameObject> activeBlocks = new List<GameObject>();
     private bool levelCleared = false;
 
@@ -54,6 +55,7 @@ public class BlockSpawner  : MonoBehaviour
         SpawnRandomLevel();
         scoreText.SetText(score + "points");
         audioSource = GetComponent<AudioSource>();
+        isEstetique = SpawnerBall.Instance.getIsEstetique();
     }
 
     void Update()
@@ -168,10 +170,15 @@ public class BlockSpawner  : MonoBehaviour
     
     public void AddScore(int points)
     {
-        score += points * coefficient;
-        scoreText.SetText($"{score} * {coefficient} points");
-        if (audioSource != null && PointWingSong != null)
-            audioSource.PlayOneShot(PointWingSong);
+        if (!isEstetique)
+        {
+            score += points * coefficient;
+            scoreText.SetText($"{score} * {coefficient} points");
+            if (audioSource != null && PointWingSong != null)
+            {
+                audioSource.PlayOneShot(PointWingSong);
+            }
+        }
     }
     
     /// <summary>Détruit tous les blocs restants, utile en cas de game over.</summary>

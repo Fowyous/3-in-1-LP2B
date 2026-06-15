@@ -9,6 +9,7 @@ public class Paddle : MonoBehaviour
     private float translationSpeed;
     public AudioClip paddleSong;
     private static AudioSource audioSource; 
+    private  bool isEstetique;
 
     void Awake()
     {
@@ -19,18 +20,26 @@ public class Paddle : MonoBehaviour
     {
         translationSpeed = 7f;
         audioSource = GetComponent<AudioSource>();
+        isEstetique = SpawnerBall.Instance.getIsEstetique();
     }
 
     void Update()
     {
-        if (Keyboard.current.rightArrowKey.isPressed && transform.position.x < 9.5f)
+        if (!isEstetique)
         {
-            transform.Translate(Vector3.right * (Time.deltaTime * translationSpeed));
-        }
+            if (Keyboard.current.rightArrowKey.isPressed && transform.position.x < 9.5f)
+            {
+                transform.Translate(Vector3.right * (Time.deltaTime * translationSpeed));
+            }
 
-        if (Keyboard.current.leftArrowKey.isPressed && transform.position.x > -9.5f)
+            if (Keyboard.current.leftArrowKey.isPressed && transform.position.x > -9.5f)
+            {
+                transform.Translate(Vector3.left * (Time.deltaTime * translationSpeed));
+            }
+        }
+        else
         {
-            transform.Translate(Vector3.left * (Time.deltaTime * translationSpeed));
+            transform.Translate(Vector3.right * (Ball.Instance.getTranslationX() * (Time.deltaTime * translationSpeed)));
         }
     }
 

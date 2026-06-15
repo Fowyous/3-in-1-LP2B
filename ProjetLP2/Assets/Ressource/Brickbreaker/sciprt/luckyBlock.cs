@@ -71,7 +71,7 @@ public class luckyBlock : MonoBehaviour
         {
             case BonusMaxhealt:
                 SpawnerBall.healMaxLives(1);
-                BonusManager.Instance.Register("+1 Vie", 1f);
+                BonusManager.Instance.Register("+1 Vie", 2f);
                 break;
             case BonusSpeed:
                 Paddle.Instance.BonusSpeed(30f, 3f);
@@ -94,8 +94,17 @@ public class luckyBlock : MonoBehaviour
                 BonusManager.Instance.Register("Balle Soignante", 5f);
                 break;
             case Duplicate:
-                SpawnerBall.Instance.DuplicateBall();
-                BonusManager.Instance.Register("Duplication", 1f);
+                bool costLife = SpawnerBall.Instance.DuplicateBall();
+                string label = "";
+                if (costLife)
+                {
+                    label = "Duplication (-1 vie)";
+                }
+                else
+                {
+                    label = "Duplication (gratuite)";
+                }
+                BonusManager.Instance.Register(label, 2f);
                 break;
         }
     }

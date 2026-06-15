@@ -181,7 +181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BifficulteBlock
   NormalSprite: {fileID: 8222420645925065664, guid: fb47e13d31ac9214297efc6483159336, type: 3}
-  damageSprite: {fileID: 4483504832982471387, guid: 47008be46c04b734cbd0b249a73cb50a, type: 3}
+  damageSprite: {fileID: 7937501056432011131, guid: 89c41c6a3c50fec40ab68c2364e5cadd, type: 3}
 --- !u!82 &250031063606093710
 AudioSource:
   m_ObjectHideFlags: 0
