@@ -21,6 +21,9 @@ EditorBuildSettings:
     path: Assets/Scenes/AppleCatcher/GameOverAppleCatcher.unity
     guid: 96e59785686eded44b2792a0bf577e3e
   - enabled: 1
+    path: Assets/Scenes/BrikeBreak/rulesBB.unity
+    guid: 420380e38320e9a429220d8e2d92a6a3
+  - enabled: 1
     path: Assets/Scenes/BrikeBreak/BrikeBreakAcceuil.unity
     guid: f764745bbd014dc429715df04968ddc4
   - enabled: 1

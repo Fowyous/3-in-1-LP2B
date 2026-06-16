@@ -17,6 +17,7 @@ public class AppleSpawner : MonoBehaviour
     public bool isEsthetique;
     public TextMeshPro Health;
     public TextMeshPro EmptyHeath;
+    public TextMeshPro goldenHeath;
 
     public static AppleSpawner Instance;
 
@@ -85,6 +86,8 @@ public class AppleSpawner : MonoBehaviour
     {
         health += value;
         RefreshHearts();
+        Debug.Log("health :" + health);
+        Debug.Log("health max :" + healthMax);
 
         if (health <= 0)
         {
@@ -105,12 +108,23 @@ public class AppleSpawner : MonoBehaviour
     {
         string healthString = "";
         string EmptyHeathString = "";
+        string goldenHeathString = "";
         
         for (int i = 0; i < health; i++)
         {
-            healthString += "<sprite name=\"pixil-frame-0_0\">";
+            if (i <= healthMax -1 )
+            {
+                healthString += "<sprite name=\"pixil-frame-0_0\">";
+            }
         }
         Health.text = healthString;
+        
+        for (int j = 0; j < health; j++)
+        {
+            goldenHeathString += "<sprite name=\"pixil-frame-0 (7)_0\">";
+        }
+        goldenHeath.text = goldenHeathString;
+        
         for (int j = 0; j < healthMax; j++)
         {
             EmptyHeathString += "<sprite name=\"pixil-frame-0 (2)_0\">";
