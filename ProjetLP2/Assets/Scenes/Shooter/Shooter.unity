@@ -472,6 +472,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 197274496}
   m_CullTransparentMesh: 1
+--- !u!1 &251084623
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 251084624}
+  m_Layer: 0
+  m_Name: FirePoint 2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &251084624
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 251084623}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.989, y: -0.482, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 499223583}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &499223574 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3384449957238118544, guid: 911fc59e7fa4bfe4da59b453b0ba6166, type: 3}
@@ -492,7 +523,7 @@ MonoBehaviour:
   speed: 5
   laserPrefab: {fileID: 6043531494957218281, guid: e48685146bb7dc6488d4b806b0ebbf13, type: 3}
   firePoint: {fileID: 730623799}
-  fireRate: 0.5
+  fireRate: 0.25
   maxHealth: 10
 --- !u!4 &499223583 stripped
 Transform:
@@ -779,7 +810,7 @@ GameObject:
   m_Component:
   - component: {fileID: 730623799}
   m_Layer: 0
-  m_Name: FirePoint
+  m_Name: FirePoint 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1038,6 +1069,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1386586474621022846, guid: 911fc59e7fa4bfe4da59b453b0ba6166, type: 3}
       insertIndex: -1
       addedObject: {fileID: 730623799}
+    - targetCorrespondingSourceObject: {fileID: 1386586474621022846, guid: 911fc59e7fa4bfe4da59b453b0ba6166, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 251084624}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3384449957238118544, guid: 911fc59e7fa4bfe4da59b453b0ba6166, type: 3}
       insertIndex: -1
