@@ -8,17 +8,21 @@ public class SpawnerBall : MonoBehaviour
 {
     public static SpawnerBall Instance { get; private set; }
 
-    [SerializeField] private GameObject    ballPrefab;
-    [SerializeField] private int           maxLivesDefault = 3;
-    [SerializeField] private float         respawnDelay    = 2f;
-    [SerializeField] private TextMeshPro livesText;        
-    [SerializeField] public  GameObject    paddle;
-    
-    private static int maxLives;                               
+    [SerializeField] private GameObject  ballPrefab;
+    [SerializeField] private int         maxLivesDefault = 3;
+    [SerializeField] private float       respawnDelay    = 2f;
+    [SerializeField] private TextMeshPro livesText;
+    [SerializeField] public  GameObject  paddle;
+    [SerializeField] private bool isEstetique;
+    public AudioClip loosLifeSong;
+    private static AudioSource audioSource;
+    private float startZ;
+
+    private static int maxLives;
     private static int currentLives;
 
-    private List<GameObject>            activeBalls   = new();
-    private Dictionary<GameObject, bool> ballLifeCost = new();
+    private List<GameObject>             activeBalls   = new();
+    private Dictionary<GameObject, bool> ballLifeCost  = new();
 
     void Awake()
     {
@@ -29,72 +33,85 @@ public class SpawnerBall : MonoBehaviour
     {
         maxLives     = maxLivesDefault;
         currentLives = maxLives;
-        RefreshHearts();
-        SpawnBall();
-    }
-
-    void Update()
-    {
-        for (int i = activeBalls.Count - 1; i >= 0; i--)
+        audioSource = GetComponent<AudioSource>();
+        if (isEstetique)
         {
-            GameObject ball = activeBalls[i];
-            if (ball == null)
-            {
-                ballLifeCost.TryGetValue(ball, out bool costs);
-                ballLifeCost.Remove(ball);
-                activeBalls.RemoveAt(i);
-                OnBallDestroyed(costs);
-            }
+            startZ = 91f;
         }
+        else
+        {
+            startZ = 0f;
+            RefreshHearts();
+        }
+        SpawnBall(paddle.transform.position.x, paddle.transform.position.y, startZ);
+    }
+    public void NotifyBallDestroyed(GameObject ball, bool countsAsLife)
+    {
+        activeBalls.Remove(ball);
+        ballLifeCost.Remove(ball);
+        OnBallDestroyed(countsAsLife);
     }
 
     private void OnBallDestroyed(bool countsAsLife)
     {
-        if (countsAsLife)
+        if (countsAsLife && !isEstetique)
         {
             currentLives--;
             RefreshHearts();
         }
 
         if (currentLives <= 0)
+        {
             StartCoroutine(LoadGameOver());
+        }
         else if (activeBalls.Count == 0)
+        {
+            if (audioSource != null && loosLifeSong != null)
+                audioSource.PlayOneShot(loosLifeSong);
             StartCoroutine(RespawnWithDelay());
+        }
     }
 
+    // ReSharper disable Unity.PerformanceAnalysis
     public IEnumerator RespawnWithDelay()
     {
         yield return new WaitForSeconds(respawnDelay);
-        SpawnBall();
+        SpawnBall(paddle.transform.position.x, paddle.transform.position.y, startZ);
     }
 
-    public void SpawnBall()
+    private void SpawnBall(float positionx, float positiony, float positionz)
     {
-        Vector3 spawnPos = new Vector3(
-            paddle.transform.position.x,
-            paddle.transform.position.y + 3.5f,
-            0);
+        Vector3    spawnPos   = new Vector3(positionx, positiony + 3.5f, positionz);
+        GameObject ball       = Instantiate(ballPrefab, spawnPos, Quaternion.identity);
+        Ball       ballScript = ball.GetComponent<Ball>();
+        
+        float   angle      = Random.Range(-15f, 15f) * Mathf.Deg2Rad;
+        Vector2 initialDir = new Vector2(Mathf.Sin(angle), -1 * Mathf.Cos(angle)).normalized;
+        ballScript.SetDirection(initialDir);
 
-        GameObject ball = Instantiate(ballPrefab, spawnPos, Quaternion.identity);
-        ball.GetComponent<Ball>().countsAsLife = true;
+        ballScript.countsAsLife = true;
         activeBalls.Add(ball);
         ballLifeCost[ball] = true;
     }
-
-    public void DuplicateBall()
+    public bool DuplicateBall()
     {
-        GameObject existingBall = GameObject.FindWithTag("Ball");
-        if (existingBall == null) return;
+        if (activeBalls.Count == 0)
+        {
+            Debug.Log("No active ball to duplicate");
+            return false;
+        }
 
+        GameObject existingBall  = activeBalls[0]; 
         Ball       originalBall  = existingBall.GetComponent<Ball>();
         GameObject newBall       = Instantiate(ballPrefab, existingBall.transform.position, Quaternion.identity);
         Ball       newBallScript = newBall.GetComponent<Ball>();
 
-        float   angle      = 15f * Mathf.Deg2Rad;
+        float   angle      = Random.Range(-30f, 30f) * Mathf.Deg2Rad;
         Vector2 dir        = originalBall.direction;
         Vector2 rotatedDir = new Vector2(
             dir.x * Mathf.Cos(angle) - dir.y * Mathf.Sin(angle),
-            dir.x * Mathf.Sin(angle) + dir.y * Mathf.Cos(angle));
+            dir.x * Mathf.Sin(angle) + dir.y * Mathf.Cos(angle)
+        );
 
         newBallScript.SetDirection(rotatedDir);
 
@@ -102,8 +119,10 @@ public class SpawnerBall : MonoBehaviour
         newBallScript.countsAsLife = costLife;
         activeBalls.Add(newBall);
         ballLifeCost[newBall] = costLife;
+
+        return costLife;
     }
-    
+
     private IEnumerator LoadGameOver()
     {
         AsyncOperation load = SceneManager.LoadSceneAsync("GameOverBrikeBreak");
@@ -119,17 +138,36 @@ public class SpawnerBall : MonoBehaviour
     public static void healMaxLives(int amount)
     {
         maxLives += amount;
-        healLives(amount);  
+        healLives(amount);
     }
-    
+
     private void RefreshHearts()
     {
         string healthString = "";
-        
         for (int i = 0; i < currentLives; i++)
-        {
             healthString += "<sprite name=\"Ball_0\">";
-        }
         livesText.text = healthString;
+    }
+    
+    public void setIsEstetique(bool value)
+    {
+        isEstetique = value;
+    }
+
+    public bool getIsEstetique()
+    {
+        return isEstetique;
+    }
+    
+    public void RespawnBallFree()
+    {
+        for (int i = activeBalls.Count - 1; i >= 0; i--)
+        {
+            GameObject ball = activeBalls[i];
+            activeBalls.RemoveAt(i);
+            ballLifeCost.Remove(ball);
+            Destroy(ball);
+        }
+        StartCoroutine(RespawnWithDelay());
     }
 }

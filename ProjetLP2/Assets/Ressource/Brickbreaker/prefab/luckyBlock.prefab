@@ -180,6 +180,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 552691bca20d04e4dac8b386ae0e50d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::luckyBlock
+  spriteBlock:
+  - {fileID: 2912297781628502651, guid: 2d5a21fa68069f5439dd5768b32c32b5, type: 3}
+  - {fileID: 56405453324043922, guid: ca75d99012bfd4a429636960581c6b54, type: 3}
+  - {fileID: -5513050994037168576, guid: 806b52724ec6f1c4e8f40f02a61f6e7a, type: 3}
+  - {fileID: 4483504832982471387, guid: 47008be46c04b734cbd0b249a73cb50a, type: 3}
 --- !u!82 &7484863510400066743
 AudioSource:
   m_ObjectHideFlags: 0

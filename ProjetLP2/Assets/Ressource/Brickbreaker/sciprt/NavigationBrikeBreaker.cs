@@ -29,6 +29,20 @@ public class NavigationBrikeBreaker : MonoBehaviour
         }
     }
     
+    public void RulesBrikeBreak()
+    {
+        StartCoroutine(LoadRulesBrikeBreak());
+    }
+    
+    private IEnumerator LoadRulesBrikeBreak()
+    {
+        AsyncOperation load = SceneManager.LoadSceneAsync("rulesBB");
+        while (!load.isDone)
+        {
+            yield return null;
+        }
+    }
+    
     public void StartAcceuil()
     {
         StartCoroutine(LoadAcceuil());
