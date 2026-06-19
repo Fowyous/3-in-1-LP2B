@@ -1348,6 +1348,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1413083812}
   - component: {fileID: 1413083811}
+  - component: {fileID: 1413083813}
   - component: {fileID: 1413083814}
   m_Layer: 0
   m_Name: Decor
@@ -1401,8 +1402,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: -710034873
-  m_SortingLayer: -1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: e1a9f6f3c7e741245964172f21b8fcab, type: 3}
@@ -1430,6 +1431,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1413083813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1413083810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9184c1b0d51cef014949e24e7ec166df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
+  enemyEntries: []
+  spawnInterval: 3
+  player: {fileID: 0}
 --- !u!114 &1413083814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1454,24 +1470,7 @@ MonoBehaviour:
   - {fileID: 2372006867996459247, guid: 1c3045626ec5bf9e5abf0ad15d6e57b5, type: 3}
   - {fileID: 3654290459096927439, guid: c42a7002362ae9c4a8b2f05530a4ad5c, type: 3}
   - {fileID: 1493423832983243856, guid: b6c9a5e05caee08ef8c6afd1852dbeff, type: 3}
-  spawnInterval: 1.5
-  backgroundSortingLayer: Background
-  layers:
-  - layerName: Far
-    speed: 1.5
-    scale: 0.4
-    sortingOrder: 0
-    weight: 3
-  - layerName: Mid
-    speed: 3
-    scale: 0.7
-    sortingOrder: 1
-    weight: 2
-  - layerName: Near
-    speed: 6
-    scale: 1.2
-    sortingOrder: 2
-    weight: 1
+  spawnInterval: 3
 --- !u!1 &1603546595
 GameObject:
   m_ObjectHideFlags: 0
