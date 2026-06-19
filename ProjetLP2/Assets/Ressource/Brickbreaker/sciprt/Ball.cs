@@ -97,9 +97,4 @@ public class Ball : MonoBehaviour
         if (SpawnerBall.Instance != null)
             SpawnerBall.Instance.NotifyBallDestroyed(gameObject, countsAsLife);
     }
-    
-    public float getTranslationX()
-    {
-        return transform.position.x;
-    }
 }

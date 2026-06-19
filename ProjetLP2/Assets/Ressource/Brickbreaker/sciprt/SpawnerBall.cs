@@ -16,6 +16,7 @@ public class SpawnerBall : MonoBehaviour
     [SerializeField] private bool isEstetique;
     public AudioClip loosLifeSong;
     private static AudioSource audioSource;
+    private float startZ;
 
     private static int maxLives;
     private static int currentLives;
@@ -32,9 +33,17 @@ public class SpawnerBall : MonoBehaviour
     {
         maxLives     = maxLivesDefault;
         currentLives = maxLives;
-        RefreshHearts();
-        SpawnBall(paddle.transform.position.x, paddle.transform.position.y, 0f);
         audioSource = GetComponent<AudioSource>();
+        if (isEstetique)
+        {
+            startZ = 91f;
+        }
+        else
+        {
+            startZ = 0f;
+            RefreshHearts();
+        }
+        SpawnBall(paddle.transform.position.x, paddle.transform.position.y, startZ);
     }
     public void NotifyBallDestroyed(GameObject ball, bool countsAsLife)
     {
@@ -63,10 +72,11 @@ public class SpawnerBall : MonoBehaviour
         }
     }
 
+    // ReSharper disable Unity.PerformanceAnalysis
     public IEnumerator RespawnWithDelay()
     {
         yield return new WaitForSeconds(respawnDelay);
-        SpawnBall(paddle.transform.position.x, paddle.transform.position.y, 0f);
+        SpawnBall(paddle.transform.position.x, paddle.transform.position.y, startZ);
     }
 
     private void SpawnBall(float positionx, float positiony, float positionz)
@@ -147,5 +157,17 @@ public class SpawnerBall : MonoBehaviour
     public bool getIsEstetique()
     {
         return isEstetique;
+    }
+    
+    public void RespawnBallFree()
+    {
+        for (int i = activeBalls.Count - 1; i >= 0; i--)
+        {
+            GameObject ball = activeBalls[i];
+            activeBalls.RemoveAt(i);
+            ballLifeCost.Remove(ball);
+            Destroy(ball);
+        }
+        StartCoroutine(RespawnWithDelay());
     }
 }
