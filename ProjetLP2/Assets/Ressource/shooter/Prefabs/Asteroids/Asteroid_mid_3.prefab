@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 5691846331351871946}
   - component: {fileID: -6753564933972765331}
   - component: {fileID: 2320233093499333151}
+  - component: {fileID: 2162144808991866982}
   m_Layer: 0
   m_Name: Asteroid_mid_3
-  m_TagString: Untagged
+  m_TagString: Asteroid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -107,6 +108,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Asteroid
   moveSpeed: 5
   rotationSpeed: 8
+  destroyXThreshold: -12
 --- !u!50 &2320233093499333151
 Rigidbody2D:
   serializedVersion: 5
@@ -134,3 +136,59 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!68 &2162144808991866982
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2733105183874647460}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0
+  m_Points:
+  - {x: -0.6843559, y: 0.07404709}
+  - {x: -0.40943503, y: 0.45734692}
+  - {x: -0.10705519, y: 0.5355115}
+  - {x: 0.0992825, y: 0.49970102}
+  - {x: 0.25355792, y: 0.5762892}
+  - {x: 0.52286124, y: 0.5361748}
+  - {x: 0.662045, y: 0.29086447}
+  - {x: 0.68298125, y: 0.116098404}
+  - {x: 0.6300795, y: -0.060723305}
+  - {x: 0.52917004, y: -0.3129387}
+  - {x: 0.35109687, y: -0.51538754}
+  - {x: 0.06502056, y: -0.54695225}
+  - {x: -0.16838908, y: -0.51782036}
+  - {x: -0.45574212, y: -0.28562355}
+  - {x: -0.6833311, y: 0.047912598}
+  m_AdjacentStartPoint: {x: 0, y: 0}
+  m_AdjacentEndPoint: {x: 0, y: 0}
+  m_UseAdjacentStartPoint: 0
+  m_UseAdjacentEndPoint: 0
