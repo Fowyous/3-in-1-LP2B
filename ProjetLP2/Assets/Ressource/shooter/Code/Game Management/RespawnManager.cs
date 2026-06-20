@@ -26,6 +26,7 @@ public class RespawnManager : MonoBehaviour
 
   // Set to false by BaseManager when the base is destroyed
   public bool CanRespawn { get; set; } = true;
+  private bool IsInGameOver = false;
 
   private void Awake()
   {
@@ -46,8 +47,9 @@ public class RespawnManager : MonoBehaviour
   ///</summary>
   public void TriggerRespawn(UFO player)
   {
-    if (!CanRespawn)
+    if (!CanRespawn && !IsInGameOver)
     {
+      IsInGameOver = true;
       // Base is destroyed: no more respawns, trigger game over instead
       Debug.Log("RespawnManager: No respawn available. Base is destroyed. GAME OVER.");
       if (GameOverManager.Instance != null)
