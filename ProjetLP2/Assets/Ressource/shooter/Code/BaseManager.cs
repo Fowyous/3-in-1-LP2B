@@ -1,5 +1,5 @@
 using UnityEngine;
-using System.Collections;
+using System;
 
 public class BaseManager : MonoBehaviour
 {
@@ -7,25 +7,30 @@ public class BaseManager : MonoBehaviour
     [SerializeField] private float maxHealth = 300f;
 
     [Header("Regeneration Settings")]
-    [SerializeField] private float regenAmountPerSecond = 5f;
+    [Tooltip("HP regained per second. Ex: 2 = full regen from 0 to 300 takes 150 seconds.")]
+    [SerializeField] private float regenAmountPerSecond = 2f;
+    [Tooltip("Seconds without taking damage before regeneration starts.")]
     [SerializeField] private float regenDelay = 5f;
 
+    public float MaxHealth => maxHealth;
     public float CurrentHealth { get; private set; }
+
+    ///<summary>
+    ///Fired whenever the base health changes (damage or regen). Passes (currentHealth, maxHealth).
+    ///Subscribed to by BaseHealthBar to update the UI fill amount.
+    ///</summary>
+    public event Action<float, float> OnHealthChanged;
 
     private float timeOfLastDamage;
 
-    ///<summary>
-    ///Initializes the base health and sets up the timestamp.
-    ///</summary>
     void Start()
     {
         CurrentHealth = maxHealth;
         timeOfLastDamage = -regenDelay;
+
+        OnHealthChanged?.Invoke(CurrentHealth, maxHealth);
     }
 
-    ///<summary>
-    ///Monitors the time since last damage to trigger passive regeneration.
-    ///</summary>
     void Update()
     {
         if (Time.time - timeOfLastDamage >= regenDelay && CurrentHealth < maxHealth)
@@ -34,43 +39,34 @@ public class BaseManager : MonoBehaviour
         }
     }
 
-    ///<summary>
-    ///Heals the base gradually over time, capping at max health.
-    ///</summary>
     private void ApplyPassiveRegeneration()
     {
         CurrentHealth += regenAmountPerSecond * Time.deltaTime;
         CurrentHealth = Mathf.Min(CurrentHealth, maxHealth);
-        Debug.Log($"Base regenerating... Current Health: {CurrentHealth:F1}/{maxHealth}");
+
+        OnHealthChanged?.Invoke(CurrentHealth, maxHealth);
     }
 
-    ///<summary>
-    ///Inflicts damage to the base and resets the regeneration timer.
-    ///</summary>
     public void TakeDamage(float damageAmount)
     {
         CurrentHealth -= damageAmount;
+        CurrentHealth = Mathf.Max(CurrentHealth, 0f); // Clamp immediately to avoid negative display
         timeOfLastDamage = Time.time;
 
         Debug.Log($"Base attacked! Took {damageAmount} damage. Health remaining: {CurrentHealth:F1}/{maxHealth}");
 
+        OnHealthChanged?.Invoke(CurrentHealth, maxHealth);
+
         if (CurrentHealth <= 0)
         {
-            CurrentHealth = 0;
             TriggerGameOver();
         }
     }
 
-    ///<summary>
-    ///Handles the destruction of the base:
-    ///- Disables future UFO respawns via RespawnManager
-    ///- Triggers Game Over only if the UFO is also dead
-    ///</summary>
     private void TriggerGameOver()
     {
         Debug.LogError("Base Destroyed!");
 
-        // Disable respawns: from now on, if the UFO dies it's Game Over
         if (RespawnManager.Instance != null)
         {
             RespawnManager.Instance.CanRespawn = false;
@@ -84,9 +80,6 @@ public class BaseManager : MonoBehaviour
         }
     }
 
-    ///<summary>
-    ///Detects enemies entering the base collider (Zone 3 wall boundary).
-    ///</summary>
     private void OnTriggerEnter2D(Collider2D collision)
     {
         IEnemy enemy = collision.GetComponent<IEnemy>();

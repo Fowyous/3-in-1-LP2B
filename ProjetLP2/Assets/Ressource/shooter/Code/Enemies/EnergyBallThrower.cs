@@ -30,6 +30,9 @@ public class EnergyBallThrower : MonoBehaviour, IEnemy
     private Rigidbody2D rb;
     private LaserChargeEffect chargeEffect;
 
+    // Reference to the currently active laser, so it can be destroyed if this enemy dies mid-shot
+    private GameObject activeLaser;
+
     void Start()
     {
         startPos = transform.position;
@@ -50,6 +53,7 @@ public class EnergyBallThrower : MonoBehaviour, IEnemy
         {
             IsAlive = false;
             if (chargeEffect != null) chargeEffect.StopChargeEffect();
+            DestroyActiveLaser();
             Destroy(gameObject);
         }
     }
@@ -58,8 +62,28 @@ public class EnergyBallThrower : MonoBehaviour, IEnemy
     {
         if (bullet != null && firePoint != null)
         {
-            Instantiate(bullet, firePoint.position, firePoint.rotation);
+            activeLaser = Instantiate(bullet, firePoint.position, firePoint.rotation);
+
+            // Make the laser follow this enemy's firePoint every frame
+            HorizontalLaser laserScript = activeLaser.GetComponent<HorizontalLaser>();
+            if (laserScript != null)
+            {
+                laserScript.SetSource(firePoint);
+            }
+
             Debug.Log("M5: Fired Horizontal Laser!");
+        }
+    }
+
+    ///<summary>
+    ///Destroys the currently active laser, if any. Called when this enemy dies.
+    ///</summary>
+    private void DestroyActiveLaser()
+    {
+        if (activeLaser != null)
+        {
+            Destroy(activeLaser);
+            activeLaser = null;
         }
     }
 
@@ -75,7 +99,6 @@ public class EnergyBallThrower : MonoBehaviour, IEnemy
 
         float combatPositionX = ShooterConstants.Phase1limit - 1f;
 
-        // Phase intro : glisse vers la position de combat en X
         if (intro)
         {
             introProgress += Time.deltaTime / introDuration;
@@ -93,23 +116,18 @@ public class EnergyBallThrower : MonoBehaviour, IEnemy
 
         if (Mathf.Abs(diff) > 0.15f)
         {
-            // Suit le joueur verticalement
             float directionY = Mathf.Sign(diff);
             moveDirection = new Vector3(0, directionY, 0);
             rb.linearVelocity = new Vector2(moveDirection.x, moveDirection.y).normalized * SPEED;
         }
         else
         {
-            // Aligné : stoppe et lance le cycle de tir une seule fois
             rb.linearVelocity = Vector2.zero;
             if (!isLockedAndShooting)
                 StartCoroutine(LockAndShootRoutine());
         }
     }
 
-    ///<summary>
-    ///Lance l'effet de charge, attend 1s, tire le laser, attend 3.5s puis reprend le tracking.
-    ///</summary>
     private IEnumerator LockAndShootRoutine()
     {
         isLockedAndShooting = true;
@@ -131,6 +149,7 @@ public class EnergyBallThrower : MonoBehaviour, IEnemy
         {
             player.TakeDamage(Damage);
             IsAlive = false;
+            DestroyActiveLaser();
             Destroy(gameObject);
             return;
         }
@@ -140,6 +159,7 @@ public class EnergyBallThrower : MonoBehaviour, IEnemy
             BaseManager baseScript = collision.GetComponent<BaseManager>();
             if (baseScript != null) baseScript.TakeDamage(Damage);
             IsAlive = false;
+            DestroyActiveLaser();
             Destroy(gameObject);
         }
     }

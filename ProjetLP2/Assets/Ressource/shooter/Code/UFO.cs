@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System;
 using System.Collections;
 using static ShooterConstants;
 
@@ -14,34 +15,34 @@ public class UFO : MonoBehaviour
     [SerializeField] private float fireRate = 0.5f;
     [SerializeField] private float maxHealth = 10f;
 
+    public float MaxHealth => maxHealth;
     public float CurrentHealth { get; private set; }
+
+    ///<summary>
+    ///Fired whenever health changes. Passes (currentHealth, maxHealth).
+    ///Subscribed to by UFOHealthUI to update the life icons display.
+    ///</summary>
+    public event Action<float, float> OnHealthChanged;
 
     private float nextFireTime = 0f;
     private Rigidbody2D rb;
 
-    // Status flags
     private bool _isStunned = false;
     private bool _isBurning = false;
     private bool _isInvincible = false;
-    private bool _isActive = true; // False while the respawn cinematic is playing
+    private bool _isActive = true;
 
-    ///<summary>
-    ///Initializes player health and caches the Rigidbody2D component.
-    ///</summary>
     void Start()
     {
         CurrentHealth = maxHealth;
         rb = GetComponent<Rigidbody2D>();
         if (rb == null)
-        {
             Debug.LogError("UFO: Rigidbody2D component missing on this GameObject!");
-        }
+
+        // Notify UI of the initial health value
+        OnHealthChanged?.Invoke(CurrentHealth, maxHealth);
     }
 
-    ///<summary>
-    ///Frame-rate independent updates for movement and shooting.
-    ///Skipped entirely while the UFO is inactive (respawn cinematic).
-    ///</summary>
     void Update()
     {
         if (!_isActive) return;
@@ -49,10 +50,6 @@ public class UFO : MonoBehaviour
         HandleShooting();
     }
 
-    ///<summary>
-    ///Handles player movement with keyboard input and restricts position within ShooterConstants limits.
-    ///Movement is blocked while the player is stunned.
-    ///</summary>
     private void HandleMovement()
     {
         if (_isStunned) return;
@@ -71,9 +68,6 @@ public class UFO : MonoBehaviour
         transform.position = pos;
     }
 
-    ///<summary>
-    ///Monitors the spacebar input and triggers weapon firing if the cooldown timer has elapsed.
-    ///</summary>
     private void HandleShooting()
     {
         if (Keyboard.current.spaceKey.isPressed && Time.time >= nextFireTime)
@@ -83,9 +77,6 @@ public class UFO : MonoBehaviour
         }
     }
 
-    ///<summary>
-    ///Instantiates a laser projectile at the designated fire point position.
-    ///</summary>
     private void ShootLaser()
     {
         if (laserPrefab != null && firePoint != null)
@@ -98,15 +89,15 @@ public class UFO : MonoBehaviour
         }
     }
 
-    ///<summary>
-    ///Inflicts damage to the player. Ignored if invincible or inactive.
-    ///</summary>
     public void TakeDamage(float damageAmount)
     {
         if (_isInvincible || !_isActive) return;
 
         CurrentHealth -= damageAmount;
+        CurrentHealth = Mathf.Max(CurrentHealth, 0f);
         Debug.Log($"UFO took {damageAmount} damage. Remaining Health: {CurrentHealth}");
+
+        OnHealthChanged?.Invoke(CurrentHealth, maxHealth);
 
         if (CurrentHealth <= 0)
         {
@@ -114,10 +105,6 @@ public class UFO : MonoBehaviour
         }
     }
 
-    ///<summary>
-    ///Triggers the respawn cinematic via RespawnManager.
-    ///Game Over only occurs if no respawn is available (base destroyed).
-    ///</summary>
     private void Die()
     {
         Debug.Log("UFO destroyed! Starting respawn sequence...");
@@ -134,46 +121,29 @@ public class UFO : MonoBehaviour
         }
     }
 
-    // Methods called by RespawnManager to control the UFO during the cinematic  
-
-    ///<summary>
-    ///Activates or deactivates UFO controls and collisions during the respawn cinematic.
-    ///</summary>
     public void SetActive(bool active)
     {
         _isActive = active;
         GetComponent<SpriteRenderer>().enabled = active;
 
-        // Disable the collider so enemies don't hit an invisible UFO
         Collider2D col = GetComponent<Collider2D>();
         if (col != null) col.enabled = active;
 
-        // Stop physics movement
         if (rb != null) rb.linearVelocity = Vector2.zero;
     }
 
-    ///<summary>
-    ///Restores UFO health to maximum. Called by RespawnManager on reappearance.
-    ///</summary>
     public void RestoreHealth()
     {
         CurrentHealth = maxHealth;
         Debug.Log($"UFO health restored to {maxHealth}.");
+        OnHealthChanged?.Invoke(CurrentHealth, maxHealth);
     }
 
-    ///<summary>
-    ///Enables or disables invincibility frames. Called by RespawnManager after respawn.
-    ///</summary>
     public void SetInvincible(bool invincible)
     {
         _isInvincible = invincible;
     }
 
-    // Status effects
-
-    ///<summary>
-    ///Immobilizes the player for a given duration. Ignored if already stunned.
-    ///</summary>
     public void ApplyStun(float duration)
     {
         if (!_isStunned) StartCoroutine(StunRoutine(duration));
@@ -182,15 +152,10 @@ public class UFO : MonoBehaviour
     private IEnumerator StunRoutine(float duration)
     {
         _isStunned = true;
-        Debug.Log($"UFO stunned for {duration}s!");
         yield return new WaitForSeconds(duration);
         _isStunned = false;
-        Debug.Log("UFO stun ended.");
     }
 
-    ///<summary>
-    ///Applies a damage-over-time burn effect. Ignored if already burning.
-    ///</summary>
     public void ApplyBurn(float dps, float duration)
     {
         if (!_isBurning) StartCoroutine(BurnRoutine(dps, duration));
@@ -199,7 +164,6 @@ public class UFO : MonoBehaviour
     private IEnumerator BurnRoutine(float dps, float duration)
     {
         _isBurning = true;
-        Debug.Log($"UFO burning! {dps} dps for {duration}s.");
         float elapsed = 0f;
         while (elapsed < duration)
         {
@@ -208,6 +172,5 @@ public class UFO : MonoBehaviour
             yield return null;
         }
         _isBurning = false;
-        Debug.Log("UFO burn ended.");
     }
 }

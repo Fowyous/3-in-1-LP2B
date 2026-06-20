@@ -9,31 +9,19 @@ public class FlameCone : MonoBehaviour
     [SerializeField] private float burnDuration = 4f;
     [SerializeField] private float expansionSpeed = 1.5f;
 
-    // Lifetime is now computed dynamically based on distance to travel
     private float lifeTime = 1.2f;
     private GameObject _target;
 
-    ///<summary>
-    ///Called by FlameThrower.Shoot() to inject the target reference.
-    ///Adjusts lifetime so the flame can always reach the left edge of the screen.
-    ///</summary>
     public void SetTarget(GameObject target)
     {
         _target = target;
-
-        // Calculate the distance from spawn position to the left edge of the screen (~-8f)
         float distanceToLeftEdge = transform.position.x - (-8f);
-
-        // Compute lifetime so the flame travels at least that far
         lifeTime = Mathf.Max(1.2f, distanceToLeftEdge / speed);
-
-        // Schedule destruction with the adjusted lifetime
         Destroy(gameObject, lifeTime);
     }
 
     void Start()
     {
-        // Fallback: if SetTarget was never called, use the default short lifetime
         Invoke(nameof(FallbackDestroy), lifeTime);
     }
 
@@ -48,6 +36,9 @@ public class FlameCone : MonoBehaviour
         transform.localScale += new Vector3(0, expansionSpeed * Time.deltaTime, 0);
     }
 
+    ///<summary>
+    ///Applies direct damage + burn to the UFO, or direct damage only to the Base.
+    ///</summary>
     private void OnTriggerEnter2D(Collider2D collision)
     {
         UFO player = collision.GetComponent<UFO>();
@@ -55,7 +46,19 @@ public class FlameCone : MonoBehaviour
         {
             player.TakeDamage(directDamage);
             player.ApplyBurn(burnDamagePerSec, burnDuration);
-            Debug.Log($"FlameCone: {directDamage} dégâts directs + brûlure {burnDamagePerSec}/s pendant {burnDuration}s.");
+            Debug.Log($"FlameCone: {directDamage} dégâts directs + brûlure appliqués à l'UFO.");
+            Destroy(gameObject);
+            return;
+        }
+
+        if (collision.CompareTag("Base"))
+        {
+            BaseManager baseScript = collision.GetComponent<BaseManager>();
+            if (baseScript != null)
+            {
+                baseScript.TakeDamage(directDamage);
+                Debug.Log($"FlameCone: {directDamage} dégâts infligés à la Base.");
+            }
             Destroy(gameObject);
         }
     }

@@ -22,8 +22,6 @@ public class ElectricMonster : MonoBehaviour, IEnemy
     private Vector3 moveDirection = Vector3.left;
     private Vector3 lastDirection;
     private float nextFireTime = 0f;
-
-    // Smoothing: current vertical velocity used by MoveTowards to avoid snapping
     private float currentVelocityY = 0f;
 
     void Start()
@@ -35,7 +33,6 @@ public class ElectricMonster : MonoBehaviour, IEnemy
     {
         NextMove(Target);
 
-        // M1 only shoots in Zone 2
         if (transform.position.x < ShooterConstants.Phase1limit &&
             transform.position.x >= ShooterConstants.Phase2limit)
         {
@@ -63,11 +60,6 @@ public class ElectricMonster : MonoBehaviour, IEnemy
             Instantiate(bullet, firePoint.position, firePoint.rotation);
     }
 
-    ///<summary>
-    ///Zone 1 : avance tout droit vers la gauche.
-    ///Zone 2 : suit le joueur verticalement avec MoveTowards pour éviter tout tremblement.
-    ///Zone 3 : continue dans la dernière direction connue.
-    ///</summary>
     public void NextMove(GameObject target)
     {
         if (rb == null) return;
@@ -77,13 +69,11 @@ public class ElectricMonster : MonoBehaviour, IEnemy
 
         if (transform.position.x >= p1)
         {
-            // Zone 1 : ligne droite vers la gauche
             moveDirection = Vector3.left;
             lastDirection = moveDirection;
         }
         else if (transform.position.x < p1 && transform.position.x >= p2)
         {
-            // Zone 2 : tracking vertical lisse avec zone morte
             if (target != null)
             {
                 float targetY = target.transform.position.y;
@@ -92,7 +82,6 @@ public class ElectricMonster : MonoBehaviour, IEnemy
 
                 if (Mathf.Abs(diff) > 0.3f)
                 {
-                    // MoveTowards : avance vers la cible sans jamais la dépasser ni osciller
                     currentVelocityY = Mathf.MoveTowards(
                         currentVelocityY,
                         Mathf.Sign(diff) * speed,
@@ -101,7 +90,6 @@ public class ElectricMonster : MonoBehaviour, IEnemy
                 }
                 else
                 {
-                    // Zone morte : on s'arrête proprement
                     currentVelocityY = Mathf.MoveTowards(currentVelocityY, 0f, speed * 4f * Time.deltaTime);
                 }
 
@@ -111,10 +99,33 @@ public class ElectricMonster : MonoBehaviour, IEnemy
         }
         else
         {
-            // Zone 3 : continue dans la dernière direction connue vers la base
             moveDirection = lastDirection != Vector3.zero ? lastDirection : Vector3.left;
         }
 
         rb.linearVelocity = moveDirection * speed;
+    }
+
+    ///<summary>
+    ///Handles collision with the UFO or the base, dealing contact damage to whichever is hit.
+    ///</summary>
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        UFO player = collision.GetComponent<UFO>();
+        if (player != null)
+        {
+            player.TakeDamage(Damage);
+            IsAlive = false;
+            Destroy(gameObject);
+            return;
+        }
+
+        if (collision.CompareTag("Base"))
+        {
+            BaseManager baseScript = collision.GetComponent<BaseManager>();
+            if (baseScript != null)
+                baseScript.TakeDamage(Damage);
+            IsAlive = false;
+            Destroy(gameObject);
+        }
     }
 }
