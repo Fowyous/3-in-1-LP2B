@@ -9,6 +9,7 @@ TagManager:
   - panier
   - joueur
   - Base
+  - Asteroid
   layers:
   - Default
   - TransparentFX
