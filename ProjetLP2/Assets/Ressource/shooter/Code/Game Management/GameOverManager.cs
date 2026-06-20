@@ -64,6 +64,13 @@ public class GameOverManager : MonoBehaviour
     );
   }
 
+  public void MainMenu()
+  {
+    Time.timeScale = 1f; // Resume time
+
+    UnityEngine.SceneManagement.SceneManager.LoadScene("Acceuil");
+  }
+
   public void QuitGame()
   {
     Time.timeScale = 1f; // Resume time before quitting

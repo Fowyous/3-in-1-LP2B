@@ -49,7 +49,9 @@ public class RespawnManager : MonoBehaviour
   {
     if (!CanRespawn && !IsInGameOver)
     {
+      //prevents multiple gameover calls 
       IsInGameOver = true;
+
       // Base is destroyed: no more respawns, trigger game over instead
       Debug.Log("RespawnManager: No respawn available. Base is destroyed. GAME OVER.");
       if (GameOverManager.Instance != null)
