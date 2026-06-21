@@ -72,7 +72,7 @@ public class AsteroidSpawner : MonoBehaviour
 
         Vector3 spawnPosition = new Vector3(
             ShooterConstants.GameLimit.x + 2f,
-            Random.Range(-ShooterConstants.GameLimit.y, ShooterConstants.GameLimit.y),
+            Random.Range(-ShooterConstants.GameLimit.yBottom, ShooterConstants.GameLimit.yTop),
             0f
         );
 
