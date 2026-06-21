@@ -65,6 +65,7 @@ public class SniperMonster : MonoBehaviour, IEnemy
         if (Health <= 0 && IsAlive)
         {
             IsAlive = false;
+            if (ScoreManager.Instance != null) ScoreManager.Instance.AddScore(2f); // M6 base health value
             Destroy(gameObject);
         }
     }

@@ -53,6 +53,7 @@ public class EnergyBallThrower : MonoBehaviour, IEnemy
         {
             IsAlive = false;
             if (chargeEffect != null) chargeEffect.StopChargeEffect();
+            if (ScoreManager.Instance != null) ScoreManager.Instance.AddScore(4f); // M5 base health value
             DestroyActiveLaser();
             Destroy(gameObject);
         }

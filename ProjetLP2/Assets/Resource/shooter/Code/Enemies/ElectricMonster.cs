@@ -50,6 +50,7 @@ public class ElectricMonster : MonoBehaviour, IEnemy
         if (Health <= 0 && IsAlive)
         {
             IsAlive = false;
+            if (ScoreManager.Instance != null) ScoreManager.Instance.AddScore(3f); // M1 base health value
             Destroy(gameObject);
         }
     }
