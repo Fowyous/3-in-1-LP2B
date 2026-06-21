@@ -71,6 +71,9 @@ public class FlameThrower : MonoBehaviour, IEnemy
     }
   }
 
+  ///<summary>
+  ///Applies damage and handles death, including score attribution.
+  ///</summary>
   public void TakeDamage(float damage)
   {
     if (!IsAlive) return;
@@ -78,6 +81,7 @@ public class FlameThrower : MonoBehaviour, IEnemy
     if (Health <= 0)
     {
       IsAlive = false;
+      if (ScoreManager.Instance != null) ScoreManager.Instance.AddScore(1f); // M2 base health value
       Destroy(gameObject);
     }
   }
