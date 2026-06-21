@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 /// <summary>
 /// "Hard" brick variant: takes 2 hits to destroy, switching between a
@@ -8,7 +7,6 @@ using UnityEngine.Serialization;
 /// </summary>
 public class HardBrick : BrickParent
 {
-    [FormerlySerializedAs("NormalSprite")]
     [SerializeField] private Sprite normalSprite;
     [SerializeField] private Sprite damageSprite;
 
@@ -63,7 +61,7 @@ public class HardBrick : BrickParent
             Debug.Log("Points gagnés : " + pointValue);
             BrickSpawner.setCoefficient(coefficient);
             BrickSpawner.Instance.AddScore(pointValue);
-            controllerTexte.editNumberHard(1);
+            GameOverControllerBrickBreaker.editNumberHard(1);
             Destroy(gameObject);
         }
     }

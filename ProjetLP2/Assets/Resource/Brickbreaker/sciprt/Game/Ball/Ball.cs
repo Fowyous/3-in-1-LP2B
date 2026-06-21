@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 /// <summary>
 /// Controls a single ball in BrickBreaker: movement, bouncing off bricks/walls,
@@ -21,7 +20,6 @@ public class Ball : MonoBehaviour
     public Vector2 direction;
     public bool    countsAsLife = true;
 
-    [FormerlySerializedAs("loosPoint")]
     public AudioClip losePoint; 
     private AudioSource audioSource;
 

@@ -105,7 +105,7 @@ public class Home : MonoBehaviour
     private IEnumerator loadMiniUfoAttackRule()
     {
         yield return StartCoroutine(playSong());
-        AsyncOperation load = SceneManager.LoadSceneAsync("Shooter");
+        AsyncOperation load = SceneManager.LoadSceneAsync("ruleShooter");
         while (!load.isDone)
         {
             yield return null;

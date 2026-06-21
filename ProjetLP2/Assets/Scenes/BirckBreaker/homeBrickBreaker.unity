@@ -907,7 +907,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b11117f51850ea4f80132fa9410dc12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ControlAcceui
-  entrerSong: {fileID: 8300000, guid: 3041a2a0db330244d8011d998a3cc3bb, type: 3}
+  enterSong: {fileID: 8300000, guid: 3041a2a0db330244d8011d998a3cc3bb, type: 3}
 --- !u!82 &490035371
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1139,7 +1139,7 @@ MonoBehaviour:
   - {fileID: 689256108565384799, guid: a9f4640d06a8ddc4bba64fc4776e1e3c, type: 3}
   scoreText: {fileID: 0}
   levelText: {fileID: 0}
-  PointWingSong: {fileID: 8300000, guid: f95e34224a15c9d4ba1184748e5328e6, type: 3}
+  pointWinSong: {fileID: 8300000, guid: f95e34224a15c9d4ba1184748e5328e6, type: 3}
   rows: 10
   cols: 11
   blockWidth: 1.76
@@ -1294,12 +1294,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpawnerBall
   ballPrefab: {fileID: 4907802335246445828, guid: a169e757f976828448cb54c6d9592719, type: 3}
-  maxLivesDefault: 3
-  respawnDelay: 1.5
   livesText: {fileID: 0}
   paddle: {fileID: 1846679591}
-  isEstetique: 1
-  loosLifeSong: {fileID: 8300000, guid: 7fd48d26fa48c7c4daf4d138e7c994ff, type: 3}
+  maxLivesDefault: 3
+  respawnDelay: 1.5
+  isAesthetic: 1
+  loseLifeSong: {fileID: 8300000, guid: 7fd48d26fa48c7c4daf4d138e7c994ff, type: 3}
 --- !u!4 &902149745
 Transform:
   m_ObjectHideFlags: 0

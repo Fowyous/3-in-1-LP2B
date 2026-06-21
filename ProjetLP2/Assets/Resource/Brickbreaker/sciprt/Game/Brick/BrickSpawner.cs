@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 /// <summary>
@@ -24,7 +23,6 @@ public class BrickSpawner : MonoBehaviour
     private static int level;
 
     [Header("Audio")]
-    [FormerlySerializedAs("PointWingSong")]
     public AudioClip pointWinSong;
     private static AudioSource audioSource;
 

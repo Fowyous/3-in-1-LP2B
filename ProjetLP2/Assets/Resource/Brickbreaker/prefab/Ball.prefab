@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4030782612617920911}
   - component: {fileID: 4319087892675521465}
-  - component: {fileID: 4206474218958122297}
   - component: {fileID: 5855338701632388788}
   - component: {fileID: 1120277027285966184}
+  - component: {fileID: 4206474218958122297}
   - component: {fileID: 6215726708273376078}
   m_Layer: 0
   m_Name: Ball
@@ -95,19 +95,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!114 &4206474218958122297
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4907802335246445828}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 978bd8653588bde4f88619bc7a6b9200, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Ball
-  countsAsLife: 1
 --- !u!58 &5855338701632388788
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -171,6 +158,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &4206474218958122297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4907802335246445828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 978bd8653588bde4f88619bc7a6b9200, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Ball
+  direction: {x: 0, y: 0}
+  countsAsLife: 1
+  losePoint: {fileID: 8300000, guid: 7fd48d26fa48c7c4daf4d138e7c994ff, type: 3}
 --- !u!82 &6215726708273376078
 AudioSource:
   m_ObjectHideFlags: 0

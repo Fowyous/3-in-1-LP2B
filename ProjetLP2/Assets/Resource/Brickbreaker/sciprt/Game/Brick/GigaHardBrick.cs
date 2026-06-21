@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 /// <summary>
 /// "Giga Hard" brick variant: starts with much higher health than a
@@ -8,7 +7,6 @@ using UnityEngine.Serialization;
 /// </summary>
 public class GigaHardBrick : BrickParent
 {
-    [FormerlySerializedAs("Sprite")]
     [SerializeField] private Sprite[] damageSprites;
 
     private SpriteRenderer spriteRenderer;
@@ -62,7 +60,7 @@ public class GigaHardBrick : BrickParent
             Debug.Log("Points gagnés : " + pointValue);
             BrickSpawner.setCoefficient(coefficient);
             BrickSpawner.Instance.AddScore(pointValue);
-            controllerTexte.editNumberHard(1);
+            GameOverControllerBrickBreaker.editNumberHard(1);
             Destroy(gameObject);
         }
     }

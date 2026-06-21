@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 
 /// <summary>
 /// Spawns and manages the player's ball(s) in BrickBreaker: initial spawn,
@@ -21,12 +20,10 @@ public class SpawnerBall : MonoBehaviour
     [Header("Stats")]
     [SerializeField] private int   maxLivesDefault;
     [SerializeField] private float respawnDelay;
-
-    [FormerlySerializedAs("isEstetique")]
+    
     [SerializeField] private bool isAesthetic;
 
     [Header("Audio")]
-    [FormerlySerializedAs("loosLifeSong")]
     public AudioClip loseLifeSong;
     private static AudioSource audioSource;
 

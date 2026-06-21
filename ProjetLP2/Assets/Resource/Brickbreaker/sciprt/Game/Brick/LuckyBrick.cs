@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 /// <summary>
 /// "Lucky" brick variant: changes sprite as it takes damage and, once
@@ -8,7 +7,6 @@ using UnityEngine.Serialization;
 /// </summary>
 public class LuckyBrick : BrickParent
 {
-    [FormerlySerializedAs("spriteBlock")]
     [SerializeField] private Sprite[] damageSprites; 
 
     private SpriteRenderer spriteRenderer;
@@ -63,7 +61,7 @@ public class LuckyBrick : BrickParent
             Debug.Log("Points gagnés : " + pointValue);
             BrickSpawner.setCoefficient(coefficient);
             BrickSpawner.Instance.AddScore(pointValue);
-            controllerTexte.editNumberLucky(1);
+            GameOverControllerBrickBreaker.editNumberLucky(1);
             TriggerRandomEffect();
             Destroy(gameObject);
         }

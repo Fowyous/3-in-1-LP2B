@@ -19,6 +19,6 @@ public class SimpleBrick : BrickParent
     protected override void OnBrickDestroyed()
     {
         Debug.Log("Points gagnés : " + pointValue);
-        controllerTexte.editNumberSimple(1);
+        GameOverControllerBrickBreaker.editNumberSimple(1);
     }
 }
