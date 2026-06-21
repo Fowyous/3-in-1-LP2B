@@ -79,7 +79,7 @@ public class SpawnerBall : MonoBehaviour
 
         if (currentLives <= 0)
         {
-            StartCoroutine(LoadGameOver());
+            SceneNavigator.Instance.LoadScene(SceneNames.BRICK_BREAKER_GAME_OVER);
         }
         else if (activeBalls.Count == 0)
         {
@@ -146,13 +146,7 @@ public class SpawnerBall : MonoBehaviour
 
         return costLife;
     }
-
-    private IEnumerator LoadGameOver()
-    {
-        AsyncOperation load = SceneManager.LoadSceneAsync("gameOverBrickBreaker");
-        while (!load.isDone) yield return null;
-    }
-
+    
     /// <summary>Restores up to "amount" lives, capped at maxLives.</summary>
     public static void healLives(int amount)
     {

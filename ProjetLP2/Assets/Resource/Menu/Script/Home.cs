@@ -1,117 +1,50 @@
-using System.Collections;
-using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Controls the global main menu: navigation to each mini-game's home/rules
+/// screen (with a click sound before each transition) and quitting the app.
+/// These public methods are meant to be wired directly to UI button OnClick events.
+/// </summary>
 public class Home : MonoBehaviour
 {
-    public AudioClip songClique;
+    public AudioClip clickSound;
     private AudioSource audioSource;
     
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Start()
     {
         audioSource = GetComponent<AudioSource>();
     }
 
-    private IEnumerator playSong()
-    {
-        audioSource.PlayOneShot(songClique);
-        if (songClique != null)
-            yield return new WaitForSeconds(songClique.length);
-    }
-    
     public void startAppleCatcher()
     {
-        StartCoroutine(loadAppleCatcher());
+        SceneNavigator.Instance.LoadSceneWithSound(SceneNames.APPLE_CATCHER_HOME, clickSound);
     }
-    
-    private IEnumerator loadAppleCatcher()
-    {
-        yield return StartCoroutine(playSong());
-        AsyncOperation load = SceneManager.LoadSceneAsync("homeAppleCatcher");
-        while (!load.isDone)
-        {
-            yield return null;
-        }
-    }
-    
+
     public void startAppleCatcherRule()
     {
-        StartCoroutine(loadAppleCatcherRule());
+        SceneNavigator.Instance.LoadSceneWithSound(SceneNames.APPLE_CATCHER_RULE, clickSound);
     }
-    
-    private IEnumerator loadAppleCatcherRule()
-    {
-        yield return StartCoroutine(playSong());
-        AsyncOperation load = SceneManager.LoadSceneAsync("ruleAppleCatcher");
-        while (!load.isDone)
-        {
-            yield return null;
-        }
-    }
-    
+
     public void startBrickBreaker()
     {
-        StartCoroutine(loadBrickBreaker());
+        SceneNavigator.Instance.LoadSceneWithSound(SceneNames.BRICK_BREAKER_HOME, clickSound);
     }
-    
-    private IEnumerator loadBrickBreaker()
-    {
-        yield return StartCoroutine(playSong());
-        AsyncOperation load = SceneManager.LoadSceneAsync("homeBrickBreaker");
-        while (!load.isDone)
-        {
-            yield return null;
-        }
-    }
-    
+
     public void startBrickBreakerRule()
     {
-        StartCoroutine(loadBrickBreakerRule());
+        SceneNavigator.Instance.LoadSceneWithSound(SceneNames.BRICK_BREAKER_RULE, clickSound);
     }
-    
-    private IEnumerator loadBrickBreakerRule()
-    {
-        yield return StartCoroutine(playSong());
-        AsyncOperation load = SceneManager.LoadSceneAsync("ruleBrickBreaker");
-        while (!load.isDone)
-        {
-            yield return null;
-        }
-    }
-    
+
     public void startMiniUfoAttack()
     {
-        StartCoroutine(loadMiniUfoAttack());
+        SceneNavigator.Instance.LoadSceneWithSound(SceneNames.MINI_UFO_ATTACK_GAME, clickSound);
     }
-    
-    private IEnumerator loadMiniUfoAttack()
-    {
-        yield return StartCoroutine(playSong());
-        AsyncOperation load = SceneManager.LoadSceneAsync("Shooter");
-        while (!load.isDone)
-        {
-            yield return null;
-        }
-    }
-    
+
     public void startMiniUfoAttackRule()
     {
-        StartCoroutine(loadMiniUfoAttackRule());
+        SceneNavigator.Instance.LoadSceneWithSound(SceneNames.MINI_UFO_ATTACK_RULE, clickSound);
     }
-    
-    private IEnumerator loadMiniUfoAttackRule()
-    {
-        yield return StartCoroutine(playSong());
-        AsyncOperation load = SceneManager.LoadSceneAsync("ruleShooter");
-        while (!load.isDone)
-        {
-            yield return null;
-        }
-    }
-    
+
     public void quitApplication()
     {
         Application.Quit();

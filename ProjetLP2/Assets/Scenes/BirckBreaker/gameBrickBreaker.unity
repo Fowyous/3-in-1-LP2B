@@ -1229,7 +1229,7 @@ MonoBehaviour:
   - {fileID: 689256108565384799, guid: a9f4640d06a8ddc4bba64fc4776e1e3c, type: 3}
   scoreText: {fileID: 533865279}
   levelText: {fileID: 1580606838}
-  PointWingSong: {fileID: 8300000, guid: f95e34224a15c9d4ba1184748e5328e6, type: 3}
+  pointWinSong: {fileID: 8300000, guid: f95e34224a15c9d4ba1184748e5328e6, type: 3}
   rows: 10
   cols: 11
   blockWidth: 1.76
@@ -2160,12 +2160,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpawnerBall
   ballPrefab: {fileID: 4907802335246445828, guid: a169e757f976828448cb54c6d9592719, type: 3}
-  maxLivesDefault: 3
-  respawnDelay: 1.5
   livesText: {fileID: 408601961}
   paddle: {fileID: 417791581}
-  isEstetique: 0
-  loosLifeSong: {fileID: 8300000, guid: 7fd48d26fa48c7c4daf4d138e7c994ff, type: 3}
+  maxLivesDefault: 3
+  respawnDelay: 1.5
+  isAesthetic: 0
+  loseLifeSong: {fileID: 8300000, guid: 7fd48d26fa48c7c4daf4d138e7c994ff, type: 3}
 --- !u!4 &2102543090
 Transform:
   m_ObjectHideFlags: 0

@@ -240,7 +240,6 @@ public class BrickSpawner : MonoBehaviour
         }
         else if (level % 5 == 0)
         {
-            // Force a "themed" level made entirely of one brick type.
             int roll = Random.Range(0, 5);
             switch (roll)
             {

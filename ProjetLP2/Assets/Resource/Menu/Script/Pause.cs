@@ -1,30 +1,21 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Lets the player press Escape during gameplay to return to the main menu.
+/// </summary>
 public class Pause : MonoBehaviour
 {
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (Keyboard.current.escapeKey.wasPressedThisFrame)
         {
             startHome();
         }
     }
-    
+
     public void startHome()
     {
-        StartCoroutine(loadHome());
-    }
-    
-    private IEnumerator loadHome()
-    {
-        AsyncOperation load = SceneManager.LoadSceneAsync("Home");
-        while (!load.isDone)
-        {
-            yield return null;
-        }
+        SceneNavigator.Instance.LoadScene(SceneNames.MAIN_MENU);
     }
 }

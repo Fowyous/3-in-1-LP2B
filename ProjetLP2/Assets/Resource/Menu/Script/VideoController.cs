@@ -1,28 +1,35 @@
 using UnityEngine;
-using UnityEngine.Video;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
+/// <summary>
+/// Drives a rules-page tutorial video: play/pause toggle and a scrub slider
+/// kept in sync with playback (without fighting the user's own dragging).
+/// </summary>
 public class VideoController : MonoBehaviour
 {
-    public VideoPlayer videoPlayer; 
-    public Slider timeSlider; 
+    public VideoPlayer videoPlayer;
+    public Slider timeSlider;
     public bool isPlaying = false;
-    void Start()
+
+    private void Start()
     {
         if (videoPlayer != null && timeSlider != null)
         {
-            timeSlider.maxValue = (float)videoPlayer.length;
+            timeSlider.maxValue        =  (float)videoPlayer.length;
             videoPlayer.loopPointReached += OnVideoEnded;
         }
     }
 
-    void Update()
+    private void Update()
     {
         if (videoPlayer != null && timeSlider != null && videoPlayer.isPlaying)
         {
-            timeSlider.value = (float)videoPlayer.time;
+            timeSlider.SetValueWithoutNotify((float)videoPlayer.time);
         }
     }
+
+    /// <summary>Called when the user drags the slider; seeks the video to match.</summary>
     public void OnSliderValueChanged()
     {
         if (videoPlayer != null)
@@ -31,6 +38,7 @@ public class VideoController : MonoBehaviour
         }
     }
 
+    /// <summary>Toggles between playing and pausing the video.</summary>
     public void TogglePlayPause()
     {
         if (videoPlayer != null)
@@ -47,10 +55,11 @@ public class VideoController : MonoBehaviour
         }
     }
 
+    /// <summary>Resets playback state and the slider once the video reaches its end.</summary>
     private void OnVideoEnded(VideoPlayer vp)
     {
         isPlaying = false;
-        timeSlider.value = 0f;
+        timeSlider.SetValueWithoutNotify(0f);
         videoPlayer.time = 0f;
     }
 }
