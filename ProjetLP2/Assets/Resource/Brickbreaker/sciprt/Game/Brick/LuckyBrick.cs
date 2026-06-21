@@ -9,22 +9,10 @@ using UnityEngine.Serialization;
 public class LuckyBrick : BrickParent
 {
     [FormerlySerializedAs("spriteBlock")]
-    [SerializeField] private Sprite[] damageSprites; // Index 0 = lowest health sprite, last index = full health sprite
+    [SerializeField] private Sprite[] damageSprites; 
 
     private SpriteRenderer spriteRenderer;
-
-    /// <summary>The random effects a Lucky brick can grant when destroyed.</summary>
-    private enum LuckyEffect
-    {
-        BonusMaxHealth         = 0, // +1 max life
-        BonusPaddleSpeed       = 1, // Temporary paddle speed boost
-        BonusPaddleSize        = 2, // Temporary paddle size boost
-        BonusOneShot            = 3, // Temporary one-shot ball
-        MalusBallSpeedIncrease = 4, // Temporary ball speed increase
-        MalusHealingBall       = 5, // Temporary healing ball (heals bricks instead of damaging them)
-        Duplicate               = 6  // Duplicates the active ball
-    }
-
+    
     protected override void Start()
     {
         base.Start();
