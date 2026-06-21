@@ -1,48 +1,26 @@
-using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-
+/// <summary>
+/// Handles scene transitions for the Apple Catcher mini-game (home screen,
+/// rules screen, and back to the global main menu). These public methods
+/// are meant to be wired directly to UI button OnClick events.
+/// </summary>
 public class NavigationAppleCatcher : MonoBehaviour
 {
     public void startAppleCatcher()
     {
-        StartCoroutine(loadAppleCatcher());
+        SceneNavigator.Instance.LoadScene(SceneNames.APPLE_CATCHER_HOME);
     }
-
-    private IEnumerator loadAppleCatcher()
-    {
-        AsyncOperation load = SceneManager.LoadSceneAsync("homeAppleCatcher");
-        while (!load.isDone)
-        {
-            yield return null;
-        }
-    }
+    
 
     public void startAppleCatcherRule()
     {
-        StartCoroutine(loadAppleCatcherRule());
+        SceneNavigator.Instance.LoadScene(SceneNames.APPLE_CATCHER_RULE);
     }
     
-    private IEnumerator loadAppleCatcherRule()
-    {
-        AsyncOperation load = SceneManager.LoadSceneAsync("ruleAppleCatcher");
-        while (!load.isDone)
-        {
-            yield return null;
-        }
-    }
     
     public void startHome()
     {
-        StartCoroutine(loadHome());
+        SceneNavigator.Instance.LoadScene(SceneNames.MAIN_MENU);
     }
     
-    private IEnumerator loadHome()
-    {
-        AsyncOperation load = SceneManager.LoadSceneAsync("Home");
-        while (!load.isDone)
-        {
-            yield return null;
-        }
-    }
 }

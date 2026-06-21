@@ -1,8 +1,10 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Controls the Apple Catcher "press any key to start" home screen: plays a
+/// sound and transitions to the main game scene on the first key press.
+/// </summary>
 public class HomeControllerAppleCatcher : MonoBehaviour
 {
     // Update is called once per frame
@@ -10,16 +12,7 @@ public class HomeControllerAppleCatcher : MonoBehaviour
     {
         if (Keyboard.current.anyKey.wasPressedThisFrame && !Keyboard.current.escapeKey.isPressed)
         {
-            StartCoroutine(loadGameAppleCatcher());
-        }
-    }
-    
-    private IEnumerator loadGameAppleCatcher()
-    {
-        AsyncOperation load = SceneManager.LoadSceneAsync("gameAppleCatcher");
-        while (!load.isDone)
-        {
-            yield return null;
+            SceneNavigator.Instance.LoadScene(SceneNames.APPLE_CATCHER_GAME);
         }
     }
 }

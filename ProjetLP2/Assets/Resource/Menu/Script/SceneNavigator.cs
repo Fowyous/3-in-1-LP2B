@@ -31,13 +31,7 @@ public class SceneNavigator : MonoBehaviour
     {
         StartCoroutine(LoadSceneWithSoundRoutine(sceneName, clip));
     }
-
-    /// <summary>Plays a sound and waits for it to finish, if both the source and the clip are available.</summary>
-    public void PlaySound(AudioClip clip)
-    {
-        StartCoroutine(PlaySoundRoutine(clip));
-    }
-
+    
     private IEnumerator LoadSceneRoutine(string sceneName)
     {
         AsyncOperation load = SceneManager.LoadSceneAsync(sceneName);

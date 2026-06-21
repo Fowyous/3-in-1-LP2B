@@ -18,7 +18,7 @@ public class BonusManager : MonoBehaviour
     {
         public string Name;
         public float  TimeRemaining;
-        public bool   IsInstant; 
+        public bool   IsInstant;
 
         public ActiveBonus(string name, float duration, bool isInstant = false)
         {
@@ -58,7 +58,6 @@ public class BonusManager : MonoBehaviour
             activeBonuses.Add(new ActiveBonus(name, duration));
     }
 
-    /// <summary>Rebuilds the bonus list text, one line per active bonus with its remaining time.</summary>
     private void RefreshUI()
     {
         if (bonusText == null) return;

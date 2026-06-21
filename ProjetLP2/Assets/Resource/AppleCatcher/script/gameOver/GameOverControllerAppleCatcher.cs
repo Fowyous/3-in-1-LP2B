@@ -1,9 +1,13 @@
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// Displays the final score and run statistics (apple dcatched by type)
+/// on the Game Over screen, then resets the score for the next playthrough.
+/// </summary>
 public class GameOverControllerAppleCatcher : MonoBehaviour
 {
-    public TextMeshPro TextStatistique;
+    public TextMeshPro statisticsText;
 
     private static int numberApple = 0;
     private static int numberCatchGolden = 0;
@@ -24,11 +28,11 @@ public class GameOverControllerAppleCatcher : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        TextStatistique.SetText("Apple catch : " + numberApple + "\n" + 
-                                "Angel Apple Catch: " + numberCatchAngel + "\n" +
-                                "Golden Apple Catch: " + numberCatchGolden + "\n" +
-                                "Pourri Apple Catch: " + numberCatchPourrie + "\n" +
-                                "Tronion Apple Catch: " + numberCatchTronion + "\n");
+        statisticsText.SetText("Apple catch : " + numberApple + "\n" + 
+                               "Angel Apple Catch: " + numberCatchAngel + "\n" +
+                               "Golden Apple Catch: " + numberCatchGolden + "\n" +
+                               "Pourri Apple Catch: " + numberCatchPourrie + "\n" +
+                               "Tronion Apple Catch: " + numberCatchTronion + "\n");
     }
     
     public static void editNumberApple(int number)
