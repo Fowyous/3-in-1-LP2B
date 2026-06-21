@@ -5,29 +5,23 @@ using UnityEngine.SceneManagement;
 
 public class Pause : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
         if (Keyboard.current.escapeKey.wasPressedThisFrame)
         {
-            StartAcceuil();
+            startHome();
         }
     }
     
-    public void StartAcceuil()
+    public void startHome()
     {
-        StartCoroutine(LoadAcceuil());
+        StartCoroutine(loadHome());
     }
     
-    private IEnumerator LoadAcceuil()
+    private IEnumerator loadHome()
     {
-        AsyncOperation load = SceneManager.LoadSceneAsync("Acceuil");
+        AsyncOperation load = SceneManager.LoadSceneAsync("Home");
         while (!load.isDone)
         {
             yield return null;
