@@ -27,12 +27,7 @@ public class StartMenuManager : MonoBehaviour
 
   void Update()
   {
-    // Check for keypress while time is paused  
-    if (Keyboard.current.anyKey.wasPressedThisFrame)
-    {
-      keyPressed = true;
-      Debug.Log("StartMenuManager : key pressed");
-    }
+
   }
 
 
@@ -60,22 +55,6 @@ public class StartMenuManager : MonoBehaviour
     // Resume game     
     StartMenuCanvas.gameObject.SetActive(false);
     Time.timeScale = 1f;
-  }
-  IEnumerator FadeBlink()
-  {
-    while (!keyPressed)
-    {
-      yield return StartCoroutine(FadeTo(originalColor.a, 0f, fadeDuration)); // Fade out 
-      yield return StartCoroutine(FadeTo(0f, originalColor.a, fadeDuration)); // Fade in 
-    }
-
-
-    Debug.Log("StartMenuManager : game start");
-    // Resume the game    
-    Time.timeScale = 1f;
-    StartMenuCanvas.gameObject.SetActive(false);//hide menu UI
-
-
   }
   IEnumerator FadeTo(float startAlpha, float targetAlpha, float duration)
   {
