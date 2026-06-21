@@ -20,6 +20,11 @@ public class UFO : MonoBehaviour
   [SerializeField] private Animator animator;
   private int stunHash;
 
+  [Header("Audio")]
+  [SerializeField] private AudioClip shootSound;
+
+  private AudioSource audioSource;
+
   public float MaxHealth => maxHealth;
   public float CurrentHealth { get; private set; }
 
@@ -49,6 +54,9 @@ public class UFO : MonoBehaviour
 
     // For the Energyball damage
     stunHash = Animator.StringToHash("IsStunned");
+
+    // Taking the audio component
+    audioSource = GetComponent<AudioSource>();
   }
 
   void Update()
@@ -80,6 +88,7 @@ public class UFO : MonoBehaviour
   {
     if (Keyboard.current.spaceKey.isPressed && Time.time >= nextFireTime)
     {
+      PlaySound(shootSound);
       ShootLaser();
       nextFireTime = Time.time + fireRate;
     }
@@ -184,5 +193,10 @@ public class UFO : MonoBehaviour
       yield return null;
     }
     _isBurning = false;
+  }
+
+  private void PlaySound(AudioClip clip)
+  {
+    audioSource.PlayOneShot(clip);
   }
 }
