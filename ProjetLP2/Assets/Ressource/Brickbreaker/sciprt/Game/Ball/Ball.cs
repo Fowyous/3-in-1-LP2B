@@ -1,57 +1,77 @@
+using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
 
+/// <summary>
+/// Controls a single ball in BrickBreaker: movement, bouncing off bricks/walls,
+/// out-of-bounds destruction, and the temporary power-up states (one-shot,
+/// healing, speed boost) that can be activated on it.
+/// </summary>
 public class Ball : MonoBehaviour
 {
     private const float DeathThresholdY = -8f;
     private const float DeathThresholdX = 13f;
-    private bool isDead = false;
-    private float speed;
-    public Vector2 direction;
-    private Rigidbody2D balle;
-    private int lastBounceFrame = -1;
-    public  AudioClip loosPoint;
-    private static AudioSource audioSource;
+
     public static Ball Instance { get; private set; }
-    public bool countsAsLife = true;
-
-
+    
     public static bool IsOneShot     { get; private set; } = false;
     public static bool IsHealingBall { get; private set; } = false;
-    void Awake()
+
+    public Vector2 direction;
+    public bool    countsAsLife = true;
+
+    [FormerlySerializedAs("loosPoint")]
+    public AudioClip losePoint; 
+    private AudioSource audioSource;
+
+    private Rigidbody2D ballRigidbody;
+    private float speed;
+    private bool isDead = false;
+    private int lastBounceFrame = -1;
+
+    private void Awake()
     {
         Instance = this;
     }
+
     protected virtual void Start()
     {
-        balle = GetComponent<Rigidbody2D>();
-        balle.bodyType = RigidbodyType2D.Kinematic;
-        speed = 28f;
+        ballRigidbody          = GetComponent<Rigidbody2D>();
+        ballRigidbody.bodyType = RigidbodyType2D.Kinematic;
+        speed                  = 28f;
+
         if (direction == Vector2.zero)
             direction = new Vector2(0f, -1f).normalized;
+
         audioSource = GetComponent<AudioSource>();
     }
 
-    void Update()
+    private void Update()
     {
-        if (!isDead && transform.position.y < DeathThresholdY || transform.position.x > DeathThresholdX || transform.position.x < -DeathThresholdX)
+        bool isOutOfBounds = transform.position.y < DeathThresholdY
+                           || transform.position.x > DeathThresholdX
+                           || transform.position.x < -DeathThresholdX;
+
+        if (!isDead && isOutOfBounds)
         {
             isDead = true;
             Destroy(gameObject);
             return;
         }
 
-        balle.MovePosition(balle.position + direction * (speed * Time.deltaTime));
+        ballRigidbody.MovePosition(ballRigidbody.position + direction * (speed * Time.deltaTime));
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (Time.frameCount == lastBounceFrame) return;
 
         lastBounceFrame = Time.frameCount;
-        direction = Vector2.Reflect(direction, collision.contacts[0].normal).normalized;
+        direction       = Vector2.Reflect(direction, collision.contacts[0].normal).normalized;
     }
-    
+
+    /// <summary>Temporarily lets this ball destroy any brick in a single hit.</summary>
     public void ActivateOneShot(float duration)
     {
         StartCoroutine(TimedFlag(
@@ -60,6 +80,7 @@ public class Ball : MonoBehaviour
             duration));
     }
 
+    /// <summary>Temporarily turns this ball into a healing ball (restores brick health instead of damaging it).</summary>
     public void ActivateHealingBall(float duration)
     {
         StartCoroutine(TimedFlag(
@@ -68,32 +89,35 @@ public class Ball : MonoBehaviour
             duration));
     }
 
+    /// <summary>Temporarily increases this ball's speed by the given percentage.</summary>
     public void ActivateBallSpeedBoost(float percent, float duration)
     {
         StartCoroutine(TimedMultiplier(percent, duration));
     }
 
-    private IEnumerator TimedFlag(System.Action set, System.Action reset, float duration)
+    /// <summary>Sets a flag on, waits, then sets it back off after the given duration.</summary>
+    private IEnumerator TimedFlag(Action set, Action reset, float duration)
     {
         set();
         yield return new WaitForSeconds(duration);
         reset();
     }
 
+    /// <summary>Temporarily boosts speed by a percentage, then removes exactly that bonus afterward.</summary>
     private IEnumerator TimedMultiplier(float percent, float duration)
     {
-        float speedBonus = speed *(percent / 100f);
+        float speedBonus = speed * (percent / 100f);
         speed += speedBonus;
         yield return new WaitForSeconds(duration);
         speed -= speedBonus;
     }
-    
+
     public void SetDirection(Vector2 dir)
     {
         direction = dir.normalized;
     }
-    
-    void OnDestroy()
+
+    private void OnDestroy()
     {
         if (SpawnerBall.Instance != null)
             SpawnerBall.Instance.NotifyBallDestroyed(gameObject, countsAsLife);

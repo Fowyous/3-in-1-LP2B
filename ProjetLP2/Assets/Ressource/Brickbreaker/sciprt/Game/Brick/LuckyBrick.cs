@@ -1,56 +1,74 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class LuckyBrick : MonoBehaviour
+/// <summary>
+/// "Lucky" brick variant: changes sprite as it takes damage and, once
+/// destroyed, grants the player a random bonus (or malus) picked from
+/// a fixed set of effects.
+/// </summary>
+public class LuckyBrick : BrickParent
 {
-    private int healthLucky = 4;
-    private static int pointValue   = 50;
-    private static int coefficient  = 5;
-    public Sprite[] spriteBlock;
-    private SpriteRenderer blockSprite;
-    
-    private const int BonusMaxhealt  = 0;
-    private const int BonusSpeed = 1;
-    private const int BonusSize   = 2;
-    private const int BonusOneShot  = 3;
-    private const int MalusBallSpeedIncrease = 4;
-    private const int MalusHealingBlock = 5;
-    private const int Duplicate = 6;
+    [FormerlySerializedAs("spriteBlock")]
+    [SerializeField] private Sprite[] damageSprites; // Index 0 = lowest health sprite, last index = full health sprite
 
-    private void Start()
+    private SpriteRenderer spriteRenderer;
+
+    /// <summary>The random effects a Lucky brick can grant when destroyed.</summary>
+    private enum LuckyEffect
     {
-        blockSprite = GetComponent<SpriteRenderer>();
+        BonusMaxHealth         = 0, // +1 max life
+        BonusPaddleSpeed       = 1, // Temporary paddle speed boost
+        BonusPaddleSize        = 2, // Temporary paddle size boost
+        BonusOneShot            = 3, // Temporary one-shot ball
+        MalusBallSpeedIncrease = 4, // Temporary ball speed increase
+        MalusHealingBall       = 5, // Temporary healing ball (heals bricks instead of damaging them)
+        Duplicate               = 6  // Duplicates the active ball
     }
-    
-    protected void OnCollisionEnter2D(Collision2D collision)
+
+    protected override void Start()
     {
-        OneShoot();
+        base.Start();
+        health         = 4;
+        pointValue     = 50;
+        coefficient    = 5;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
+    /// <summary>
+    /// Lucky bricks don't use the shared heal-then-damage flow from the
+    /// base class: a healing ball heals them OR a damaging ball damages
+    /// them, never both on the same hit (handled entirely in TakeDamage()).
+    /// </summary>
+    protected override void OnCollisionEnter2D(Collision2D collision)
+    {
+        OneShot();
+
         if (!Ball.IsOneShot)
         {
-            takeDamage();
+            TakeDamage();
         }
     }
 
-    protected void takeDamage()
+    /// <summary>
+    /// Applies damage or healing depending on the ball type, updates the
+    /// brick's sprite to reflect remaining health (clamped to the sprite
+    /// array bounds), and triggers a random bonus/malus on destruction.
+    /// </summary>
+    protected override void TakeDamage()
     {
         if (!Ball.IsHealingBall)
         {
-            healthLucky -= 1;
+            health--;
         }
         else
         {
-            healthLucky += 1;
+            health++;
         }
 
-        if (healthLucky > 0)
+        if (health > 0)
         {
-            if (healthLucky >= 4)
-            {
-                blockSprite.sprite = spriteBlock[3];
-            }
-            else
-            {
-                blockSprite.sprite = spriteBlock[healthLucky - 1];
-            }
+            int spriteIndex = Mathf.Min(health - 1, damageSprites.Length - 1);
+            spriteRenderer.sprite = damageSprites[spriteIndex];
         }
         else
         {
@@ -58,63 +76,53 @@ public class LuckyBrick : MonoBehaviour
             BrickSpawner.setCoefficient(coefficient);
             BrickSpawner.Instance.AddScore(pointValue);
             controllerTexte.editNumberLucky(1);
-            EditBonusMalus();
+            TriggerRandomEffect();
             Destroy(gameObject);
         }
     }
 
-    private static void EditBonusMalus()
+    /// <summary>Picks one of the 7 possible effects at random and applies it.</summary>
+    private void TriggerRandomEffect()
     {
-        int roll = Random.Range(0, 7);
+        LuckyEffect effect = (LuckyEffect)Random.Range(0, 7);
 
-        switch (roll)
+        switch (effect)
         {
-            case BonusMaxhealt:
+            case LuckyEffect.BonusMaxHealth:
                 SpawnerBall.healMaxLives(1);
                 BonusManager.Instance.Register("+1 Vie", 2f);
                 break;
-            case BonusSpeed:
+
+            case LuckyEffect.BonusPaddleSpeed:
                 Paddle.Instance.BonusSpeed(30f, 3f);
                 BonusManager.Instance.Register("Vitesse Paddle", 3f);
                 break;
-            case BonusSize:
+
+            case LuckyEffect.BonusPaddleSize:
                 Paddle.Instance.BonusSize(50f, 5f);
                 BonusManager.Instance.Register("Taille Paddle", 5f);
                 break;
-            case BonusOneShot:
+
+            case LuckyEffect.BonusOneShot:
                 Ball.Instance.ActivateOneShot(4f);
                 BonusManager.Instance.Register("One Shot", 4f);
                 break;
-            case MalusBallSpeedIncrease:
+
+            case LuckyEffect.MalusBallSpeedIncrease:
                 Ball.Instance.ActivateBallSpeedBoost(40f, 3f);
                 BonusManager.Instance.Register("Balle Rapide", 3f);
                 break;
-            case MalusHealingBlock:
+
+            case LuckyEffect.MalusHealingBall:
                 Ball.Instance.ActivateHealingBall(5f);
                 BonusManager.Instance.Register("Balle Soignante", 5f);
                 break;
-            case Duplicate:
-                bool costLife = SpawnerBall.Instance.DuplicateBall();
-                string label = "";
-                if (costLife)
-                {
-                    label = "Duplication (-1 vie)";
-                }
-                else
-                {
-                    label = "Duplication (gratuite)";
-                }
+
+            case LuckyEffect.Duplicate:
+                bool   costLife = SpawnerBall.Instance.DuplicateBall();
+                string label    = costLife ? "Duplication (-1 vie)" : "Duplication (gratuite)";
                 BonusManager.Instance.Register(label, 2f);
                 break;
-        }
-    }
-
-    protected void OneShoot()
-    {
-        if (Ball.IsOneShot)
-        {
-            BrickSpawner.Instance.AddScore(pointValue);
-            Destroy(gameObject);
         }
     }
 }

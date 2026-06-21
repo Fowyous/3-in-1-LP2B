@@ -1,71 +1,74 @@
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-public class BrickSpawner  : MonoBehaviour 
+/// <summary>
+/// Spawns and manages the grid of bricks for one BrickBreaker level.
+/// Handles random level generation with configurable spawn probabilities
+/// per brick type, difficulty progression over levels, and score/coefficient
+/// tracking.
+/// </summary>
+public class BrickSpawner : MonoBehaviour
 {
     public static BrickSpawner Instance { get; private set; }
 
-    private const int EMPTY  = -1;
-    private const int SIMPLE = 0;
-    private const int HARD   = 1;
-    private const int GIGA_HARD = 2;
-    private const int LUCKY  = 3;
-
     [Header("Prefabs")]
     [SerializeField] private GameObject[] blockArray;
-    [SerializeField]  private TextMeshPro scoreText;
-    [SerializeField] private TextMeshPro levelText;
+    [SerializeField] private TextMeshPro  scoreText;
+    [SerializeField] private TextMeshPro  levelText;
+
     private static int score;
     private static int coefficient;
-    
-    [Header("Song")]
-    [SerializeField] public AudioClip PointWingSong;
-    private static AudioSource audioSource; 
+    private static int level;
 
-    [Header("Taille de la grille")]
+    [Header("Audio")]
+    [FormerlySerializedAs("PointWingSong")]
+    public AudioClip pointWinSong;
+    private static AudioSource audioSource;
+
+    [Header("Grid Size")]
     [SerializeField] private int rows;
     [SerializeField] private int cols;
 
-    [Header("Espacement des blocs")]
+    [Header("Block Spacing")]
     [SerializeField] private float blockWidth  = 1.76f;
     [SerializeField] private float blockHeight = 0.96f;
     [SerializeField] private float startX      = -8.5f;
     [SerializeField] private float startY      =  4.5f;
     private float startZ;
 
-    [Header("Probabilités sur 100")]
+    [Header("Spawn Probabilities (out of 100)")]
     [Range(0, 100)] [SerializeField] private int chanceEmpty;
-    [Range(0, 100)]  private int chanceEmptyTemp;
     [Range(0, 100)] [SerializeField] private int chanceSimple;
-    [Range(0, 100)] private int chanceSimpleTemp;
     [Range(0, 100)] [SerializeField] private int chanceHard;
-    [Range(0, 100)] private int chanceHardTemp;
     [Range(0, 100)] [SerializeField] private int chanceGigaHard;
-    [Range(0, 100)] private int chanceGigaHardTemp;
     [Range(0, 100)] [SerializeField] private int chanceLucky;
-    [Range(0, 100)] private int chanceLuckyTemp;
-    private static int level;
     
-    private bool isEstetique;
-    
+    private int chanceEmptyBackup;
+    private int chanceSimpleBackup;
+    private int chanceHardBackup;
+    private int chanceGigaHardBackup;
+    private int chanceLuckyBackup;
+
+    private bool isAesthetic;
+
     private List<GameObject> activeBlocks = new List<GameObject>();
     private bool levelCleared = false;
 
-    void Awake()
+    private void Awake()
     {
         Instance = this;
     }
 
-    void Start()
+    private void Start()
     {
         score = 0;
         level = 0;
-        
-        isEstetique = SpawnerBall.Instance.getIsEstetique();
-        if (isEstetique)
+
+        isAesthetic = SpawnerBall.Instance.getIsEstetique();
+        if (isAesthetic)
         {
             startZ = 91f;
         }
@@ -75,15 +78,15 @@ public class BrickSpawner  : MonoBehaviour
             scoreText.SetText("score :\n" + score);
             levelText.SetText("level : " + level);
         }
-        
+
         SpawnRandomLevel();
         audioSource = GetComponent<AudioSource>();
     }
 
-    void Update()
+    private void Update()
     {
         if (levelCleared) return;
-
+        
         for (int i = activeBlocks.Count - 1; i >= 0; i--)
         {
             if (activeBlocks[i] == null)
@@ -94,144 +97,133 @@ public class BrickSpawner  : MonoBehaviour
         {
             levelCleared = true;
             level++;
-            if (!isEstetique)
+
+            if (!isAesthetic)
             {
                 levelText.SetText("level : " + level);
             }
+
             if (level % 5 == 0)
             {
-                stockChance();
+                CacheChances();
             }
-            increaseLevel();
+
+            UpdateSpawnChances();
             SpawnerBall.healLives(1);
             SpawnRandomLevel();
+
             if (level % 5 == 0)
             {
-                editChance();
+                RestoreChances();
             }
+
             SpawnerBall.Instance.RespawnBallFree();
         }
     }
-    
+
+    /// <summary>Generates a new random grid of bricks and spawns it.</summary>
     private void SpawnRandomLevel()
     {
         levelCleared = false;
 
-        int[][] grid = GenerateRandomGrid();
+        BrickType[][] grid = GenerateRandomGrid();
         SpawnGrid(grid);
     }
 
-    private int[][] GenerateRandomGrid()
+    /// <summary>Rolls a random brick type for every cell of the grid.</summary>
+    private BrickType[][] GenerateRandomGrid()
     {
-        int[][] grid = new int[rows][];
+        BrickType[][] grid = new BrickType[rows][];
 
         for (int row = 0; row < rows; row++)
         {
-            grid[row] = new int[cols];
+            grid[row] = new BrickType[cols];
             for (int col = 0; col < cols; col++)
             {
-                int type = GetRandomCellType();
-                if (type == -2)
-                {
-                    type = GetRandomCellType();
-                }
-                else
-                {
-                    grid[row][col] = type;
-                }
+                grid[row][col] = GetRandomCellType();
             }
         }
-        
+
         return grid;
     }
 
-    private int GetRandomCellType()
+    /// <summary>Rolls a random brick type for one grid cell, based on the current spawn probabilities.</summary>
+    private BrickType GetRandomCellType()
     {
-        int roll = Random.Range(0, 100);
-        
-        if (-1 < roll && roll <= chanceEmpty)
+        BrickType[] types   = { BrickType.Empty, BrickType.Simple, BrickType.Hard, BrickType.GigaHard, BrickType.Lucky };
+        int[]       chances = { chanceEmpty, chanceSimple, chanceHard, chanceGigaHard, chanceLucky };
+
+        int roll       = Random.Range(0, 100);
+        int cumulative = 0;
+
+        for (int i = 0; i < types.Length; i++)
         {
-            return EMPTY;
+            cumulative += chances[i];
+            if (roll < cumulative)
+                return types[i];
         }
-        else if (chanceEmpty < roll && roll <= chanceEmpty+chanceSimple)
-        {
-            return SIMPLE;
-        }
-        else if (chanceEmpty+chanceSimple < roll &&  roll <= chanceEmpty+chanceSimple+chanceHard)
-        {
-            return HARD;
-        }
-        else if (chanceEmpty + chanceSimple + chanceHard < roll && roll <= chanceEmpty + chanceSimple + chanceHard + chanceGigaHard)
-        {
-            return GIGA_HARD;
-        }
-        else if (chanceEmpty + chanceSimple + chanceHard + chanceGigaHard < roll && roll <= chanceEmpty + chanceSimple + chanceHard + chanceGigaHard + chanceLucky)
-        {
-            return LUCKY;
-        }
-        else
-        {
-            return -2;
-        }
+
+        return BrickType.Empty;
     }
 
-    private void SpawnGrid(int[][] grid)
+    /// <summary>Instantiates one brick prefab per non-empty cell of the grid.</summary>
+    private void SpawnGrid(BrickType[][] grid)
     {
         for (int row = 0; row < grid.Length; row++)
         {
             for (int col = 0; col < grid[row].Length; col++)
             {
-                int cellType = grid[row][col];
-                
-                if (cellType == EMPTY)
-                {
+                BrickType cellType = grid[row][col];
+
+                if (cellType == BrickType.Empty)
                     continue;
-                }
-                Vector3 position = new Vector3(startX + col * blockWidth, startY - row * blockHeight, startZ);
-                GameObject block;
-                GameObject prefab = blockArray[cellType];
-                block = Instantiate(prefab, position, Quaternion.identity);
+
+                Vector3    position = new Vector3(startX + col * blockWidth, startY - row * blockHeight, startZ);
+                GameObject prefab   = blockArray[(int)cellType];
+                GameObject block    = Instantiate(prefab, position, Quaternion.identity);
                 activeBlocks.Add(block);
             }
         }
     }
 
-    private void stockChance()
+    /// <summary>Saves the current spawn probabilities so they can be restored after a themed level.</summary>
+    private void CacheChances()
     {
-        chanceEmptyTemp =  chanceEmpty;
-        chanceSimpleTemp =  chanceSimple;
-        chanceHardTemp =  chanceHard;
-        chanceGigaHardTemp = chanceGigaHard;
-        chanceLuckyTemp =  chanceLucky;
+        chanceEmptyBackup    = chanceEmpty;
+        chanceSimpleBackup   = chanceSimple;
+        chanceHardBackup     = chanceHard;
+        chanceGigaHardBackup = chanceGigaHard;
+        chanceLuckyBackup    = chanceLucky;
     }
-    private void increaseLevel()
+
+    /// <summary>Adjusts spawn probabilities to ramp up difficulty as levels progress.</summary>
+    private void UpdateSpawnChances()
     {
-        
         if (level % 2 == 0)
         {
             if (level < 12)
             {
-                chanceEmpty -= 5;
-                chanceLucky -= 1;
-                chanceSimple -= 2;
-                chanceHard += 6;
+                chanceEmpty    -= 5;
+                chanceLucky    -= 1;
+                chanceSimple   -= 2;
+                chanceHard     += 6;
                 chanceGigaHard += 2;
             }
             else
             {
                 if (chanceLucky > 1)
                 {
-                    chanceEmpty -= 2;
-                    chanceLucky -= 1;
-                    chanceSimple -= 2;
-                    chanceHard += 4;
+                    chanceEmpty    -= 2;
+                    chanceLucky    -= 1;
+                    chanceSimple   -= 2;
+                    chanceHard     += 4;
                     chanceGigaHard += 1;
                 }
                 else
                 {
                     if (chanceSimple == 0 || chanceEmpty <= 4)
                     {
-                        chanceHard -= 2;
+                        chanceHard     -= 2;
                         chanceGigaHard += 2;
                         if (chanceHard <= 0)
                         {
@@ -240,65 +232,47 @@ public class BrickSpawner  : MonoBehaviour
                     }
                     else
                     {
-                        chanceEmpty -= 2;
-                        chanceSimple -= 2;
-                        chanceHard += 3;
+                        chanceEmpty    -= 2;
+                        chanceSimple   -= 2;
+                        chanceHard     += 3;
                         chanceGigaHard += 1;
                     }
                 }
             }
         }
-        else if  (level % 5 == 0)
+        else if (level % 5 == 0)
         {
-            int roll = Random.Range(0, 4);
+            // Force a "themed" level made entirely of one brick type.
+            int roll = Random.Range(0, 5);
             switch (roll)
             {
                 case 0:
-                    chanceEmpty = 100;
-                    chanceSimple = 0;
-                    chanceHard = 0;
-                    chanceGigaHard = 0;
-                    chanceLucky = 0;
+                    chanceEmpty = 100; chanceSimple = 0; chanceHard = 0; chanceGigaHard = 0; chanceLucky = 0;
                     break;
                 case 1:
-                    chanceEmpty = 0;
-                    chanceSimple = 100;
-                    chanceHard = 0;
-                    chanceGigaHard = 0;
-                    chanceLucky = 0;
+                    chanceEmpty = 0; chanceSimple = 100; chanceHard = 0; chanceGigaHard = 0; chanceLucky = 0;
                     break;
                 case 2:
-                    chanceEmpty = 0;
-                    chanceSimple = 0;
-                    chanceHard = 100;
-                    chanceGigaHard = 0;
-                    chanceLucky = 0;
+                    chanceEmpty = 0; chanceSimple = 0; chanceHard = 100; chanceGigaHard = 0; chanceLucky = 0;
                     break;
                 case 3:
-                    chanceEmpty = 0;
-                    chanceSimple = 0;
-                    chanceHard = 0;
-                    chanceGigaHard = 100;
-                    chanceLucky = 0;
+                    chanceEmpty = 0; chanceSimple = 0; chanceHard = 0; chanceGigaHard = 100; chanceLucky = 0;
                     break;
                 case 4:
-                    chanceEmpty = 0;
-                    chanceSimple = 0;
-                    chanceHard = 0;
-                    chanceGigaHard = 0;
-                    chanceLucky = 100;
+                    chanceEmpty = 0; chanceSimple = 0; chanceHard = 0; chanceGigaHard = 0; chanceLucky = 100;
                     break;
             }
         }
     }
 
-    private void editChance()
+    /// <summary>Restores the spawn probabilities saved by CacheChances().</summary>
+    private void RestoreChances()
     {
-        chanceEmpty =  chanceEmptyTemp;
-        chanceSimple =  chanceSimpleTemp;
-        chanceHard =  chanceHardTemp;
-        chanceGigaHard = chanceGigaHardTemp;
-        chanceLucky =  chanceLuckyTemp;
+        chanceEmpty    = chanceEmptyBackup;
+        chanceSimple   = chanceSimpleBackup;
+        chanceHard     = chanceHardBackup;
+        chanceGigaHard = chanceGigaHardBackup;
+        chanceLucky    = chanceLuckyBackup;
     }
 
     public static void setCoefficient(int coef)
@@ -312,21 +286,21 @@ public class BrickSpawner  : MonoBehaviour
             coefficient += coef;
         }
     }
-    
+
     public void AddScore(int points)
     {
-        if (!isEstetique)
+        if (!isAesthetic)
         {
             score += points * coefficient;
             scoreText.SetText($"{score} * {coefficient} points");
-            if (audioSource != null && PointWingSong != null)
+            if (audioSource != null && pointWinSong != null)
             {
-                audioSource.PlayOneShot(PointWingSong);
+                audioSource.PlayOneShot(pointWinSong);
             }
         }
     }
-    
-    /// <summary>Détruit tous les blocs restants, utile en cas de game over.</summary>
+
+    /// <summary>Destroys all remaining blocks; useful on game over.</summary>
     public void ClearLevel()
     {
         foreach (GameObject block in activeBlocks)
@@ -341,9 +315,9 @@ public class BrickSpawner  : MonoBehaviour
         return score;
     }
 
-    public static void SetScore(int newscore)
+    public static void SetScore(int newScore)
     {
-        score = newscore;
+        score = newScore;
     }
 
     public static int GetLevel()

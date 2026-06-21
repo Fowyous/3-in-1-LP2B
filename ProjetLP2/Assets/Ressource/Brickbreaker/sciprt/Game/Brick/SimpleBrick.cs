@@ -1,49 +1,24 @@
 using UnityEngine;
 
-public class SimpleBrick : MonoBehaviour
+/// <summary>
+/// "Simple" brick variant: the most basic brick, destroyed in a single
+/// hit. Reuses the base class's collision/heal/damage flow entirely and
+/// only adds its own statistic tracking on destruction.
+/// </summary>
+public class SimpleBrick : BrickParent
 {
-    private int healthSimple = 1;
-    private static int pointValue = 10;
-    private static int coefficient = 1;
-
-    protected void OnCollisionEnter2D(Collision2D collision)
+    protected override void Start()
     {
-        healBlock();
-        OneShoot();
-        if (!Ball.IsOneShot)
-        {
-            takeDamage();
-        }
-    }
-    
-    protected void takeDamage()
-    {
-        healthSimple--;
-        
-        if (healthSimple <= 0)
-        {
-            Debug.Log("Points gagnés : " + pointValue);
-            BrickSpawner.setCoefficient(coefficient);
-            BrickSpawner.Instance.AddScore(pointValue);
-            controllerTexte.editNumberSimple(1);
-            Destroy(gameObject);
-        }
-    }
-    
-    protected void healBlock()
-    {
-        if (Ball.IsHealingBall)
-        {
-            healthSimple++;
-        }
+        base.Start();
+        health      = 1;
+        pointValue  = 10;
+        coefficient = 1;
     }
 
-    protected void OneShoot()
+    /// <summary>Logs the score gained and updates the "simple bricks destroyed" statistic.</summary>
+    protected override void OnBrickDestroyed()
     {
-        if (Ball.IsOneShot)
-        {
-            BrickSpawner.Instance.AddScore(pointValue);
-            Destroy(gameObject);
-        }
+        Debug.Log("Points gagnés : " + pointValue);
+        controllerTexte.editNumberSimple(1);
     }
 }

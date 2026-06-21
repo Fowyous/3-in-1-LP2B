@@ -107,7 +107,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f81c68873fd8fd458ecca4e9586d4cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GigaHardBlock
-  Sprite:
+  health: 1
+  pointValue: 1
+  coefficient: 1
+  collisionBlockSong: {fileID: 8300000, guid: 9c9b3ae247b008a4c97d1fa4e5879955, type: 3}
+  damageSprites:
   - {fileID: 1166379057546375990, guid: a83e3d4062ae0b041baacb79ba1d6ea4, type: 3}
   - {fileID: 8847973936624979385, guid: f998b026b38ee81498572055ecb1021f, type: 3}
   - {fileID: 2522816112723954540, guid: 449a3b3e9a3cdad4d9ef9a235a7f9db0, type: 3}
