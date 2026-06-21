@@ -18,14 +18,11 @@ public class VideoController : MonoBehaviour
 
     void Update()
     {
-        // Met à jour la position du slider en temps réel
         if (videoPlayer != null && timeSlider != null && videoPlayer.isPlaying)
         {
             timeSlider.value = (float)videoPlayer.time;
         }
     }
-
-    // Méthode appelée quand le slider est déplacé
     public void OnSliderValueChanged()
     {
         if (videoPlayer != null)
@@ -34,7 +31,6 @@ public class VideoController : MonoBehaviour
         }
     }
 
-    // Méthode pour démarrer/arrêter la vidéo
     public void TogglePlayPause()
     {
         if (videoPlayer != null)
@@ -51,7 +47,6 @@ public class VideoController : MonoBehaviour
         }
     }
 
-    // Méthode appelée quand la vidéo se termine
     private void OnVideoEnded(VideoPlayer vp)
     {
         isPlaying = false;
