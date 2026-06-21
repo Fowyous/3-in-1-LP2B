@@ -17,6 +17,7 @@ public class SpawnerBall : MonoBehaviour
     public AudioClip loosLifeSong;
     private static AudioSource audioSource;
     private float startZ;
+    private bool isRespawning = false;
 
     private static int maxLives;
     private static int currentLives;
@@ -68,15 +69,19 @@ public class SpawnerBall : MonoBehaviour
         {
             if (audioSource != null && loosLifeSong != null)
                 audioSource.PlayOneShot(loosLifeSong);
-            StartCoroutine(RespawnWithDelay());
+
+            if (!isRespawning)
+                StartCoroutine(RespawnWithDelay());
         }
     }
 
     // ReSharper disable Unity.PerformanceAnalysis
     public IEnumerator RespawnWithDelay()
     {
+        if (isRespawning == false) isRespawning = true;
         yield return new WaitForSeconds(respawnDelay);
         SpawnBall(paddle.transform.position.x, paddle.transform.position.y, startZ);
+        isRespawning = false;
     }
 
     private void SpawnBall(float positionx, float positiony, float positionz)
@@ -158,9 +163,11 @@ public class SpawnerBall : MonoBehaviour
     {
         return isEstetique;
     }
-    
+
     public void RespawnBallFree()
     {
+        if (isRespawning) return;
+
         for (int i = activeBalls.Count - 1; i >= 0; i--)
         {
             GameObject ball = activeBalls[i];
@@ -168,6 +175,8 @@ public class SpawnerBall : MonoBehaviour
             ballLifeCost.Remove(ball);
             Destroy(ball);
         }
+
+        isRespawning = true;
         StartCoroutine(RespawnWithDelay());
     }
 }
