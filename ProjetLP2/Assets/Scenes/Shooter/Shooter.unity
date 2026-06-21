@@ -1552,13 +1552,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 499223574}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc52a8fd1fa5de56e8d9a4681b0acb17, type: 3}
+  m_Script: {fileID: 11500000, guid: 1a5eb41ae4248230b81231ac8567b141, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UFO
   speed: 5
   laserPrefab: {fileID: 6043531494957218281, guid: e48685146bb7dc6488d4b806b0ebbf13, type: 3}
-  firePoint: {fileID: 730623799}
-  fireRate: 0.25
+  firePoint: {fileID: 966189940}
+  fireRate: 0.5
   maxHealth: 10
   animator: {fileID: 298494292}
   shootSound: {fileID: 8300000, guid: e2a4a8739c445cf46ab8a79f968d6046, type: 3}
@@ -2433,6 +2433,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 499223591}
   m_SourcePrefab: {fileID: 100100000, guid: 911fc59e7fa4bfe4da59b453b0ba6166, type: 3}
+--- !u!4 &966189940 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7819063383309613567, guid: 911fc59e7fa4bfe4da59b453b0ba6166, type: 3}
+  m_PrefabInstance: {fileID: 958116456}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1143033489
 GameObject:
   m_ObjectHideFlags: 0
@@ -4318,7 +4323,7 @@ MonoBehaviour:
   - prefab: {fileID: 5812400168598625813, guid: caa09ca2df17a00d8aaa857ee2b55aab, type: 3}
     weight: 5
   spawnInterval: 1.5
-  player: {fileID: 0}
+  player: {fileID: 499223574}
 --- !u!4 &2080301128
 Transform:
   m_ObjectHideFlags: 0

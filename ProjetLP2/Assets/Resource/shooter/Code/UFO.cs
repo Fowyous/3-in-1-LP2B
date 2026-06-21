@@ -20,6 +20,11 @@ public class UFO : MonoBehaviour
   [SerializeField] private Animator animator;
   private int stunHash;
 
+  [Header("Audio")]
+  [SerializeField] private AudioClip shootSound;
+
+  private AudioSource audioSource;
+
   public float MaxHealth => maxHealth;
   public float CurrentHealth { get; private set; }
 
@@ -49,6 +54,9 @@ public class UFO : MonoBehaviour
 
     // For the Energyball damage
     stunHash = Animator.StringToHash("IsStunned");
+
+    // Taking the audio component
+    audioSource = GetComponent<AudioSource>();
   }
 
   void Update()
@@ -58,11 +66,6 @@ public class UFO : MonoBehaviour
     HandleShooting();
   }
 
-  ///<summary>
-  ///Handles player movement. Vertical clamp uses separate top/bottom limits:
-  ///yTop is reduced so the UFO never overlaps the HUD Canvas at the top of the screen,
-  ///while yBottom stays at the full screen edge (no UI element down there).
-  ///</summary>
   private void HandleMovement()
   {
     if (_isStunned) return;
@@ -77,7 +80,7 @@ public class UFO : MonoBehaviour
 
     Vector3 pos = transform.position;
     pos.x = Mathf.Clamp(pos.x, -ShooterConstants.GameLimit.x, ShooterConstants.GameLimit.x);
-    pos.y = Mathf.Clamp(pos.y, -ShooterConstants.GameLimit.yBottom, ShooterConstants.GameLimit.yTop);
+    pos.y = Mathf.Clamp(pos.y, -ShooterConstants.GameLimit.y, ShooterConstants.GameLimit.y);
     transform.position = pos;
   }
 
@@ -85,6 +88,7 @@ public class UFO : MonoBehaviour
   {
     if (Keyboard.current.spaceKey.isPressed && Time.time >= nextFireTime)
     {
+      PlaySound(shootSound);
       ShootLaser();
       nextFireTime = Time.time + fireRate;
     }
@@ -189,5 +193,10 @@ public class UFO : MonoBehaviour
       yield return null;
     }
     _isBurning = false;
+  }
+
+  private void PlaySound(AudioClip clip)
+  {
+    audioSource.PlayOneShot(clip);
   }
 }
