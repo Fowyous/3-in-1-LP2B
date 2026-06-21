@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-public class HomeController : MonoBehaviour
+public class HomeControllerBrickBreaker : MonoBehaviour
 {
     public  AudioClip entrerSong;
     private static AudioSource audioSource; 
@@ -17,10 +17,7 @@ public class HomeController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Keyboard.current.escapeKey.wasPressedThisFrame)
-        {
-        }
-        else if (Keyboard.current.anyKey.wasPressedThisFrame)
+        if (Keyboard.current.anyKey.wasPressedThisFrame && !Keyboard.current.escapeKey.wasPressedThisFrame)
         {
             if (audioSource != null && entrerSong != null)
             {

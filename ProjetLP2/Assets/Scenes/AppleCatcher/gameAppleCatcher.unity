@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 139623296}
   - component: {fileID: 139623295}
   m_Layer: 0
-  m_Name: boxTextScore
+  m_Name: scoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -631,7 +631,7 @@ GameObject:
   - component: {fileID: 461688823}
   - component: {fileID: 461688822}
   m_Layer: 0
-  m_Name: controllerPause
+  m_Name: PauseController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -676,7 +676,7 @@ GameObject:
   - component: {fileID: 511089333}
   - component: {fileID: 511089335}
   m_Layer: 0
-  m_Name: Background_0
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1086,7 +1086,7 @@ GameObject:
   - component: {fileID: 628119320}
   - component: {fileID: 628119319}
   m_Layer: 0
-  m_Name: afichage bonus
+  m_Name: bonusText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1266,7 +1266,7 @@ GameObject:
   - component: {fileID: 766179181}
   - component: {fileID: 766179182}
   m_Layer: 0
-  m_Name: apple_spawner
+  m_Name: appleSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1305,7 +1305,7 @@ MonoBehaviour:
   - {fileID: 8314783819603285416, guid: b6ac11c998add354aa114de7ce23dc38, type: 3}
   - {fileID: 7938522465667178133, guid: 3104c2097eee877469adbf7e652b507a, type: 3}
   - {fileID: 2124399226287266424, guid: f331b0b7f1ed7af4c88ea7e91cdf43c1, type: 3}
-  isEsthetique: 0
+  isAesthetic: 0
   Health: {fileID: 1314835430}
   EmptyHeath: {fileID: 182661463}
   goldenHeath: {fileID: 1628132353}
@@ -1320,7 +1320,7 @@ GameObject:
   - component: {fileID: 900006929}
   - component: {fileID: 900006928}
   m_Layer: 0
-  m_Name: BonusPrint
+  m_Name: BonusController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1347,7 +1347,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 900006927}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1366,7 +1366,7 @@ GameObject:
   - component: {fileID: 1314835431}
   - component: {fileID: 1314835430}
   m_Layer: 0
-  m_Name: boxTextHealth
+  m_Name: heartBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1820,13 +1820,13 @@ SceneRoots:
   m_Roots:
   - {fileID: 519420032}
   - {fileID: 619394802}
-  - {fileID: 6940078838227396265}
-  - {fileID: 766179181}
-  - {fileID: 139623297}
   - {fileID: 511089334}
+  - {fileID: 139623297}
+  - {fileID: 6940078838227396265}
   - {fileID: 1314835432}
-  - {fileID: 628119321}
-  - {fileID: 900006929}
   - {fileID: 182661462}
   - {fileID: 1628132355}
+  - {fileID: 766179181}
+  - {fileID: 628119321}
+  - {fileID: 900006929}
   - {fileID: 461688823}

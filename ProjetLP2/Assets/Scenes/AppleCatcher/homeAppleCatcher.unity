@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 234814069}
   - component: {fileID: 234814068}
   m_Layer: 0
-  m_Name: controller
+  m_Name: HomeController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -604,7 +604,7 @@ GameObject:
   - component: {fileID: 645792876}
   - component: {fileID: 645792875}
   m_Layer: 0
-  m_Name: textBegin
+  m_Name: homeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -830,7 +830,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: rules
+  m_text: Rule
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1e53f72f59a8e0848ab961d5275252b3, type: 2}
   m_sharedMaterial: {fileID: 1198813782383803405, guid: 1e53f72f59a8e0848ab961d5275252b3, type: 2}
@@ -857,13 +857,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 10.65
+  m_fontSize: 19.65
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 1
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -1026,8 +1026,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -246, y: 152}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: -302.36, y: 161.57}
+  m_SizeDelta: {x: 124.28, y: 55.25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1775914448
 MonoBehaviour:
@@ -1087,7 +1087,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1775914448}
         m_TargetAssemblyTypeName: NavigationAppleCatcher, Assembly-CSharp
-        m_MethodName: StartRules
+        m_MethodName: startAppleCatcherRule
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1117,8 +1117,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 4883445521696027806, guid: a8a59b5929f2d2d4181257c81a1f855d, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1146,7 +1146,7 @@ GameObject:
   - component: {fileID: 1846580869}
   - component: {fileID: 1846580868}
   m_Layer: 0
-  m_Name: controllerPause
+  m_Name: PauseController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1214,7 +1214,7 @@ MonoBehaviour:
   - {fileID: 8314783819603285416, guid: b6ac11c998add354aa114de7ce23dc38, type: 3}
   - {fileID: 7938522465667178133, guid: 3104c2097eee877469adbf7e652b507a, type: 3}
   - {fileID: 2124399226287266424, guid: f331b0b7f1ed7af4c88ea7e91cdf43c1, type: 3}
-  isEsthetique: 1
+  isAesthetic: 1
   Health: {fileID: 0}
   EmptyHeath: {fileID: 0}
   goldenHeath: {fileID: 0}
@@ -1329,11 +1329,11 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 548771679}
+  - {fileID: 1243192077}
+  - {fileID: 477109045}
   - {fileID: 497914465}
   - {fileID: 2059537988}
   - {fileID: 645792877}
   - {fileID: 2001181766}
   - {fileID: 234814069}
-  - {fileID: 477109045}
-  - {fileID: 1243192077}
   - {fileID: 1846580869}

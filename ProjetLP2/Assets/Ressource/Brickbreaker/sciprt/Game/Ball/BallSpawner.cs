@@ -9,8 +9,8 @@ public class SpawnerBall : MonoBehaviour
     public static SpawnerBall Instance { get; private set; }
 
     [SerializeField] private GameObject  ballPrefab;
-    [SerializeField] private int         maxLivesDefault = 3;
-    [SerializeField] private float       respawnDelay    = 2f;
+    [SerializeField] private int maxLivesDefault ;
+    [SerializeField] private float respawnDelay ;
     [SerializeField] private TextMeshPro livesText;
     [SerializeField] public  GameObject  paddle;
     [SerializeField] private bool isEstetique;
@@ -130,7 +130,7 @@ public class SpawnerBall : MonoBehaviour
 
     private IEnumerator LoadGameOver()
     {
-        AsyncOperation load = SceneManager.LoadSceneAsync("GameOverBrikeBreak");
+        AsyncOperation load = SceneManager.LoadSceneAsync("gameOverBrickBreaker");
         while (!load.isDone) yield return null;
     }
 
@@ -149,8 +149,14 @@ public class SpawnerBall : MonoBehaviour
     private void RefreshHearts()
     {
         string healthString = "";
-        for (int i = 0; i < currentLives; i++)
+        for (int i = 1; i < currentLives + 1; i++)
+        {
             healthString += "<sprite name=\"Ball_0\">";
+            if (i % 4 == 0)
+            {
+                healthString += "\n";
+            }
+        }
         livesText.text = healthString;
     }
     

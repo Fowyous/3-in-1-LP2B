@@ -14,7 +14,7 @@ public class AppleSpawner : MonoBehaviour
     private float spawnTimerMalus2;
     private static int health;
     private static int healthMax;
-    public bool isEsthetique;
+    public bool isAesthetic;
     public TextMeshPro Health;
     public TextMeshPro EmptyHeath;
     public TextMeshPro goldenHeath;
@@ -78,8 +78,8 @@ public class AppleSpawner : MonoBehaviour
         float newX = Random.Range(-8f, 8f);
         newApple.transform.position = new Vector3(newX, 7f, 0f);
         
-        AppleScript appleScript = newApple.GetComponent<AppleScript>();
-        appleScript.setIsEsthetique(isEsthetique);
+        AppleParent appleScript = newApple.GetComponent<AppleParent>();
+        appleScript.SetAesthetic(isAesthetic);
     }
     
     public void editHealth(int value)

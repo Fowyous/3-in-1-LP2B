@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
 
-public class Catchboy : MonoBehaviour
+public class CatchboyController : MonoBehaviour
 {
     public Animator ref_animator;
     private float translationSpeed;
@@ -17,7 +17,7 @@ public class Catchboy : MonoBehaviour
     private static float baseSpeed = 7f;
     private static float bordure = 7.2f;
 
-    public static Catchboy Instance;
+    public static CatchboyController Instance;
     private static readonly int Idle = Animator.StringToHash("Idle");
     private static readonly int Backwards = Animator.StringToHash("Backwards");
     private static readonly int Forwards = Animator.StringToHash("Forwards");

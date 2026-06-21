@@ -22,7 +22,8 @@ public class controllerTexte : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        TextStatistique.SetText("Simple block destroy: " + numberSimple + "\n" +
+        TextStatistique.SetText("Level : " + BrickSpawner.GetLevel() + "\n" +
+                                "Simple block destroy: " + numberSimple + "\n" +
                                 "Hard block destroy: " + numberHard + "\n" +
                                 "Lucky block destroy: " + numberLucky);
     }

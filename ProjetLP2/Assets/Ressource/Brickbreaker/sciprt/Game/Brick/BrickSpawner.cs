@@ -47,7 +47,7 @@ public class BrickSpawner  : MonoBehaviour
     [Range(0, 100)] private int chanceGigaHardTemp;
     [Range(0, 100)] [SerializeField] private int chanceLucky;
     [Range(0, 100)] private int chanceLuckyTemp;
-    private int level;
+    private static int level;
     
     private bool isEstetique;
     
@@ -344,5 +344,10 @@ public class BrickSpawner  : MonoBehaviour
     public static void SetScore(int newscore)
     {
         score = newscore;
+    }
+
+    public static int GetLevel()
+    {
+        return level;
     }
 }

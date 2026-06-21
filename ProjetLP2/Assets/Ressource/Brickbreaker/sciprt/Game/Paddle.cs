@@ -10,6 +10,7 @@ public class Paddle : MonoBehaviour
     public AudioClip paddleSong;
     private static AudioSource audioSource; 
     private  bool isEstetique;
+    private Vector3 original;
 
     void Awake()
     {
@@ -21,6 +22,7 @@ public class Paddle : MonoBehaviour
         translationSpeed = 7f;
         audioSource = GetComponent<AudioSource>();
         isEstetique = SpawnerBall.Instance.getIsEstetique();
+        original = transform.localScale;
     }
 
     void Update()
@@ -79,7 +81,7 @@ public class Paddle : MonoBehaviour
 
     private IEnumerator SizeCoroutine(float percent, float duration)
     {
-        Vector3 original = transform.localScale;
+        
         transform.localScale = new Vector3(
             original.x * (1f + percent / 100f),
             original.y,

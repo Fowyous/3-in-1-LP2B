@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class Statistiques : MonoBehaviour
+public class GameOverControllerAppleCatcher : MonoBehaviour
 {
     public TextMeshPro TextStatistique;
 
@@ -17,7 +17,7 @@ public class Statistiques : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        score = Catchboy.scoreGet();
+        score = CatchboyController.scoreGet();
         TextScore.SetText("score : " + score);
     }
 

@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-    private const float DeathThreshold = -8f;
+    private const float DeathThresholdY = -8f;
+    private const float DeathThresholdX = 13f;
     private bool isDead = false;
     private float speed;
     public Vector2 direction;
@@ -33,7 +34,7 @@ public class Ball : MonoBehaviour
 
     void Update()
     {
-        if (!isDead && transform.position.y < DeathThreshold)
+        if (!isDead && transform.position.y < DeathThresholdY || transform.position.x > DeathThresholdX || transform.position.x < -DeathThresholdX)
         {
             isDead = true;
             Destroy(gameObject);
