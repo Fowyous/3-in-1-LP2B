@@ -3,39 +3,54 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
+/// <summary>
+/// Spawns and manages the player's ball(s) in BrickBreaker: initial spawn,
+/// respawn after a loss, life tracking, and ball duplication.
+/// </summary>
 public class SpawnerBall : MonoBehaviour
 {
     public static SpawnerBall Instance { get; private set; }
 
+    [Header("References")]
     [SerializeField] private GameObject  ballPrefab;
-    [SerializeField] private int maxLivesDefault ;
-    [SerializeField] private float respawnDelay ;
     [SerializeField] private TextMeshPro livesText;
-    [SerializeField] public  GameObject  paddle;
-    [SerializeField] private bool isEstetique;
-    public AudioClip loosLifeSong;
+    public GameObject paddle;
+
+    [Header("Stats")]
+    [SerializeField] private int   maxLivesDefault;
+    [SerializeField] private float respawnDelay;
+
+    [FormerlySerializedAs("isEstetique")]
+    [SerializeField] private bool isAesthetic;
+
+    [Header("Audio")]
+    [FormerlySerializedAs("loosLifeSong")]
+    public AudioClip loseLifeSong;
     private static AudioSource audioSource;
+
     private float startZ;
-    private bool isRespawning = false;
+    private bool  isRespawning = false;
 
     private static int maxLives;
     private static int currentLives;
 
-    private List<GameObject>             activeBalls   = new();
-    private Dictionary<GameObject, bool> ballLifeCost  = new();
+    private List<GameObject> activeBalls = new();
+    private Dictionary<GameObject, bool> ballLifeCost = new(); 
 
-    void Awake()
+    private void Awake()
     {
         if (Instance == null) Instance = this;
     }
 
-    void Start()
+    private void Start()
     {
         maxLives     = maxLivesDefault;
         currentLives = maxLives;
-        audioSource = GetComponent<AudioSource>();
-        if (isEstetique)
+        audioSource  = GetComponent<AudioSource>();
+
+        if (isAesthetic)
         {
             startZ = 91f;
         }
@@ -44,8 +59,11 @@ public class SpawnerBall : MonoBehaviour
             startZ = 0f;
             RefreshHearts();
         }
+
         SpawnBall(paddle.transform.position.x, paddle.transform.position.y, startZ);
     }
+
+    /// <summary>Called by a ball when it gets destroyed, so this spawner can stop tracking it and react accordingly.</summary>
     public void NotifyBallDestroyed(GameObject ball, bool countsAsLife)
     {
         activeBalls.Remove(ball);
@@ -53,9 +71,10 @@ public class SpawnerBall : MonoBehaviour
         OnBallDestroyed(countsAsLife);
     }
 
+    /// <summary>Handles a life loss (if applicable), then either triggers Game Over or schedules a respawn.</summary>
     private void OnBallDestroyed(bool countsAsLife)
     {
-        if (countsAsLife && !isEstetique)
+        if (countsAsLife && !isAesthetic)
         {
             currentLives--;
             RefreshHearts();
@@ -67,29 +86,30 @@ public class SpawnerBall : MonoBehaviour
         }
         else if (activeBalls.Count == 0)
         {
-            if (audioSource != null && loosLifeSong != null)
-                audioSource.PlayOneShot(loosLifeSong);
+            if (audioSource != null && loseLifeSong != null)
+                audioSource.PlayOneShot(loseLifeSong);
 
             if (!isRespawning)
                 StartCoroutine(RespawnWithDelay());
         }
     }
 
-    // ReSharper disable Unity.PerformanceAnalysis
+    /// <summary>Waits respawnDelay seconds, then spawns a fresh ball above the paddle.</summary>
     public IEnumerator RespawnWithDelay()
     {
-        if (isRespawning == false) isRespawning = true;
+        isRespawning = true;
         yield return new WaitForSeconds(respawnDelay);
         SpawnBall(paddle.transform.position.x, paddle.transform.position.y, startZ);
         isRespawning = false;
     }
 
-    private void SpawnBall(float positionx, float positiony, float positionz)
+    /// <summary>Instantiates a new ball at the given position with a randomized initial launch angle.</summary>
+    private void SpawnBall(float positionX, float positionY, float positionZ)
     {
-        Vector3    spawnPos   = new Vector3(positionx, positiony + 3.5f, positionz);
+        Vector3    spawnPos   = new Vector3(positionX, positionY + 3.5f, positionZ);
         GameObject ball       = Instantiate(ballPrefab, spawnPos, Quaternion.identity);
         Ball       ballScript = ball.GetComponent<Ball>();
-        
+
         float   angle      = Random.Range(-15f, 15f) * Mathf.Deg2Rad;
         Vector2 initialDir = new Vector2(Mathf.Sin(angle), -1 * Mathf.Cos(angle)).normalized;
         ballScript.SetDirection(initialDir);
@@ -98,6 +118,8 @@ public class SpawnerBall : MonoBehaviour
         activeBalls.Add(ball);
         ballLifeCost[ball] = true;
     }
+
+    /// <summary>Spawns a second ball next to an existing one, splitting off at a randomized angle. 50% chance it costs a life if lost.</summary>
     public bool DuplicateBall()
     {
         if (activeBalls.Count == 0)
@@ -106,7 +128,7 @@ public class SpawnerBall : MonoBehaviour
             return false;
         }
 
-        GameObject existingBall  = activeBalls[0]; 
+        GameObject existingBall  = activeBalls[0];
         Ball       originalBall  = existingBall.GetComponent<Ball>();
         GameObject newBall       = Instantiate(ballPrefab, existingBall.transform.position, Quaternion.identity);
         Ball       newBallScript = newBall.GetComponent<Ball>();
@@ -134,18 +156,23 @@ public class SpawnerBall : MonoBehaviour
         while (!load.isDone) yield return null;
     }
 
+    /// <summary>Restores up to "amount" lives, capped at maxLives.</summary>
     public static void healLives(int amount)
     {
         currentLives = Mathf.Min(currentLives + amount, maxLives);
-        Instance.RefreshHearts();
+
+        if (!Instance.isAesthetic)
+            Instance.RefreshHearts();
     }
 
+    /// <summary>Increases the maximum life count and immediately grants the same amount as bonus lives.</summary>
     public static void healMaxLives(int amount)
     {
         maxLives += amount;
         healLives(amount);
     }
 
+    /// <summary>Rebuilds the lives display, wrapping to a new line every 4 icons.</summary>
     private void RefreshHearts()
     {
         string healthString = "";
@@ -159,17 +186,18 @@ public class SpawnerBall : MonoBehaviour
         }
         livesText.text = healthString;
     }
-    
+
     public void setIsEstetique(bool value)
     {
-        isEstetique = value;
+        isAesthetic = value;
     }
 
     public bool getIsEstetique()
     {
-        return isEstetique;
+        return isAesthetic;
     }
 
+    /// <summary>Clears all active balls without costing a life, then respawns one fresh ball (used when a level is cleared mid-flight).</summary>
     public void RespawnBallFree()
     {
         if (isRespawning) return;

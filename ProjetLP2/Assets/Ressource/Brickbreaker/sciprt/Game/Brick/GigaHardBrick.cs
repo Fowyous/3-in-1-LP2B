@@ -1,41 +1,61 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class GigaHardBrick : MonoBehaviour
+/// <summary>
+/// "Giga Hard" brick variant: starts with much higher health than a
+/// simple brick, visually changes sprite as it takes damage, and
+/// awards a large score bonus plus a coefficient boost when destroyed.
+/// </summary>
+public class GigaHardBrick : BrickParent
 {
-    private int healthGIGAHard = 6;
-    private static int pointValue = 100;
-    private static int coefficient = 10;
-    [SerializeField] private Sprite[] Sprite; 
-    private SpriteRenderer blockSprite;
+    [FormerlySerializedAs("Sprite")]
+    [SerializeField] private Sprite[] damageSprites;
 
-    private void Start()
+    private SpriteRenderer spriteRenderer;
+
+    protected override void Start()
     {
-        blockSprite = GetComponent<SpriteRenderer>();
+        base.Start();
+        health         = 6;
+        pointValue     = 100;
+        coefficient    = 10;
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
-    
-    protected void OnCollisionEnter2D()
+
+    /// <summary>
+    /// Giga bricks don't use the shared heal-then-damage flow from the
+    /// base class: a healing ball heals them OR a damaging ball damages
+    /// them, never both on the same hit (handled entirely in TakeDamage()).
+    /// </summary>
+    protected override void OnCollisionEnter2D(Collision2D collision)
     {
-        OneShoot();
+        OneShot();
+
         if (!Ball.IsOneShot)
         {
-            takeDamage();
+            TakeDamage();
         }
     }
 
-    protected void takeDamage()
+    /// <summary>
+    /// Applies damage or healing depending on the ball type, updates the
+    /// brick's sprite to reflect remaining health, and destroys it with
+    /// bonus score/coefficient once health reaches zero.
+    /// </summary>
+    protected override void TakeDamage()
     {
         if (!Ball.IsHealingBall)
         {
-            healthGIGAHard -= 1;
+            health--;
         }
         else
         {
-            healthGIGAHard += 1;
+            health++;
         }
 
-        if (healthGIGAHard > 0)
+        if (health > 0)
         {
-            blockSprite.sprite = Sprite[healthGIGAHard-1];
+            spriteRenderer.sprite = damageSprites[health - 1];
         }
         else
         {
@@ -43,15 +63,6 @@ public class GigaHardBrick : MonoBehaviour
             BrickSpawner.setCoefficient(coefficient);
             BrickSpawner.Instance.AddScore(pointValue);
             controllerTexte.editNumberHard(1);
-            Destroy(gameObject);
-        }
-    }
-    
-    protected void OneShoot()
-    {
-        if (Ball.IsOneShot)
-        {
-            BrickSpawner.Instance.AddScore(pointValue);
             Destroy(gameObject);
         }
     }
