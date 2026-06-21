@@ -311,6 +311,8 @@ MonoBehaviour:
   MissilePrefab: {fileID: 2714648526948218590, guid: 53b9d34278e08391ba79c0fc9b6eef76, type: 3}
   firePoint: {fileID: 4256895836124213405}
   fireRate: 0.1
+  fireRotation: 40
+  fireRangeY: 0.5
   distancetomaintain: 2
 --- !u!114 &511490125966791403
 MonoBehaviour:

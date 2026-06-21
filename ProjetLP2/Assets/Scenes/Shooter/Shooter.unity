@@ -965,6 +965,28 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1386586474621022846, guid: 911fc59e7fa4bfe4da59b453b0ba6166, type: 3}
   m_PrefabInstance: {fileID: 958116456}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &499223587
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 499223574}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 963e86de6539899d6a9eba933b56473f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &540218138
 GameObject:
   m_ObjectHideFlags: 0
@@ -1634,11 +1656,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1386586474621022846, guid: 911fc59e7fa4bfe4da59b453b0ba6166, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.73
+      value: -2.94
       objectReference: {fileID: 0}
     - target: {fileID: 1386586474621022846, guid: 911fc59e7fa4bfe4da59b453b0ba6166, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.19
+      value: 1.846
       objectReference: {fileID: 0}
     - target: {fileID: 1386586474621022846, guid: 911fc59e7fa4bfe4da59b453b0ba6166, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1688,7 +1710,8 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 2.56
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1007118243841700813, guid: 911fc59e7fa4bfe4da59b453b0ba6166, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 1386586474621022846, guid: 911fc59e7fa4bfe4da59b453b0ba6166, type: 3}
@@ -1704,6 +1727,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3384449957238118544, guid: 911fc59e7fa4bfe4da59b453b0ba6166, type: 3}
       insertIndex: -1
       addedObject: {fileID: 499223579}
+    - targetCorrespondingSourceObject: {fileID: 3384449957238118544, guid: 911fc59e7fa4bfe4da59b453b0ba6166, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 499223587}
   m_SourcePrefab: {fileID: 100100000, guid: 911fc59e7fa4bfe4da59b453b0ba6166, type: 3}
 --- !u!1 &1143033489
 GameObject:
@@ -2331,7 +2357,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1534153862
 RectTransform:
   m_ObjectHideFlags: 0

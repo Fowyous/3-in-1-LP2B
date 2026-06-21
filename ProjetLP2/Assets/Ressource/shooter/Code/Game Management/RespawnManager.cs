@@ -24,6 +24,8 @@ public class RespawnManager : MonoBehaviour
   [SerializeField] private GameObject explosionPrefab;
   [SerializeField] private float explosionDuration = 1f;  // How long the explosion stays on screen
 
+  private Animator animator;
+
   // Set to false by BaseManager when the base is destroyed
   public bool CanRespawn { get; set; } = true;
   private bool IsInGameOver = false;
@@ -110,6 +112,9 @@ public class RespawnManager : MonoBehaviour
   ///</summary>
   private IEnumerator InvincibilityFrames(UFO player)
   {
+    //put the surprise animation
+    animator = player.GetComponent<Animator>();
+    animator.SetBool("IsInRespawnSequence", true);
     player.SetInvincible(true);
 
     float elapsed = 0f;
@@ -133,6 +138,8 @@ public class RespawnManager : MonoBehaviour
     }
 
     player.SetInvincible(false);
+
+    animator.SetBool("IsInRespawnSequence", false);
 
     Debug.Log("RespawnManager: Invincibility ended.");
   }
