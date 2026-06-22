@@ -318,7 +318,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c5124966a0ef1e40bab6854d9565e95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Statistiques
-  TextStatistique: {fileID: 1183090105}
+  statisticsText: {fileID: 1183090105}
   TextScore: {fileID: 1830916906}
 --- !u!4 &226817275
 Transform:
