@@ -5,8 +5,15 @@ public class GameOverManager : MonoBehaviour
 {
   public static GameOverManager Instance { get; private set; }
 
+  [Header("Canvas settings")]
   [SerializeField] private Canvas gameOverCanvas;
   [SerializeField] private RawImage backgroundImage;
+
+  [Header("Audio")]
+  [SerializeField] private AudioSource mainAudio;
+  [SerializeField] private AudioClip gameOverAudio;
+
+  private AudioSource audioSource;
 
   private Texture2D screenshotTexture;
 
@@ -24,6 +31,8 @@ public class GameOverManager : MonoBehaviour
       Debug.LogWarning("Multiple GameOverManager instances detected!");
     }
     gameOverCanvas.gameObject.SetActive(false);
+    audioSource = GetComponent<AudioSource>();
+
   }
 
   private System.Collections.IEnumerator CaptureScreenAndShowGameOver()
@@ -43,6 +52,9 @@ public class GameOverManager : MonoBehaviour
 
     // Show game over canvas
     gameOverCanvas.gameObject.SetActive(true);
+    // Play gameover audio after pausing main game song
+    mainAudio.Pause();
+    audioSource.PlayOneShot(gameOverAudio);
   }
 
   public void TriggerGameOver()

@@ -220,6 +220,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LaserChargeEffect
   chargeSprite: {fileID: 470512373445817330}
   chargeDuration: 1
+  laserSound: {fileID: 8300000, guid: 490fd3b757246144aaf23875dcd5d9dd, type: 3}
 --- !u!1 &470512373445817330
 GameObject:
   m_ObjectHideFlags: 0
