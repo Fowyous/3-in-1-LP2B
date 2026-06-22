@@ -9,10 +9,13 @@ public class GameOverManager : MonoBehaviour
   [SerializeField] private Canvas gameOverCanvas;
   [SerializeField] private RawImage backgroundImage;
 
+  [Header("HUD")]
+  [Tooltip("Drag the HUD Canvas here so it gets hidden when Game Over triggers.")]
+  [SerializeField] private Canvas hudCanvas;
+
   [Header("Audio")]
   [SerializeField] private AudioSource mainAudio;
   [SerializeField] private AudioClip gameOverAudio;
-
   private AudioSource audioSource;
 
   private Texture2D screenshotTexture;
@@ -32,7 +35,6 @@ public class GameOverManager : MonoBehaviour
     }
     gameOverCanvas.gameObject.SetActive(false);
     audioSource = GetComponent<AudioSource>();
-
   }
 
   private System.Collections.IEnumerator CaptureScreenAndShowGameOver()
@@ -42,16 +44,21 @@ public class GameOverManager : MonoBehaviour
 
     // Capture screenshot
     screenshotTexture = ScreenCapture.CaptureScreenshotAsTexture();
-
     if (!screenshotTexture)
     {
       Debug.LogError("backgroundImage not set");
     }
+
     // Apply to background image
     backgroundImage.texture = screenshotTexture;
 
+    // Hide the HUD so it doesn't render on top of the Game Over screen
+    if (hudCanvas != null)
+      hudCanvas.gameObject.SetActive(false);
+
     // Show game over canvas
     gameOverCanvas.gameObject.SetActive(true);
+
     // Play gameover audio after pausing main game song
     mainAudio.Pause();
     audioSource.PlayOneShot(gameOverAudio);
@@ -62,11 +69,9 @@ public class GameOverManager : MonoBehaviour
     Debug.Log("game over triggered");
     // Pause the game
     Time.timeScale = 0f;
-
     // Capture the screen. We start coroutine so that the method spans over multiple frames because we are waiting for frame to end in this method
     StartCoroutine(CaptureScreenAndShowGameOver());
   }
-
 
   public void RestartGame()
   {
@@ -79,7 +84,6 @@ public class GameOverManager : MonoBehaviour
   public void MainMenu()
   {
     Time.timeScale = 1f; // Resume time
-
     UnityEngine.SceneManagement.SceneManager.LoadScene("Home");
   }
 
@@ -93,4 +97,3 @@ public class GameOverManager : MonoBehaviour
 #endif
   }
 }
-

@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 734446319009871686}
   - component: {fileID: 9192133749047573659}
   - component: {fileID: 511490125966791403}
+  - component: {fileID: 8286376880578022741}
   m_Layer: 0
   m_Name: FlameThrower
   m_TagString: Untagged
@@ -328,3 +329,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DeathExplosion
   explosionPrefab: {fileID: 6460029486616987351, guid: 7cc8d5bcbdbcce143a0caed52bcd108b, type: 3}
   explosionDuration: 1
+--- !u!114 &8286376880578022741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7573689468843734864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d19da1214186be44ebc4eb7cb1c7c6a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PowerUpDropper
+  dropChance: 0.2
+  possibleDrops:
+  - type: 2
+    pickupPrefab: {fileID: 7736826119957432489, guid: e5f5cbc200c35c04ba76082fd3ba0620, type: 3}
+    weight: 5

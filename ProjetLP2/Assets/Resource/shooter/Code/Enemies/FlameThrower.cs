@@ -72,7 +72,7 @@ public class FlameThrower : MonoBehaviour, IEnemy
   }
 
   ///<summary>
-  ///Applies damage and handles death, including score attribution.
+  ///Applies damage and handles death, including score attribution and power-up drop.
   ///</summary>
   public void TakeDamage(float damage)
   {
@@ -82,18 +82,15 @@ public class FlameThrower : MonoBehaviour, IEnemy
     {
       IsAlive = false;
       if (ScoreManager.Instance != null) ScoreManager.Instance.AddScore(1f); // M2 base health value
+      GetComponent<PowerUpDropper>()?.TryDropPowerUp();
       Destroy(gameObject);
     }
   }
 
-  ///<summary>
-  ///Instantiates the flame cone projectile and injects the target reference so it can travel far enough.
-  ///</summary>
   public void Shoot(GameObject bullet)
   {
     if (bullet != null && firePoint != null)
     {
-      // Vary Y position within a range       
       float randomYOffset = Random.Range(-fireRangeY, fireRangeY);
       Vector3 spawnPosition = firePoint.position + new Vector3(0, randomYOffset, 0);
 
@@ -157,24 +154,19 @@ public class FlameThrower : MonoBehaviour, IEnemy
     rb.linearVelocity = new Vector2(moveDirection.x, moveDirection.y).normalized * SPEED;
   }
 
-  ///<summary>
-  ///Handles collision with the UFO player: applies contact damage + burn effect.
-  ///</summary>
   private void OnTriggerEnter2D(Collider2D collision)
   {
-    // Case 1: Collision with the player UFO
     UFO player = collision.GetComponent<UFO>();
     if (player != null)
     {
       player.TakeDamage(Damage);
-      player.ApplyBurn(0.5f, 4f); // Apply burn on contact crash
+      player.ApplyBurn(0.5f, 4f);
       Debug.Log("FlameThrower crashed into the Player UFO and applied burn!");
       IsAlive = false;
       Destroy(gameObject);
       return;
     }
 
-    // Case 2: Collision with the base
     if (collision.CompareTag("Base"))
     {
       BaseManager baseScript = collision.GetComponent<BaseManager>();

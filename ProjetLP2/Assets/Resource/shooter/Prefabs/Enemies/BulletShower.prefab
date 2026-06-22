@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8396249338162749848}
   - component: {fileID: 6779322832263708159}
   - component: {fileID: 632888987211260826}
+  - component: {fileID: 8477982762445625903}
   m_Layer: 0
   m_Name: BulletShower
   m_TagString: Untagged
@@ -301,6 +302,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8477982762445625903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1242048767278209705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d19da1214186be44ebc4eb7cb1c7c6a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PowerUpDropper
+  dropChance: 0.5
+  possibleDrops:
+  - type: 0
+    pickupPrefab: {fileID: 2108434914436778209, guid: 19c650ba1e399464ebc5073f91a1ce56, type: 3}
+    weight: 5
 --- !u!1 &5140458595996471095
 GameObject:
   m_ObjectHideFlags: 0

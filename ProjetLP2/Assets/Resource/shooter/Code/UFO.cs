@@ -20,10 +20,13 @@ public class UFO : MonoBehaviour
   [SerializeField] private Animator animator;
   private int stunHash;
 
+  [Header("Power-Up Visuals")]
+  [Tooltip("Child GameObject holding the shield sprite/animation. Activated while the Shield power-up is active.")]
+  [SerializeField] private GameObject shieldVisual;
+
   [Header("Audio")]
   [SerializeField] private AudioClip shootSound;
   [SerializeField] private AudioClip deathCry;
-  [SerializeField] private AudioClip damageSound;
 
   private AudioSource audioSource;
 
@@ -44,6 +47,22 @@ public class UFO : MonoBehaviour
   private bool _isInvincible = false;
   private bool _isActive = true;
 
+  // Power-up state
+  private bool _hasShield = false;
+  private float _baseFireRate;
+  private float _baseSpeed;
+
+  [Header("Special Attack (Bomb)")]
+  [Tooltip("Number of Bomb fragments required to trigger the special attack.")]
+  [SerializeField] private int bombsRequired = 4;
+  public int BombCount { get; private set; } = 0;
+
+  ///<summary>
+  ///Fired whenever the bomb count changes. Passes (currentCount, required).
+  ///Subscribed to by BombHUD to update the icon display.
+  ///</summary>
+  public event System.Action<int, int> OnBombCountChanged;
+
   void Start()
   {
     CurrentHealth = maxHealth;
@@ -59,6 +78,10 @@ public class UFO : MonoBehaviour
 
     // Taking the audio component
     audioSource = GetComponent<AudioSource>();
+
+    // Remember base stats so power-ups can be reverted correctly afterwards
+    _baseFireRate = fireRate;
+    _baseSpeed = speed;
   }
 
   void Update()
@@ -66,6 +89,7 @@ public class UFO : MonoBehaviour
     if (!_isActive) return;
     HandleMovement();
     HandleShooting();
+    HandleSpecialAttackInput();
   }
 
   ///<summary>
@@ -101,6 +125,18 @@ public class UFO : MonoBehaviour
     }
   }
 
+  ///<summary>
+  ///Listens for the 'T' key to trigger the special attack.
+  ///Does nothing if the player hasn't collected enough Bomb fragments yet.
+  ///</summary>
+  private void HandleSpecialAttackInput()
+  {
+    if (Keyboard.current.tKey.wasPressedThisFrame)
+    {
+      TriggerSpecialAttack();
+    }
+  }
+
   private void ShootLaser()
   {
     if (laserPrefab != null && firePoint != null)
@@ -119,8 +155,6 @@ public class UFO : MonoBehaviour
 
     CurrentHealth -= damageAmount;
     CurrentHealth = Mathf.Max(CurrentHealth, 0f);
-    audioSource.PlayOneShot(damageSound);
-
     Debug.Log($"UFO took {damageAmount} damage. Remaining Health: {CurrentHealth}");
 
     OnHealthChanged?.Invoke(CurrentHealth, maxHealth);
@@ -209,5 +243,120 @@ public class UFO : MonoBehaviour
   private void PlaySound(AudioClip clip)
   {
     audioSource.PlayOneShot(clip);
+  }
+
+  // -------------------------------------------------------------------------
+  // Power-ups
+  // -------------------------------------------------------------------------
+
+  ///<summary>
+  ///Dispatches a collected power-up to its corresponding effect.
+  ///Called by PowerUpPickup when the UFO touches a pickup.
+  ///</summary>
+  public void ApplyPowerUp(PowerUpType type)
+  {
+    switch (type)
+    {
+      case PowerUpType.RapidFire:
+        StartCoroutine(RapidFireRoutine(8f));
+        break;
+      case PowerUpType.SpeedBoost:
+        StartCoroutine(SpeedBoostRoutine(8f));
+        break;
+      case PowerUpType.Shield:
+        StartCoroutine(ShieldRoutine(6f));
+        break;
+      case PowerUpType.Bomb:
+        CollectBombFragment();
+        break;
+      case PowerUpType.Heal:
+        ApplyHeal(0.5f); // Heals 50% of max health instantly
+        break;
+    }
+  }
+
+  ///<summary>
+  ///Doubles fire rate (halves the cooldown) for the given duration.
+  ///</summary>
+  private IEnumerator RapidFireRoutine(float duration)
+  {
+    fireRate = _baseFireRate / 2f;
+    yield return new WaitForSeconds(duration);
+    fireRate = _baseFireRate;
+  }
+
+  ///<summary>
+  ///Increases movement speed by 50% for the given duration.
+  ///</summary>
+  private IEnumerator SpeedBoostRoutine(float duration)
+  {
+    speed = _baseSpeed * 1.5f;
+    yield return new WaitForSeconds(duration);
+    speed = _baseSpeed;
+  }
+
+  ///<summary>
+  ///Grants temporary full invincibility (stacks safely with respawn invincibility).
+  ///Activates the shield visual/animation for the duration, if assigned.
+  ///</summary>
+  private IEnumerator ShieldRoutine(float duration)
+  {
+    _hasShield = true;
+    SetInvincible(true);
+    if (shieldVisual != null) shieldVisual.SetActive(true);
+
+    yield return new WaitForSeconds(duration);
+
+    _hasShield = false;
+    if (shieldVisual != null) shieldVisual.SetActive(false);
+    if (!_hasShield) SetInvincible(false);
+  }
+
+  ///<summary>
+  ///Instantly restores a percentage of max health.
+  ///</summary>
+  private void ApplyHeal(float percentage)
+  {
+    float healAmount = maxHealth * percentage;
+    CurrentHealth = Mathf.Min(CurrentHealth + healAmount, maxHealth);
+    OnHealthChanged?.Invoke(CurrentHealth, maxHealth);
+    Debug.Log($"UFO healed for {healAmount:F1}. Current Health: {CurrentHealth}/{maxHealth}");
+  }
+
+  ///<summary>
+  ///Adds one Bomb fragment to the player's stock, capped at bombsRequired.
+  ///Notifies the HUD so it can update the icon display.
+  ///</summary>
+  private void CollectBombFragment()
+  {
+    BombCount = Mathf.Min(BombCount + 1, bombsRequired);
+    OnBombCountChanged?.Invoke(BombCount, bombsRequired);
+    Debug.Log($"UFO collected a Bomb fragment. {BombCount}/{bombsRequired}");
+  }
+
+  ///<summary>
+  ///Triggers the special attack (wipes out every enemy on screen) if the
+  ///player has collected enough Bomb fragments. Does nothing otherwise.
+  ///Resets the bomb count back to 0 afterwards and updates the HUD.
+  ///</summary>
+  public void TriggerSpecialAttack()
+  {
+    if (BombCount < bombsRequired)
+    {
+      Debug.Log($"UFO: Special attack not available yet ({BombCount}/{bombsRequired} bombs).");
+      return;
+    }
+
+    if (SpecialAttackManager.Instance != null)
+    {
+      SpecialAttackManager.Instance.DetonateAllEnemies();
+    }
+    else
+    {
+      Debug.LogError("UFO: SpecialAttackManager not found in scene!");
+    }
+
+    BombCount = 0;
+    OnBombCountChanged?.Invoke(BombCount, bombsRequired);
   }
 }

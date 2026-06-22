@@ -30,7 +30,6 @@ public class EnergyBallThrower : MonoBehaviour, IEnemy
     private Rigidbody2D rb;
     private LaserChargeEffect chargeEffect;
 
-    // Reference to the currently active laser, so it can be destroyed if this enemy dies mid-shot
     private GameObject activeLaser;
 
     void Start()
@@ -54,6 +53,7 @@ public class EnergyBallThrower : MonoBehaviour, IEnemy
             IsAlive = false;
             if (chargeEffect != null) chargeEffect.StopChargeEffect();
             if (ScoreManager.Instance != null) ScoreManager.Instance.AddScore(4f); // M5 base health value
+            GetComponent<PowerUpDropper>()?.TryDropPowerUp();
             DestroyActiveLaser();
             Destroy(gameObject);
         }
@@ -65,7 +65,6 @@ public class EnergyBallThrower : MonoBehaviour, IEnemy
         {
             activeLaser = Instantiate(bullet, firePoint.position, firePoint.rotation);
 
-            // Make the laser follow this enemy's firePoint every frame
             HorizontalLaser laserScript = activeLaser.GetComponent<HorizontalLaser>();
             if (laserScript != null)
             {
@@ -76,9 +75,6 @@ public class EnergyBallThrower : MonoBehaviour, IEnemy
         }
     }
 
-    ///<summary>
-    ///Destroys the currently active laser, if any. Called when this enemy dies.
-    ///</summary>
     private void DestroyActiveLaser()
     {
         if (activeLaser != null)

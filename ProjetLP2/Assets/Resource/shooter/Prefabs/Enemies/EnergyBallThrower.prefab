@@ -106,6 +106,7 @@ GameObject:
   - component: {fileID: 6282751527697676220}
   - component: {fileID: 2375374635571617234}
   - component: {fileID: 1078640764649499825}
+  - component: {fileID: 5299382246584112287}
   m_Layer: 0
   m_Name: EnergyBallThrower
   m_TagString: Untagged
@@ -392,6 +393,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5299382246584112287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6236802763043699279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d19da1214186be44ebc4eb7cb1c7c6a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PowerUpDropper
+  dropChance: 0.25
+  possibleDrops:
+  - type: 1
+    pickupPrefab: {fileID: 878714410417345620, guid: d95bb9ac1fee7b6488175e31a38989fb, type: 3}
+    weight: 5
 --- !u!1 &7129093365981165899
 GameObject:
   m_ObjectHideFlags: 0
