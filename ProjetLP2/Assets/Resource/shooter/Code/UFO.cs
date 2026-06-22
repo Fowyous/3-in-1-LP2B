@@ -23,6 +23,7 @@ public class UFO : MonoBehaviour
   [Header("Audio")]
   [SerializeField] private AudioClip shootSound;
   [SerializeField] private AudioClip deathCry;
+  [SerializeField] private AudioClip damageSound;
 
   private AudioSource audioSource;
 
@@ -118,6 +119,8 @@ public class UFO : MonoBehaviour
 
     CurrentHealth -= damageAmount;
     CurrentHealth = Mathf.Max(CurrentHealth, 0f);
+    audioSource.PlayOneShot(damageSound);
+
     Debug.Log($"UFO took {damageAmount} damage. Remaining Health: {CurrentHealth}");
 
     OnHealthChanged?.Invoke(CurrentHealth, maxHealth);

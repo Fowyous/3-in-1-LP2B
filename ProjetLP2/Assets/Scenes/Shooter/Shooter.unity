@@ -1564,6 +1564,7 @@ MonoBehaviour:
   animator: {fileID: 298494292}
   shootSound: {fileID: 8300000, guid: e2a4a8739c445cf46ab8a79f968d6046, type: 3}
   deathCry: {fileID: 8300000, guid: b8a51c3ca51420d4f84896942414960e, type: 3}
+  damageSound: {fileID: 8300000, guid: 2343af7e180633946b751cb73b1e542c, type: 3}
 --- !u!4 &499223583 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1386586474621022846, guid: 911fc59e7fa4bfe4da59b453b0ba6166, type: 3}
