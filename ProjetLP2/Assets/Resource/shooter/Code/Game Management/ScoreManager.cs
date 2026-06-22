@@ -64,7 +64,7 @@ public class ScoreManager : MonoBehaviour
             scoreText.text = $"Score: {CurrentScore}";
 
         if (gameOverScoreText != null)
-            gameOverScoreText.text = $"Final Score: {CurrentScore}";
+            gameOverScoreText.text = $"Score: {CurrentScore}";
     }
 
     ///<summary>

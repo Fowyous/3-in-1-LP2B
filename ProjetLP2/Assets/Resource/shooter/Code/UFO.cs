@@ -67,6 +67,11 @@ public class UFO : MonoBehaviour
     HandleShooting();
   }
 
+  ///<summary>
+  ///Handles player movement. Vertical clamp uses separate top/bottom limits:
+  ///yTop is reduced so the UFO never overlaps the HUD Canvas at the top of the screen,
+  ///while yBottom stays at the full screen edge (no UI element down there).
+  ///</summary>
   private void HandleMovement()
   {
     if (_isStunned) return;
@@ -81,7 +86,7 @@ public class UFO : MonoBehaviour
 
     Vector3 pos = transform.position;
     pos.x = Mathf.Clamp(pos.x, -ShooterConstants.GameLimit.x, ShooterConstants.GameLimit.x);
-    pos.y = Mathf.Clamp(pos.y, -ShooterConstants.GameLimit.y, ShooterConstants.GameLimit.y);
+    pos.y = Mathf.Clamp(pos.y, -ShooterConstants.GameLimit.yBottom, ShooterConstants.GameLimit.yTop);
     transform.position = pos;
   }
 

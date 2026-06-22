@@ -5,15 +5,6 @@ using UnityEngine.UI;
 ///Displays the Base's health as a classic UI fill bar.
 ///Updates the Image's fillAmount whenever BaseManager's health changes
 ///(damage or passive regeneration).
-///
-///SETUP IN UNITY:
-///1. In your Canvas, create a UI > Image (this will be the background/empty bar).
-///2. Create a child UI > Image inside it (this will be the fill bar).
-///3. On the fill Image: set "Image Type" to "Filled", "Fill Method" to "Horizontal",
-///   and "Fill Origin" to "Left".
-///4. Add this script to the fill Image's GameObject (or any GameObject) and
-///   assign the "Fill Image" field to that same Image component.
-///5. Assign "Base" with the Base GameObject (or leave empty, it will auto-find it).
 ///</summary>
 public class BaseHealthBar : MonoBehaviour
 {
