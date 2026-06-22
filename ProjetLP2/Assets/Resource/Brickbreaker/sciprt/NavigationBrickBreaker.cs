@@ -7,18 +7,19 @@ using UnityEngine;
 /// </summary>
 public class NavigationBrickBreaker : MonoBehaviour
 {
-    public void startBrickBreaker()
-    {
-        SceneNavigator.Instance.LoadScene(SceneNames.BRICK_BREAKER_HOME);
-    }
+  public void startBrickBreaker()
+  {
+    SceneNavigator.Instance.LoadScene(SceneNames.BRICK_BREAKER_HOME);
+  }
 
-    public void startBrickBreakerRule()
-    {
-        SceneNavigator.Instance.LoadScene(SceneNames.BRICK_BREAKER_RULE);
-    }
+  public void startBrickBreakerRule()
+  {
+    Debug.Log("showing rules");
+    SceneNavigator.Instance.LoadScene(SceneNames.BRICK_BREAKER_RULE);
+  }
 
-    public void startHome()
-    {
-        SceneNavigator.Instance.LoadScene(SceneNames.MAIN_MENU);
-    }
+  public void startHome()
+  {
+    SceneNavigator.Instance.LoadScene(SceneNames.MAIN_MENU);
+  }
 }
