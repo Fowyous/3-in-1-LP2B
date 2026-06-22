@@ -1,16 +1,16 @@
 using UnityEngine;
 
 /// <summary>
-/// "Core" (trognon) apple variant: falls fast, gives a negative coefficient
-/// and a small score penalty when caught, and temporarily slows the
-/// player down. Missing it never damages the player's health.
+/// "Core" (trognon) apple variant: falls fast then slows down, applies a
+/// negative coefficient and a score penalty when caught, and temporarily
+/// reduces the player's movement speed. Missing it never damages the player's health.
 /// </summary>
 public class CoreApple : AppleParent
 {
-    [SerializeField] private int   malusScore    = -1;
-    [SerializeField] private float malusSpeed    = 0.5f;
+    [SerializeField] private int malusScore = -1; 
+    [SerializeField] private float malusSpeed = 0.5f;
     [SerializeField] private float malusDuration = 3f;
-    
+
     private static float speed;
 
     protected override float Speed
@@ -19,7 +19,7 @@ public class CoreApple : AppleParent
         set => speed = value;
     }
 
-    /// <summary>Initializes Core apple-specific stats (speed, coefficient, malus values).</summary>
+    /// <summary>Initializes Core apple-specific stats (fast start, negative coefficient, no miss penalty).</summary>
     protected override void Start()
     {
         base.Start();
@@ -32,14 +32,14 @@ public class CoreApple : AppleParent
         malusDuration   = 3f;
     }
 
-    /// <summary>Slows the apple down once it crosses the attack threshold (it starts fast, then eases off).</summary>
+    /// <summary>Slows the apple down once it crosses the attack threshold (fast descent, then eases off near the bottom).</summary>
     protected override void UpdateSpeed()
     {
         if (transform.position.y < attackThreshold)
             Speed = 4f;
     }
 
-    /// <summary>Applies a negative coefficient, a score penalty, and a temporary slow-down when caught.</summary>
+    /// <summary>Applies a negative coefficient, a score penalty, and a temporary player slow-down when caught.</summary>
     protected override void OnCaught()
     {
         GameOverControllerAppleCatcher.editNumberCatchTronion(1);

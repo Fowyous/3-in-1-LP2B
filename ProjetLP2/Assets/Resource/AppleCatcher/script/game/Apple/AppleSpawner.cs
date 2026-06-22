@@ -1,96 +1,98 @@
 using System.Collections;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Spawns all apple types on a timer and tracks the player's remaining
+/// lives. Triggers the Game Over scene when health reaches zero.
+/// </summary>
 public class AppleSpawner : MonoBehaviour
 {
-    public GameObject[] applePrefab;
+    public static AppleSpawner Instance { get; private set; }
 
-    private float spawnTimer;
-    private float spawnTimerBonus1;
-    private float spawnTimerBonus2;
-    private float spawnTimerMalus1;
-    private float spawnTimerMalus2;
+    [Header("Prefabs")]
+    public GameObject[] applePrefabs;
+
+    [Header("UI")]
+    public TextMeshPro healthText;
+    public TextMeshPro emptyHealthText;
+    public TextMeshPro goldenHealthText;
+    
+    [SerializeField] private bool isAesthetic;
+
     private static int health;
     private static int healthMax;
-    public bool isAesthetic;
-    public TextMeshPro Health;
-    public TextMeshPro EmptyHeath;
-    public TextMeshPro goldenHeath;
+    private bool       isGameOver = false;
 
-    public static AppleSpawner Instance;
+    private struct SpawnTimer
+    {
+        public int   AppleIndex;
+        public float Timer;
+        public float MinInterval;
+        public float MaxInterval;
+    }
 
-    void Awake()
+    private SpawnTimer[] spawnTimers;
+
+    private void Awake()
     {
         Instance = this;
     }
 
-    void Start()
+    private void Start()
     {
-        spawnTimer = 0f;
-        spawnTimerBonus1 = Random.Range(0f, 30f);
-        spawnTimerBonus2 = Random.Range(0f, 30f);
-        spawnTimerMalus1 = Random.Range(0f, 30f);
-        spawnTimerMalus2 = Random.Range(0f, 30f);
-        health = 3;
+        health    = 3;
         healthMax = health;
+
+        
+        spawnTimers = new[]
+        {
+            new SpawnTimer { AppleIndex = 0, Timer = 0f,                     MinInterval = 0.5f, MaxInterval = 2f  },
+            new SpawnTimer { AppleIndex = 1, Timer = Random.Range(0f, 30f),  MinInterval = 20f,  MaxInterval = 60f },
+            new SpawnTimer { AppleIndex = 2, Timer = Random.Range(0f, 30f),  MinInterval = 20f,  MaxInterval = 60f },
+            new SpawnTimer { AppleIndex = 3, Timer = Random.Range(0f, 30f),  MinInterval = 20f,  MaxInterval = 60f },
+            new SpawnTimer { AppleIndex = 4, Timer = Random.Range(0f, 30f),  MinInterval = 20f,  MaxInterval = 60f },
+        };
+
         RefreshHearts();
     }
 
-    void Update()
+    private void Update()
     {
-        spawnTimer -= Time.deltaTime;
-        if (spawnTimer <= 0)
+        for (int i = 0; i < spawnTimers.Length; i++)
         {
-            spawnApple(0);
-            spawnTimer = Random.Range(0.5f, 2f);
-        }
-        spawnTimerBonus1 -= Time.deltaTime;
-        if (spawnTimerBonus1 <= 0)
-        {
-            spawnApple(1);
-            spawnTimerBonus1 = Random.Range(20f, 60f); 
-        }
-        spawnTimerBonus2 -= Time.deltaTime;
-        if (spawnTimerBonus2 <= 0)
-        {
-            spawnApple(2);
-            spawnTimerBonus2 = Random.Range(20f, 60f);
-        }
-        spawnTimerMalus1 -= Time.deltaTime;
-        if (spawnTimerMalus1 <= 0)
-        {
-            spawnApple(3);
-            spawnTimerMalus1 = Random.Range(20f, 60f);
-        }
-        spawnTimerMalus2 -= Time.deltaTime;
-        if (spawnTimerMalus2 <= 0)
-        {
-            spawnApple(4);
-            spawnTimerMalus2 = Random.Range(20f, 60f);
+            spawnTimers[i].Timer -= Time.deltaTime;
+            if (spawnTimers[i].Timer <= 0f)
+            {
+                SpawnApple(spawnTimers[i].AppleIndex);
+                spawnTimers[i].Timer = Random.Range(spawnTimers[i].MinInterval, spawnTimers[i].MaxInterval);
+            }
         }
     }
-    
-    private void spawnApple(int index)
+
+    /// <summary>Instantiates an apple of the given type at a random X position above the screen.</summary>
+    private void SpawnApple(int index)
     {
-        GameObject newApple = Instantiate(applePrefab[index]);
-        float newX = Random.Range(-8f, 8f);
+        GameObject  newApple    = Instantiate(applePrefabs[index]);
+        float       newX        = Random.Range(-8f, 8f);
         newApple.transform.position = new Vector3(newX, 7f, 0f);
-        
+
         AppleParent appleScript = newApple.GetComponent<AppleParent>();
         appleScript.SetAesthetic(isAesthetic);
     }
-    
+
+    /// <summary>Adds (or subtracts) health, refreshes the display, and triggers Game Over if health reaches zero.</summary>
     public void editHealth(int value)
     {
+        if (isGameOver) return; 
+
         health += value;
         RefreshHearts();
-        Debug.Log("health :" + health);
-        Debug.Log("health max :" + healthMax);
 
         if (health <= 0)
         {
+            isGameOver = true;
             StartCoroutine(LoadEndScene());
         }
     }
@@ -104,31 +106,33 @@ public class AppleSpawner : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Rebuilds the three-layer heart display:
+    ///   emptyHealthText  = healthMax empty slots (background)
+    ///   goldenHealthText = health golden hearts   (mid layer, shows bonus lives beyond max)
+    ///   healthText       = min(health, healthMax) filled hearts (top layer, covers golden ones up to max)
+    /// </summary>
     private void RefreshHearts()
     {
-        string healthString = "";
-        string EmptyHeathString = "";
-        string goldenHeathString = "";
-        
+        string filled = "";
+        string golden = "";
+        string empty  = "";
+
         for (int i = 0; i < health; i++)
         {
-            if (i <= healthMax -1 )
-            {
-                healthString += "<sprite name=\"pixil-frame-0_0\">";
-            }
+            if (i <= healthMax - 1)
+                filled += "<sprite name=\"pixil-frame-0_0\">";
+
+            golden += "<sprite name=\"pixil-frame-0 (7)_0\">";
         }
-        Health.text = healthString;
-        
-        for (int j = 0; j < health; j++)
+
+        for (int i = 0; i < healthMax; i++)
         {
-            goldenHeathString += "<sprite name=\"pixil-frame-0 (7)_0\">";
+            empty += "<sprite name=\"pixil-frame-0 (2)_0\">";
         }
-        goldenHeath.text = goldenHeathString;
-        
-        for (int j = 0; j < healthMax; j++)
-        {
-            EmptyHeathString += "<sprite name=\"pixil-frame-0 (2)_0\">";
-        }
-        EmptyHeath.text = EmptyHeathString;
+
+        healthText.text       = filled;
+        goldenHealthText.text = golden;
+        emptyHealthText.text  = empty;
     }
 }

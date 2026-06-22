@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 9010753918984482930}
   - component: {fileID: 6305826588623181733}
   m_Layer: 0
-  m_Name: tronion_de_pomme
+  m_Name: CoreApple
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

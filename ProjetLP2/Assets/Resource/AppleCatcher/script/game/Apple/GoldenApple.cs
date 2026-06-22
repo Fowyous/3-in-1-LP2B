@@ -1,19 +1,16 @@
 using UnityEngine;
 
 /// <summary>
-/// "Golden" apple variant: falls slower than a normal apple, awards
-/// bonus points when caught, and temporarily boosts the player's
+/// "Golden" apple variant: falls slowly at first then accelerates,
+/// awards bonus points when caught, and temporarily boosts the player's
 /// catching speed. Missing it never damages the player's health.
 /// </summary>
 public class GoldenApple : AppleParent
 {
-    [SerializeField] private int   bonusScore = 2;
+    [SerializeField] private int bonusScore = 2;
     [SerializeField] private float bonusSpeed = 1.5f;
-    [SerializeField] private float bonusDuration = 20f; 
-
-    // Independent speed storage, isolated from AppleScript and any
-    // other subclass. See AppleScript.Speed for why this overrides
-    // the property instead of hiding the field.
+    [SerializeField] private float bonusDuration = 20f;
+    
     private static float speed;
 
     protected override float Speed
@@ -22,7 +19,7 @@ public class GoldenApple : AppleParent
         set => speed = value;
     }
 
-    /// <summary>Initializes Golden apple-specific stats (speed, coefficient, bonuses).</summary>
+    /// <summary>Initializes Golden apple-specific stats (slow initial speed, high coefficient, no miss penalty).</summary>
     protected override void Start()
     {
         base.Start();
@@ -35,7 +32,7 @@ public class GoldenApple : AppleParent
         bonusDuration   = 20f;
     }
 
-    /// <summary>Accelerates the apple once it crosses the attack threshold.</summary>
+    /// <summary>Accelerates the apple once it crosses the attack threshold (slow descent, then fast finish).</summary>
     protected override void UpdateSpeed()
     {
         if (transform.position.y < attackThreshold)
