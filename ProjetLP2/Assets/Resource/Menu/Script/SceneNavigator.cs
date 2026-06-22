@@ -8,16 +8,31 @@ using UnityEngine.SceneManagement;
 /// to finish) right before the transition.
 /// </summary>
 public class SceneNavigator : MonoBehaviour
-{
-    public static SceneNavigator Instance { get; private set; }
-
+{ 
     private AudioSource audioSource;
+
+    public static SceneNavigator Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                GameObject go = new GameObject("SceneNavigator");
+                _instance = go.AddComponent<SceneNavigator>();
+                _instance.audioSource = go.AddComponent<AudioSource>();
+            }
+            return _instance;
+        }
+        private set => _instance = value;
+    }
+    
+    private static SceneNavigator _instance;
 
     private void Awake()
     {
-        if (Instance != null) { Destroy(gameObject); return; }
-        Instance = this;
-        audioSource = GetComponent<AudioSource>();
+        if (_instance != null && _instance != this) { Destroy(gameObject); return; }
+        _instance    = this;
+        audioSource  = GetComponent<AudioSource>();
     }
 
     /// <summary>Loads a scene asynchronously and waits for it to finish.</summary>

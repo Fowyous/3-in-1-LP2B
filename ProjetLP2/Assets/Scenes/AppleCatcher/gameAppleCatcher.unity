@@ -1335,10 +1335,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 900006927}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ccb3fabe85d3f4c4d96b1daffc190ca1, type: 3}
+  m_Script: {fileID: 11500000, guid: c41f31a0b98356b4289534f259c6620b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BonusPrint
-  effectText: {fileID: 628119319}
+  bonusText: {fileID: 628119319}
 --- !u!4 &900006929
 Transform:
   m_ObjectHideFlags: 0

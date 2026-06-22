@@ -58,10 +58,13 @@ public class LuckyBrick : BrickParent
         }
         else
         {
-            Debug.Log("Points gagnés : " + pointValue);
-            BrickSpawner.setCoefficient(coefficient);
-            BrickSpawner.Instance.AddScore(pointValue);
-            GameOverControllerBrickBreaker.editNumberLucky(1);
+            if (!isAesthetic)
+            {
+                Debug.Log("Points gagnés : " + pointValue);
+                BrickSpawner.setCoefficient(coefficient);
+                BrickSpawner.Instance.AddScore(pointValue);
+                GameOverControllerBrickBreaker.editNumberLucky(1);
+            }
             TriggerRandomEffect();
             Destroy(gameObject);
         }
@@ -76,38 +79,38 @@ public class LuckyBrick : BrickParent
         {
             case LuckyEffect.BonusMaxHealth:
                 SpawnerBall.healMaxLives(1);
-                BonusManager.Instance.Register("+1 Vie", 2f);
+                BonusManager.Instance?.Register("+1 Vie", 2f);
                 break;
 
             case LuckyEffect.BonusPaddleSpeed:
                 Paddle.Instance.BonusSpeed(30f, 3f);
-                BonusManager.Instance.Register("Vitesse Paddle", 3f);
+                BonusManager.Instance?.Register("Vitesse Paddle", 3f);
                 break;
 
             case LuckyEffect.BonusPaddleSize:
                 Paddle.Instance.BonusSize(50f, 5f);
-                BonusManager.Instance.Register("Taille Paddle", 5f);
+                BonusManager.Instance?.Register("Taille Paddle", 5f);
                 break;
 
             case LuckyEffect.BonusOneShot:
                 Ball.Instance.ActivateOneShot(4f);
-                BonusManager.Instance.Register("One Shot", 4f);
+                BonusManager.Instance?.Register("One Shot", 4f);
                 break;
 
             case LuckyEffect.MalusBallSpeedIncrease:
                 Ball.Instance.ActivateBallSpeedBoost(40f, 3f);
-                BonusManager.Instance.Register("Balle Rapide", 3f);
+                BonusManager.Instance?.Register("Balle Rapide", 3f);
                 break;
 
             case LuckyEffect.MalusHealingBall:
                 Ball.Instance.ActivateHealingBall(5f);
-                BonusManager.Instance.Register("Balle Soignante", 5f);
+                BonusManager.Instance?.Register("Balle Soignante", 5f);
                 break;
 
             case LuckyEffect.Duplicate:
                 bool   costLife = SpawnerBall.Instance.DuplicateBall();
                 string label    = costLife ? "Duplication (-1 vie)" : "Duplication (gratuite)";
-                BonusManager.Instance.Register(label, 2f);
+                BonusManager.Instance?.Register(label, 2f);
                 break;
         }
     }

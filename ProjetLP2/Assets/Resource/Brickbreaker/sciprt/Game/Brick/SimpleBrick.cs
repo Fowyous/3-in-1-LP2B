@@ -18,7 +18,10 @@ public class SimpleBrick : BrickParent
     /// <summary>Logs the score gained and updates the "simple bricks destroyed" statistic.</summary>
     protected override void OnBrickDestroyed()
     {
-        Debug.Log("Points gagnés : " + pointValue);
-        GameOverControllerBrickBreaker.editNumberSimple(1);
+        if (!isAesthetic)
+        {
+            Debug.Log("Points gagnés : " + pointValue);
+            GameOverControllerBrickBreaker.editNumberSimple(1);
+        }
     }
 }

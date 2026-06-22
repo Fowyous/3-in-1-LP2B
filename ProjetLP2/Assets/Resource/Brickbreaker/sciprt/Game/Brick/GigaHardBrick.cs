@@ -57,10 +57,13 @@ public class GigaHardBrick : BrickParent
         }
         else
         {
-            Debug.Log("Points gagnés : " + pointValue);
-            BrickSpawner.setCoefficient(coefficient);
-            BrickSpawner.Instance.AddScore(pointValue);
-            GameOverControllerBrickBreaker.editNumberHard(1);
+            if (!isAesthetic)
+            {
+                Debug.Log("Points gagnés : " + pointValue);
+                BrickSpawner.setCoefficient(coefficient);
+                BrickSpawner.Instance.AddScore(pointValue);
+                GameOverControllerBrickBreaker.editNumberGigaHard(1);
+            }
             Destroy(gameObject);
         }
     }

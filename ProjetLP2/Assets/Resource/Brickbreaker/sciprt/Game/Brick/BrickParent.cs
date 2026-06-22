@@ -10,6 +10,8 @@ using UnityEngine;
 /// </summary>
 public class BrickParent : MonoBehaviour
 {
+    protected bool isAesthetic;
+    
     [Header("Stats")]
     [SerializeField] protected int health = 1;
     [SerializeField] protected int pointValue = 1;
@@ -22,6 +24,7 @@ public class BrickParent : MonoBehaviour
     protected virtual void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        isAesthetic = SpawnerBall.Instance.getIsEstetique();
     }
 
     protected virtual void OnCollisionEnter2D(Collision2D collision)
@@ -63,9 +66,11 @@ public class BrickParent : MonoBehaviour
         {
             if (audioSource != null && collisionBlockSong != null)
                 audioSource.PlayOneShot(collisionBlockSong);
-
-            BrickSpawner.setCoefficient(coefficient);
-            BrickSpawner.Instance.AddScore(pointValue);
+            if (!isAesthetic)
+            {
+                BrickSpawner.setCoefficient(coefficient);
+                BrickSpawner.Instance.AddScore(pointValue);
+            }
             OnBrickDestroyed();
             Destroy(gameObject);
         }

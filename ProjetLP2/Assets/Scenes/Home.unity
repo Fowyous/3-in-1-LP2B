@@ -174,7 +174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b5bb873602e9634fa0072c82d490cc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Acceuil
-  songClique: {fileID: 8300000, guid: d70cb0e8b06508847b70261d01f34035, type: 3}
+  clickSound: {fileID: 8300000, guid: d70cb0e8b06508847b70261d01f34035, type: 3}
 --- !u!114 &27455062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -633,7 +633,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b5bb873602e9634fa0072c82d490cc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Acceuil
-  songClique: {fileID: 8300000, guid: d70cb0e8b06508847b70261d01f34035, type: 3}
+  clickSound: {fileID: 8300000, guid: d70cb0e8b06508847b70261d01f34035, type: 3}
 --- !u!114 &81545517
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1015,7 +1015,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b5bb873602e9634fa0072c82d490cc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Acceuil
-  songClique: {fileID: 8300000, guid: d70cb0e8b06508847b70261d01f34035, type: 3}
+  clickSound: {fileID: 8300000, guid: d70cb0e8b06508847b70261d01f34035, type: 3}
 --- !u!114 &217920202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1397,7 +1397,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b5bb873602e9634fa0072c82d490cc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Acceuil
-  songClique: {fileID: 8300000, guid: d70cb0e8b06508847b70261d01f34035, type: 3}
+  clickSound: {fileID: 8300000, guid: d70cb0e8b06508847b70261d01f34035, type: 3}
 --- !u!114 &362353271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2250,7 +2250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b5bb873602e9634fa0072c82d490cc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Acceuil
-  songClique: {fileID: 8300000, guid: d70cb0e8b06508847b70261d01f34035, type: 3}
+  clickSound: {fileID: 8300000, guid: d70cb0e8b06508847b70261d01f34035, type: 3}
 --- !u!82 &637088023
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2544,7 +2544,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b5bb873602e9634fa0072c82d490cc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Acceuil
-  songClique: {fileID: 8300000, guid: d70cb0e8b06508847b70261d01f34035, type: 3}
+  clickSound: {fileID: 8300000, guid: d70cb0e8b06508847b70261d01f34035, type: 3}
 --- !u!114 &1236617519
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2925,7 +2925,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b5bb873602e9634fa0072c82d490cc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Acceuil
-  songClique: {fileID: 0}
+  clickSound: {fileID: 0}
 --- !u!114 &1372151356
 MonoBehaviour:
   m_ObjectHideFlags: 0

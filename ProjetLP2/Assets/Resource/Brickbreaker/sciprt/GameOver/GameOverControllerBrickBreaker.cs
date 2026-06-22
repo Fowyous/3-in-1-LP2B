@@ -14,6 +14,7 @@ public class GameOverControllerBrickBreaker : MonoBehaviour
 
     private static int simpleBricksDestroyed = 0;
     private static int hardBricksDestroyed   = 0;
+    private static int gigaHardBrickDestroy  = 0;
     private static int luckyBricksDestroyed  = 0;
 
     private void Start()
@@ -26,9 +27,10 @@ public class GameOverControllerBrickBreaker : MonoBehaviour
     private void Update()
     {
         statisticsText.SetText("Level : " + BrickSpawner.GetLevel() + "\n" +
-                               "Simple block destroy: " + simpleBricksDestroyed + "\n" +
-                               "Hard block destroy: " + hardBricksDestroyed + "\n" +
-                               "Lucky block destroy: " + luckyBricksDestroyed);
+                               "Simple brick destroy: " + simpleBricksDestroyed + "\n" +
+                               "Hard brick destroy: " + hardBricksDestroyed + "\n" +
+                               "Giga Hard brick destroy: " + gigaHardBrickDestroy + "\n" +
+                               "Lucky brick destroy: " + luckyBricksDestroyed);
     }
 
     public static void editNumberSimple(int number)
@@ -41,6 +43,11 @@ public class GameOverControllerBrickBreaker : MonoBehaviour
         hardBricksDestroyed += number;
     }
 
+    public static void editNumberGigaHard(int number)
+    {
+        gigaHardBrickDestroy += number;
+    }
+    
     public static void editNumberLucky(int number)
     {
         luckyBricksDestroyed += number;

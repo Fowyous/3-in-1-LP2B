@@ -93,16 +93,7 @@ public class AppleSpawner : MonoBehaviour
         if (health <= 0)
         {
             isGameOver = true;
-            StartCoroutine(LoadEndScene());
-        }
-    }
-
-    private IEnumerator LoadEndScene()
-    {
-        AsyncOperation load = SceneManager.LoadSceneAsync("GameOverAppleCatcher");
-        while (!load.isDone)
-        {
-            yield return null;
+            SceneNavigator.Instance.LoadScene(SceneNames.APPLE_CATCHER_GAME_OVER);
         }
     }
 
