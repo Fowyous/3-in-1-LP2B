@@ -22,6 +22,7 @@ public class UFO : MonoBehaviour
 
   [Header("Audio")]
   [SerializeField] private AudioClip shootSound;
+  [SerializeField] private AudioClip deathCry;
 
   private AudioSource audioSource;
 
@@ -125,6 +126,8 @@ public class UFO : MonoBehaviour
   private void Die()
   {
     Debug.Log("UFO destroyed! Starting respawn sequence...");
+
+    PlaySound(deathCry);
 
     if (RespawnManager.Instance != null)
     {

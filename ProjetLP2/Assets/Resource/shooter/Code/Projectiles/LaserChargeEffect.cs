@@ -15,6 +15,10 @@ public class LaserChargeEffect : MonoBehaviour
   [Header("Charge Settings")]
   [SerializeField] private float chargeDuration = 1.0f; // Must match WaitForSeconds in LockAndShootRoutine
 
+  [Header("Audio")]
+  [SerializeField] private AudioClip laserSound;
+
+  private AudioSource audioSource;
   private Animator animator;
   private Coroutine activeCharge;
 
@@ -29,6 +33,9 @@ public class LaserChargeEffect : MonoBehaviour
     {
       Debug.LogWarning("LaserChargeEffect: chargeSprite is not assigned!");
     }
+
+    audioSource = GetComponent<AudioSource>();
+
   }
 
   ///<summary>
@@ -52,6 +59,7 @@ public class LaserChargeEffect : MonoBehaviour
     if (animator != null)
       animator.Play(0); // Replays the default state from the beginning
 
+    audioSource.PlayOneShot(laserSound);
     // Wait for the charge duration
     yield return new WaitForSeconds(chargeDuration);
 

@@ -68,7 +68,7 @@ public class GameOverManager : MonoBehaviour
   {
     Time.timeScale = 1f; // Resume time
 
-    UnityEngine.SceneManagement.SceneManager.LoadScene("Acceuil");
+    UnityEngine.SceneManagement.SceneManager.LoadScene("Home");
   }
 
   public void QuitGame()
