@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6325655393537317999}
   - component: {fileID: 8699197301060059730}
   m_Layer: 0
-  m_Name: pomme_pourrie
+  m_Name: rottenApple
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

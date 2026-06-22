@@ -1,9 +1,9 @@
 using UnityEngine;
 
 /// <summary>
-/// "Angel" apple variant: falls slower than a normal apple, grants
-/// the player bonus health when caught instead of points, and
-/// never damages the player's health when missed.
+/// "Angel" apple variant: falls slowly at first then accelerates,
+/// grants the player bonus health when caught instead of points,
+/// and never damages the player's health when missed.
 /// </summary>
 public class AngelApple : AppleParent
 {
@@ -16,6 +16,7 @@ public class AngelApple : AppleParent
         set => speed = value;
     }
 
+    /// <summary>Initializes Angel apple-specific stats (slow initial speed, high coefficient, no miss penalty).</summary>
     protected override void Start()
     {
         base.Start();
@@ -26,12 +27,14 @@ public class AngelApple : AppleParent
         bonusHealth     = 1;
     }
 
+    /// <summary>Accelerates the apple once it crosses the attack threshold (slow descent, then fast finish).</summary>
     protected override void UpdateSpeed()
     {
         if (transform.position.y < attackThreshold)
             Speed = 8f;
     }
 
+    /// <summary>Grants bonus health to the player and applies the combo coefficient when caught. Awards no score points.</summary>
     protected override void OnCaught()
     {
         GameOverControllerAppleCatcher.editNumberCatchAngel(1);
