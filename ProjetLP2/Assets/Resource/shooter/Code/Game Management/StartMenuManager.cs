@@ -34,6 +34,7 @@ public class StartMenuManager : MonoBehaviour
 
   IEnumerator ReadySetGo()
   {
+    Time.timeScale = 0;
     // Ready    
     countdownText.text = "Ready";
     yield return StartCoroutine(FadeTo(0f, 1f, fadeDuration));
