@@ -169,7 +169,8 @@ public class UFO : MonoBehaviour
   {
     Debug.Log("UFO destroyed! Starting respawn sequence...");
 
-    PlaySound(deathCry);
+    audioSource.PlayOneShot(deathCry, 0.7f);
+
 
     if (RespawnManager.Instance != null)
     {

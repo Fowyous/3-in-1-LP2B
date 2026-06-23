@@ -16,7 +16,6 @@ public class SpecialAttackManager : MonoBehaviour
   public static SpecialAttackManager Instance { get; private set; }
 
   [SerializeField] Canvas explosionCanvas;
-  [SerializeField] private CircleExpander circleExpander;
 
   private void Awake()
   {
@@ -44,10 +43,8 @@ public class SpecialAttackManager : MonoBehaviour
     // so we look for MonoBehaviour components implementing it via a base search.
     MonoBehaviour[] allBehaviours = Object.FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
 
-    explosionCanvas.gameObject.SetActive(true);
-    //explosionCanvas.GetComponent<CircleExplosion>().PlayExplosion();
-    circleExpander.ActivateCircle();
-    explosionCanvas.gameObject.SetActive(false);
+    explosionCanvas.enabled = true;
+    explosionCanvas.GetComponent<CircleExplosion>().PlayExplosion();
 
     int destroyedCount = 0;
     foreach (MonoBehaviour behaviour in allBehaviours)
