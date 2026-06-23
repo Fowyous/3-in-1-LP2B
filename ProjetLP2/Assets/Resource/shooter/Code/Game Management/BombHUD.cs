@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 ///<summary>
 ///Displays the player's collected Bomb fragments in the HUD.
@@ -18,79 +19,83 @@ using System.Collections.Generic;
 ///</summary>
 public class BombHUD : MonoBehaviour
 {
-    [Header("References")]
-    [Tooltip("Leave empty to auto-find the UFO in the scene.")]
-    [SerializeField] private UFO player;
+  [Header("References")]
+  [Tooltip("Leave empty to auto-find the UFO in the scene.")]
+  [SerializeField] private UFO player;
+  [Tooltip("Sprite shown for a bomb slot that hasn't been collected yet.")]
+  [SerializeField] private Sprite emptyBombIcon;
+  [Tooltip("Sprite shown for a bomb slot that has been collected.")]
+  [SerializeField] private Sprite filledBombIcon;
 
-    [Tooltip("A simple prefab with an Image component showing your bomb sprite.")]
-    [SerializeField] private GameObject bombIconPrefab;
+  private List<Image> bombIcons = new List<Image>();
 
-    [Tooltip("Parent container where icons are instantiated. Defaults to this GameObject's transform.")]
-    [SerializeField] private Transform iconsContainer;
-
-    private List<GameObject> spawnedIcons = new List<GameObject>();
-
-    void Start()
+  void Start()
+  {
+    if (player == null)
     {
-        if (player == null)
-        {
-            player = Object.FindAnyObjectByType<UFO>();
-            if (player == null)
-            {
-                Debug.LogError("BombHUD: No UFO found in the scene!");
-                return;
-            }
-        }
-
-        if (iconsContainer == null) iconsContainer = transform;
-
-        if (bombIconPrefab == null)
-        {
-            Debug.LogError("BombHUD: bombIconPrefab is not assigned!");
-            return;
-        }
-
-        player.OnBombCountChanged += UpdateBombDisplay;
+      player = Object.FindAnyObjectByType<UFO>();
+      if (player == null)
+      {
+        Debug.LogError("BombHUD: No UFO found in the scene!");
+        return;
+      }
+    }
+    // Auto-find all Image components in children     
+    bombIcons.AddRange(GetComponentsInChildren<Image>());
+    if (bombIcons.Count == 0)
+    {
+      Debug.LogError("BombHUD: No Image components found in children!");
+      return;
+    }
+    if (emptyBombIcon == null || filledBombIcon == null)
+    {
+      Debug.LogError("BombHUD: Empty and Filled bomb icons must be assigned!");
+      return;
     }
 
-    void OnDestroy()
-    {
-        if (player != null)
-            player.OnBombCountChanged -= UpdateBombDisplay;
-    }
+    // Initialize all icons to empty state        
+    RefreshAllIcons(0);
 
-    ///<summary>
-    ///Called automatically whenever UFO.OnBombCountChanged fires.
-    ///If the count went UP, instantly spawns one new icon (pop-in effect).
-    ///If the count went back to 0 (special attack used), clears all icons at once.
-    ///</summary>
-    private void UpdateBombDisplay(int currentCount, int required)
-    {
-        if (currentCount == 0)
-        {
-            // Special attack was triggered: clear every icon at once
-            ClearAllIcons();
-            return;
-        }
+    player.OnBombCountChanged += UpdateBombDisplay;
+  }
 
-        // Spawn new icons until we match the current count
-        // (covers the normal case of +1, and is safe if multiple are gained at once)
-        while (spawnedIcons.Count < currentCount)
-        {
-            GameObject icon = Instantiate(bombIconPrefab, iconsContainer);
-            spawnedIcons.Add(icon);
-        }
-    }
+  void OnDestroy()
+  {
+    if (player != null)
+      player.OnBombCountChanged -= UpdateBombDisplay;
+  }
 
-    ///<summary>
-    ///Destroys every currently displayed bomb icon.
-    ///</summary>
-    private void ClearAllIcons()
+  ///<summary>
+  ///Called automatically whenever UFO.OnBombCountChanged fires.
+  ///If the count went UP, instantly spawns one new icon (pop-in effect).
+  ///If the count went back to 0 (special attack used), clears all icons at once.
+  ///</summary>
+  private void UpdateBombDisplay(int currentCount, int required)
+  {
+    RefreshAllIcons(currentCount);
+
+  }
+
+  ///<summary> 
+  ///Updates all bomb icons based on the current count.
+  ///Icons 0 to (count-1) show the filled sprite.    
+  ///Icons from count onward show the empty sprite.    
+  ///</summary>    
+  private void RefreshAllIcons(int filledCount)
+  {
+    for (int i = 0; i < bombIcons.Count; i++)
     {
-        foreach (var icon in spawnedIcons)
-        {
-            if (icon != null) Destroy(icon);
-        }
-        spawnedIcons.Clear();
+      if (i < filledCount)
+      {
+        // This slot has a bomb                
+        bombIcons[i].sprite = filledBombIcon;
+      }
+      else
+      {
+        // This slot is empty                
+        bombIcons[i].sprite = emptyBombIcon;
+      }
     }
+  }
+
 }
