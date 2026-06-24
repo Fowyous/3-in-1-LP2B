@@ -1,16 +1,14 @@
 # 3-in-1-LP2B
 Welcome to the repository of the 3-in-1-LP2 project, a retro arcade compilation app developed entirely using Unity.
- Authors / CreditsProject developed as a team by:
- Alban Gratia
- Mohamed Youssef KOUBAA
- Djylan VINCENT
+
  
  Global Navigation & InterfaceThe application relies on a centralized architecture to cleanly connect each module:
- Main Home: The entry point of the app, featuring an animated interface over a looping video background. Interactive buttons allow the player to launch a game or read specific instructions.
- Escape Shortcut (Return Home): A global navigation system allows players to interrupt any game at any time. Pressing the Escape key instantly exits the current game and returns to the main menu.
+ Main Home: The entry point of the app, featuring an animated interface over a looping video background.
+ Interactive buttons allow the player to launch a game or read specific instructions.
+ Escape Shortcut (Return Home): A global navigation system allows players to interrupt any game at any time. 
+ Pressing the Escape key exits the current game and returns to the main menu.
  Game Over System: Triggers automatically as soon as a game ends. It displays the final game over message, the score achieved,the statistique , and offers two buttons to either replay immediately or return to the main menu.
  
-Included Games:
   
 1. Apple Catcher
   
@@ -59,7 +57,8 @@ The main centerpiece of this compilation. A tactical horizontal shoot 'em up / t
 
 Controls:
 
- Arrow Keys: Free movement in all 4 directions (WASD is not configured, controls are centered around the arrows).Spacebar: Hold down to fire the main laser machine gun continuously.Mouse Click: Mandatory interaction required to collect and activate floating power-ups on the screen.
+ Arrow Keys: Free movement in all 4 directions (WASD is not configured, controls are centered around the arrows).
+ Spacebar: Hold down to fire the main laser machine gun continuously.Mouse Click: Mandatory interaction required to collect and activate floating power-ups on the screen.
  
  Entity Management:
  
