@@ -63,7 +63,7 @@ public class BrickSpawner : MonoBehaviour
     private void Start()
     {
         score = 0;
-        level = 0;
+        level = 1;
 
         isAesthetic = SpawnerBall.Instance.getIsEstetique();
         if (isAesthetic)
@@ -238,7 +238,7 @@ public class BrickSpawner : MonoBehaviour
                 }
             }
         }
-        else if (level % 5 == 0)
+        else if (level % 2 == 0)
         {
             int roll = Random.Range(0, 5);
             switch (roll)
