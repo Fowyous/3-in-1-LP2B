@@ -2003,7 +2003,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: accueuil
+  m_text: Home
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1e53f72f59a8e0848ab961d5275252b3, type: 2}
   m_sharedMaterial: {fileID: 1198813782383803405, guid: 1e53f72f59a8e0848ab961d5275252b3, type: 2}
