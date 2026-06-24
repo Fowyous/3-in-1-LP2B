@@ -3260,7 +3260,7 @@ MonoBehaviour:
   - type: 1
     iconPrefab: {fileID: 8649036711990781073, guid: 3b447f68e63d2a641989729d5d842656, type: 3}
   - type: 2
-    iconPrefab: {fileID: 394089314021990879, guid: 014113df8a505ed45aa551ae8b8bb557, type: 3}
+    iconPrefab: {fileID: 3578824700532822926, guid: 014113df8a505ed45aa551ae8b8bb557, type: 3}
   iconsContainer: {fileID: 0}
 --- !u!114 &1032837357
 MonoBehaviour:
