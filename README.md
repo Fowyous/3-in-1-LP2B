@@ -65,15 +65,18 @@ Controls:
  
  The Base (Left Border): Has 300 HP. If it takes no damage for 5s, it activates a passive regeneration of 5 HP/s.The Player Ship: Has 10 HP. If destroyed, a respawn cutscene acts as a blocking cooldown before the ship reappears.
  
- The ship blinks for 1 to 2 seconds after taking damage to indicate temporary invincibility. A limited-use special attack (bomb) clears the screen in case of emergency.
- The 3 Horizontal Tactical Zones:Zone 1 (Spawn - Right): Enemies spawn and advance in a straight line.Zone 2 (Combat - Middle): Enemies activate their offensive attack patterns. Specifically, Monster 5 locks onto the horizontal axis and moves vertically to align with the player's ship, charging up to fire its massive super laser.
- 
+ The ship blinks for 1 to 2 seconds after taking damage to indicate temporary invincibility.
+ The 3 Horizontal Tactical Zones:
+ Zone 1 (Spawn - Right): Enemies spawn and advance in a straight line.
+ Zone 2 (Combat - Middle): Enemies activate their offensive attack patterns. Specifically, Monster 5 locks onto the horizontal axis and moves vertically to align with the player's ship, charging up to fire its massive super laser.
  Zone 3 (Assaut - Left): Enemies ignore patterns and charge straight towards the base. Any enemy reaching the wall crashes, dealing its remaining HP plus its attack power directly to the base.Power-up System (Click-to-Collect Drops):
- Super Attack (Green): Fires a devastating giant laser beam.
+
+ Powerups:
  Shield (Blue): Spawns an arc-shaped barrier in front of the ship for 5s, protecting half the field.
  Fire Rate (Yellow): Boosts the weapon's fire rate.
  Speed (Purple): Boosts the ship's movement speed.
- Heal (Red): Instantly restores $k$ HP to the ship.
+ Heal (Red): Instantly restores HP to the ship.
+ Bomb (Green): A special attack (bomb) clears the screen after the player collects 4 green powerups.
 
  Dedicated Pause Menu:
   Exclusively available in the Shooter game, accessing this menu freezes gameplay. It displays the live score, current lives, and active power-up cooldown timers. It offers 4 actions: Resume, Restart, Return to main menu, or Quit application.
