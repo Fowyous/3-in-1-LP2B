@@ -8,14 +8,6 @@ using UnityEngine.UI;
 ///fragment is actually collected (instant pop-in), creating a
 ///"charging up" visual effect as the player gathers fragments.
 ///All icons disappear at once when the special attack is used.
-///
-///SETUP IN UNITY:
-///1. Create an empty GameObject in your HUD Canvas, e.g. "BombContainer".
-///2. Add a Horizontal Layout Group to it (optional, for automatic spacing).
-///3. Add this script to it.
-///4. Assign "Bomb Icon Prefab" with a simple GameObject containing an Image
-///   component using your bomb sprite.
-///5. Assign "Player" with the UFO GameObject, or leave empty to auto-find it.
 ///</summary>
 public class BombHUD : MonoBehaviour
 {

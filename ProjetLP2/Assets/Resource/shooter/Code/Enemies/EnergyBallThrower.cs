@@ -3,7 +3,7 @@ using System.Collections;
 using static ShooterConstants;
 
 ///<summary>
-///The EnergyBallThrower (M5) enemy. Tracks the player vertically, locks, charges,
+///The EnergyBallThrower enemy. Tracks the player vertically, locks, charges,
 ///and instantiates an independent horizontal laser prefab.
 ///</summary>
 public class EnergyBallThrower : MonoBehaviour, IEnemy
