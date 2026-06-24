@@ -23,7 +23,7 @@ public class CircleExpander : MonoBehaviour
     circleTransform = circleInstance.transform;
 
     // Reset position and initial scale
-    circleTransform.localPosition = circleTransform.localPosition = new Vector3(0, 0, -10.0f);  // Move it in front
+    circleTransform.localPosition = circleTransform.localPosition = new Vector3(0, 0, -9.0f);  // Move it in front
     circleTransform.localScale = initialScale;
 
     // Make sure it's enabled

@@ -1842,7 +1842,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   circlePrefab: {fileID: 3532916626554465547, guid: de23cbb16453afff9b54807c013cc669, type: 3}
   expandDuration: 1.5
-  displayDuration: 1.8
+  displayDuration: 1.5
 --- !u!1 &540218138
 GameObject:
   m_ObjectHideFlags: 0
