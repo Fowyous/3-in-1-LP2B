@@ -31,8 +31,8 @@ public class GameOverControllerAppleCatcher : MonoBehaviour
         statisticsText.SetText("Apple catch : " + numberApple + "\n" + 
                                "Angel Apple Catch: " + numberCatchAngel + "\n" +
                                "Golden Apple Catch: " + numberCatchGolden + "\n" +
-                               "Pourri Apple Catch: " + numberCatchPourrie + "\n" +
-                               "Tronion Apple Catch: " + numberCatchTronion + "\n");
+                               "Rotten Apple Catch: " + numberCatchPourrie + "\n" +
+                               "Core Apple Catch: " + numberCatchTronion + "\n");
     }
     
     public static void editNumberApple(int number)

@@ -35,9 +35,9 @@ public class Ball : MonoBehaviour
 
     protected virtual void Start()
     {
-        ballRigidbody          = GetComponent<Rigidbody2D>();
+        ballRigidbody = GetComponent<Rigidbody2D>();
         ballRigidbody.bodyType = RigidbodyType2D.Kinematic;
-        speed                  = 28f;
+        speed = 40f;
 
         if (direction == Vector2.zero)
             direction = new Vector2(0f, -1f).normalized;
@@ -47,9 +47,7 @@ public class Ball : MonoBehaviour
 
     private void Update()
     {
-        bool isOutOfBounds = transform.position.y < DeathThresholdY
-                           || transform.position.x > DeathThresholdX
-                           || transform.position.x < -DeathThresholdX;
+        bool isOutOfBounds = transform.position.y < DeathThresholdY || transform.position.x > DeathThresholdX || transform.position.x < -DeathThresholdX;
 
         if (!isDead && isOutOfBounds)
         {

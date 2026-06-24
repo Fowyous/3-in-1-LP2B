@@ -48,6 +48,7 @@ public class CatchboyController : MonoBehaviour
     private void Update()
     {
         int direction = isInverted ? -1 : 1;
+        AddScore(0);
 
         if (Keyboard.current.rightArrowKey.isPressed && CanMove(direction))
         {
@@ -117,7 +118,7 @@ public class CatchboyController : MonoBehaviour
     /// <summary>Temporarily multiplies movement speed by the given factor.</summary>
     public void editSpeed(float value, float duration)
     {
-        string label = value > 1f ? "⚡ Vitesse x" + value : "🐢 Vitesse x" + value;
+        string label = "speed x" + value;
         BonusManager.Instance.Register(label, duration);
         StartCoroutine(SpeedEffect(baseSpeed * value, duration));
     }
@@ -125,7 +126,7 @@ public class CatchboyController : MonoBehaviour
     /// <summary>Temporarily inverts left/right controls.</summary>
     public void ApplyInvertedControls(float duration)
     {
-        BonusManager.Instance.Register("↔ Contrôles inversés", duration);
+        BonusManager.Instance.Register("Inverted controls", duration);
         StartCoroutine(InvertEffect(duration));
     }
 
