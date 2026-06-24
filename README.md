@@ -1,14 +1,8 @@
 # 3-in-1-LP2B
 Welcome to the repository of the 3-in-1-LP2 project, a retro arcade compilation app developed entirely using Unity.
 
- 
- Global Navigation & InterfaceThe application relies on a centralized architecture to cleanly connect each module:
- Main Home: The entry point of the app, featuring an animated interface over a looping video background.
- Interactive buttons allow the player to launch a game or read specific instructions.
- Escape Shortcut (Return Home): A global navigation system allows players to interrupt any game at any time. 
- Pressing the Escape key exits the current game and returns to the main menu.
- Game Over System: Triggers automatically as soon as a game ends. It displays the final game over message, the score achieved,the statistique , and offers two buttons to either replay immediately or return to the main menu.
- 
+
+ Each game has an explanation of the rules as a video
   
 ## 1. Apple Catcher
   
@@ -77,5 +71,13 @@ The main centerpiece of this compilation. A tactical horizontal shoot 'em up / t
  Heal (Red): Instantly restores HP to the ship.
  Bomb (Green): A special attack (bomb) clears the screen after the player collects 4 green powerups.
 
+ ### Monsters:
+ LaserShooter: keeps a distance from the player ( Zone 1) and shoots the laser
+ Kamikaze: Follows the player and explodes on contact
+ Energy beam thrower: keeps a distance from the player and shoots a beam that paralyzes the player on contact
+ Flame Thrower: follows the player while throwing bullets (not flames because we did not have the assets for that)
+ Bullet Shower: goes in a single line and shoots quick bullets
+ Boss: Has all the capabilities of the other monsters except the kamikaz and the flame thrower. Has another special attack not for the other players
+ 
  ### Dedicated Pause Menu:
   Available only in the Shooter game ( we used scenes for the other ones), accessing this menu freezes gameplay. It displays the live score, current lives, and active power-up cooldown timers. It offers 4 actions: Resume, Restart, Return to main menu, or Quit application.
