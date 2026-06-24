@@ -26,9 +26,13 @@ public class UFO : MonoBehaviour
 
   [Header("Audio")]
   [SerializeField] private AudioClip shootSound;
+  [SerializeField] private AudioClip damageSound;
+  [SerializeField] private float damageSoundCooldown = 0.2f; // Minimum time between damage sounds
   [SerializeField] private AudioClip deathCry;
 
+
   private AudioSource audioSource;
+  private float nextDamageSoundTime = 0f; // Track when the sound can play again in case the players takes too much damage at once
 
   public float MaxHealth => maxHealth;
   public float CurrentHealth { get; private set; }
@@ -164,6 +168,13 @@ public class UFO : MonoBehaviour
   public void TakeDamage(float damageAmount)
   {
     if (_isInvincible || !_isActive) return;
+
+    // Only play damage sound if enough time has passed since the last one    
+    if (Time.time >= nextDamageSoundTime)
+    {
+      PlaySound(damageSound);
+      nextDamageSoundTime = Time.time + damageSoundCooldown;
+    }
 
     CurrentHealth -= damageAmount;
     CurrentHealth = Mathf.Max(CurrentHealth, 0f);

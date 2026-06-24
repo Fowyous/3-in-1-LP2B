@@ -3,103 +3,103 @@ using System;
 
 public class BaseManager : MonoBehaviour
 {
-    [Header("Base Stats")]
-    [SerializeField] private float maxHealth = 300f;
+  [Header("Base Stats")]
+  [SerializeField] private float maxHealth = 300f;
 
-    [Header("Regeneration Settings")]
-    [Tooltip("HP regained per second. Ex: 2 = full regen from 0 to 300 takes 150 seconds.")]
-    [SerializeField] private float regenAmountPerSecond = 2f;
-    [Tooltip("Seconds without taking damage before regeneration starts.")]
-    [SerializeField] private float regenDelay = 5f;
+  [Header("Regeneration Settings")]
+  [Tooltip("HP regained per second. Ex: 2 = full regen from 0 to 300 takes 150 seconds.")]
+  [SerializeField] private float regenAmountPerSecond = 2f;
+  [Tooltip("Seconds without taking damage before regeneration starts.")]
+  [SerializeField] private float regenDelay = 5f;
 
-    public float MaxHealth => maxHealth;
-    public float CurrentHealth { get; private set; }
+  public float MaxHealth => maxHealth;
+  public float CurrentHealth { get; private set; }
 
-    ///<summary>
-    ///True once the base has reached 0 HP. Once destroyed, it stays at 0
-    ///permanently for the rest of the game — no further regeneration occurs,
-    ///even if no damage source touches it again.
-    ///</summary>
-    public bool IsDestroyed { get; private set; } = false;
+  ///<summary>
+  ///True once the base has reached 0 HP. Once destroyed, it stays at 0
+  ///permanently for the rest of the game — no further regeneration occurs,
+  ///even if no damage source touches it again.
+  ///</summary>
+  public bool IsDestroyed { get; private set; } = false;
 
-    ///<summary>
-    ///Fired whenever the base health changes (damage or regen). Passes (currentHealth, maxHealth).
-    ///Subscribed to by BaseHealthBar to update the UI fill amount.
-    ///</summary>
-    public event Action<float, float> OnHealthChanged;
+  ///<summary>
+  ///Fired whenever the base health changes (damage or regen). Passes (currentHealth, maxHealth).
+  ///Subscribed to by BaseHealthBar to update the UI fill amount.
+  ///</summary>
+  public event Action<float, float> OnHealthChanged;
 
-    private float timeOfLastDamage;
+  private float timeOfLastDamage;
 
-    void Start()
+  void Start()
+  {
+    CurrentHealth = maxHealth;
+    timeOfLastDamage = -regenDelay;
+
+    OnHealthChanged?.Invoke(CurrentHealth, maxHealth);
+  }
+
+  void Update()
+  {
+    if (IsDestroyed) return; // Permanently blocks regeneration once the base is destroyed
+
+    if (Time.time - timeOfLastDamage >= regenDelay && CurrentHealth < maxHealth)
     {
-        CurrentHealth = maxHealth;
-        timeOfLastDamage = -regenDelay;
-
-        OnHealthChanged?.Invoke(CurrentHealth, maxHealth);
+      ApplyPassiveRegeneration();
     }
+  }
 
-    void Update()
+  private void ApplyPassiveRegeneration()
+  {
+    CurrentHealth += regenAmountPerSecond * Time.deltaTime;
+    CurrentHealth = Mathf.Min(CurrentHealth, maxHealth);
+
+    OnHealthChanged?.Invoke(CurrentHealth, maxHealth);
+  }
+
+  public void TakeDamage(float damageAmount)
+  {
+    if (IsDestroyed) return; // Already destroyed, no further changes possible
+
+    CurrentHealth -= damageAmount;
+    CurrentHealth = Mathf.Max(CurrentHealth, 0f); // Clamp immediately to avoid negative display
+    timeOfLastDamage = Time.time;
+
+    Debug.Log($"Base attacked! Took {damageAmount} damage. Health remaining: {CurrentHealth:F1}/{maxHealth}");
+
+    OnHealthChanged?.Invoke(CurrentHealth, maxHealth);
+
+    if (CurrentHealth <= 0)
     {
-        if (IsDestroyed) return; // Permanently blocks regeneration once the base is destroyed
-
-        if (Time.time - timeOfLastDamage >= regenDelay && CurrentHealth < maxHealth)
-        {
-            ApplyPassiveRegeneration();
-        }
+      IsDestroyed = true;
+      TriggerGameOver();
     }
+  }
 
-    private void ApplyPassiveRegeneration()
+  private void TriggerGameOver()
+  {
+    Debug.Log("Base Destroyed!");
+
+    if (RespawnManager.Instance != null)
     {
-        CurrentHealth += regenAmountPerSecond * Time.deltaTime;
-        CurrentHealth = Mathf.Min(CurrentHealth, maxHealth);
-
-        OnHealthChanged?.Invoke(CurrentHealth, maxHealth);
+      RespawnManager.Instance.CanRespawn = false;
+      Debug.Log("BaseManager: Respawn disabled. Player must survive to avoid Game Over.");
     }
-
-    public void TakeDamage(float damageAmount)
+    else
     {
-        if (IsDestroyed) return; // Already destroyed, no further changes possible
-
-        CurrentHealth -= damageAmount;
-        CurrentHealth = Mathf.Max(CurrentHealth, 0f); // Clamp immediately to avoid negative display
-        timeOfLastDamage = Time.time;
-
-        Debug.Log($"Base attacked! Took {damageAmount} damage. Health remaining: {CurrentHealth:F1}/{maxHealth}");
-
-        OnHealthChanged?.Invoke(CurrentHealth, maxHealth);
-
-        if (CurrentHealth <= 0)
-        {
-            IsDestroyed = true;
-            TriggerGameOver();
-        }
+      Debug.LogWarning("BaseManager: RespawnManager not found, triggering Game Over directly.");
+      if (GameOverManager.Instance != null)
+        GameOverManager.Instance.TriggerGameOver();
     }
+  }
 
-    private void TriggerGameOver()
+  private void OnTriggerEnter2D(Collider2D collision)
+  {
+    IEnemy enemy = collision.GetComponent<IEnemy>();
+    if (enemy != null)
     {
-        Debug.LogError("Base Destroyed!");
-
-        if (RespawnManager.Instance != null)
-        {
-            RespawnManager.Instance.CanRespawn = false;
-            Debug.Log("BaseManager: Respawn disabled. Player must survive to avoid Game Over.");
-        }
-        else
-        {
-            Debug.LogWarning("BaseManager: RespawnManager not found, triggering Game Over directly.");
-            if (GameOverManager.Instance != null)
-                GameOverManager.Instance.TriggerGameOver();
-        }
+      float totalDamage = enemy.Health + enemy.Damage;
+      TakeDamage(totalDamage);
+      Destroy(collision.gameObject);
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        IEnemy enemy = collision.GetComponent<IEnemy>();
-        if (enemy != null)
-        {
-            float totalDamage = enemy.Health + enemy.Damage;
-            TakeDamage(totalDamage);
-            Destroy(collision.gameObject);
-        }
-    }
+  }
 }

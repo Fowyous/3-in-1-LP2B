@@ -1706,6 +1706,8 @@ MonoBehaviour:
   animator: {fileID: 298494292}
   shieldVisual: {fileID: 715680555}
   shootSound: {fileID: 8300000, guid: e2a4a8739c445cf46ab8a79f968d6046, type: 3}
+  damageSound: {fileID: 8300000, guid: 2343af7e180633946b751cb73b1e542c, type: 3}
+  damageSoundCooldown: 0.2
   deathCry: {fileID: 8300000, guid: b8a51c3ca51420d4f84896942414960e, type: 3}
   bombsRequired: 4
 --- !u!4 &499223583 stripped
@@ -2107,6 +2109,7 @@ GameObject:
   - component: {fileID: 571801800}
   - component: {fileID: 571801802}
   - component: {fileID: 571801801}
+  - component: {fileID: 571801803}
   m_Layer: 5
   m_Name: Special Attack Bomb UI
   m_TagString: Untagged
@@ -2171,6 +2174,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 571801799}
   m_CullTransparentMesh: 1
+--- !u!114 &571801803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 571801799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15ba3513e2ea4fb30a8c786690d012c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  blinkSpeed: 0.5
 --- !u!1 &576612333
 GameObject:
   m_ObjectHideFlags: 0
@@ -4482,8 +4498,8 @@ MonoBehaviour:
   player: {fileID: 499223579}
   emptyBombIcon: {fileID: 21300000, guid: a6fcf645d31a9cc459b06898477930e8, type: 3}
   filledBombIcon: {fileID: 21300000, guid: 4f10a8ac98d97634b8a66571e09c226c, type: 3}
-  specialAttackBomb1: {fileID: 0}
-  specialAttackBomb2: {fileID: 0}
+  specialAttackBomb1: {fileID: 571801799}
+  specialAttackBomb2: {fileID: 1820041458}
 --- !u!114 &1484079379
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5498,6 +5514,7 @@ GameObject:
   - component: {fileID: 1820041459}
   - component: {fileID: 1820041461}
   - component: {fileID: 1820041460}
+  - component: {fileID: 1820041462}
   m_Layer: 5
   m_Name: Special Attack Bomb UI (1)
   m_TagString: Untagged
@@ -5562,6 +5579,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1820041458}
   m_CullTransparentMesh: 1
+--- !u!114 &1820041462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1820041458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15ba3513e2ea4fb30a8c786690d012c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ImageBlink
+  blinkSpeed: 0.5
 --- !u!1 &1861998024
 GameObject:
   m_ObjectHideFlags: 0
