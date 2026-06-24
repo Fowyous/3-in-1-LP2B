@@ -6,13 +6,6 @@ using UnityEngine;
 ///effect is applied and the pickup is destroyed. If never picked up, it is
 ///destroyed automatically once it exits the screen on the left, to avoid
 ///wasting memory on pickups nobody ever collects.
-///
-///SETUP IN UNITY:
-///1. Create one prefab per power-up type (RapidFirePickup, SpeedBoostPickup, etc.)
-///   each with its own sprite assigned.
-///2. Add this script to each prefab and set the "Type" field accordingly.
-///3. Make sure the prefab has a Collider2D (Is Trigger checked) and a
-///   Rigidbody2D (Body Type = Kinematic), like all other projectiles.
 ///</summary>
 public class PowerUpPickup : MonoBehaviour
 {

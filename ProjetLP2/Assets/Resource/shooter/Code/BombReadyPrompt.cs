@@ -6,13 +6,6 @@ using System.Collections;
 ///Shows a "Press [T] to use your bomb" message in the HUD whenever the player
 ///has collected enough Bomb fragments to trigger the special attack, and
 ///hides it otherwise.
-///
-///SETUP IN UNITY:
-///1. Create a TextMeshPro - Text (UI) element in your HUD Canvas, e.g. "BombReadyText".
-///   Set its text to something like "Press [T] to use your bomb!".
-///2. Create an empty GameObject (or reuse the text's GameObject) and add this script to it.
-///3. Assign "Prompt Text" with that TextMeshPro element.
-///4. Assign "Player" with the UFO GameObject, or leave empty to auto-find it.
 ///</summary>
 public class BombReadyPrompt : MonoBehaviour
 {

@@ -6,14 +6,6 @@ using System.Collections.Generic;
 ///Displays the UFO's health as a row of life icons (e.g. hearts/sprites).
 ///Automatically generates one icon per max health point at Start,
 ///then hides icons one by one as the UFO loses health.
-///
-///SETUP IN UNITY:
-///1. Create a Canvas (or use an existing one) with a horizontal layout container
-///   (e.g. an empty GameObject with a Horizontal Layout Group component).
-///2. Add this script to that container GameObject.
-///3. Assign "Life Icon Prefab" with a simple GameObject containing an Image
-///   component using your life sprite.
-///4. Assign "Player" with the UFO GameObject (or leave empty, it will auto-find it).
 ///</summary>
 public class UFOHealthUI : MonoBehaviour
 {

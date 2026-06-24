@@ -6,10 +6,6 @@ using UnityEngine;
 ///Visual/audio explosion feedback (animation + sound) is handled separately
 ///by each enemy's own death logic (DeathExplosion, PowerUpDropper, etc.),
 ///since destroying the GameObject still triggers those normally.
-///
-///SETUP IN UNITY:
-///1. Create an empty GameObject in the scene, name it "SpecialAttackManager".
-///2. Add this script to it.
 ///</summary>
 public class SpecialAttackManager : MonoBehaviour
 {
@@ -31,14 +27,15 @@ public class SpecialAttackManager : MonoBehaviour
     }
   }
 
-  ///<summary>
-  ///Finds every active enemy in the scene (anything implementing IEnemy,
-  ///including the Boss) and destroys them immediately.
-  ///Each enemy's own TakeDamage/death logic is bypassed here since we go
-  ///straight to destruction, but their OnDestroy-based effects (explosions)
-  ///still fire normally.
-  ///</summary>
-  public void DetonateAllEnemies()
+    ///<summary>
+    ///Finds every active enemy in the scene (anything implementing IEnemy,
+    ///including the Boss) and destroys them immediately.
+    ///Each enemy's own TakeDamage/death logic is bypassed here since we go
+    ///straight to destruction, but their OnDestroy-based effects (explosions)
+    ///still fire normally.
+    ///</summary>
+    [System.Obsolete]
+    public void DetonateAllEnemies()
   {
     // FindObjectsByType works on any MonoBehaviour; IEnemy is an interface,
     // so we look for MonoBehaviour components implementing it via a base search.
