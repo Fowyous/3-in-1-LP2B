@@ -26,6 +26,10 @@ public class BombHUD : MonoBehaviour
   [SerializeField] private Sprite emptyBombIcon;
   [Tooltip("Sprite shown for a bomb slot that has been collected.")]
   [SerializeField] private Sprite filledBombIcon;
+  [Tooltip("The gameobject that has the sprite for the missile that indicates the special attack")]
+  [SerializeField] private GameObject specialAttackBomb1;
+  [Tooltip("The gameobject that has the sprite for the missile that indicates the special attack")]
+  [SerializeField] private GameObject specialAttackBomb2;
 
   private List<Image> bombIcons = new List<Image>();
 
@@ -55,6 +59,10 @@ public class BombHUD : MonoBehaviour
 
     // Initialize all icons to empty state        
     RefreshAllIcons(0);
+
+    //disable the bombs sprites
+    specialAttackBomb1.SetActive(false);
+    specialAttackBomb2.SetActive(false);
 
     player.OnBombCountChanged += UpdateBombDisplay;
   }
@@ -96,6 +104,19 @@ public class BombHUD : MonoBehaviour
         bombIcons[i].sprite = emptyBombIcon;
       }
     }
+
+    if (filledCount == 4)
+    {
+      specialAttackBomb1.SetActive(true);
+      specialAttackBomb2.SetActive(true);
+    }
+    else if (filledCount == 0)
+    {
+      specialAttackBomb1.SetActive(false);
+      specialAttackBomb2.SetActive(false);
+    }
+
+
   }
 
 }
