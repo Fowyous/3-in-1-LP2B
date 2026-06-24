@@ -324,6 +324,15 @@ public class UFO : MonoBehaviour
 
     yield return new WaitForSeconds(duration);
 
+    // Get the Animator component from the GameObject 
+    Animator shieldAnimator = shieldVisual.GetComponent<Animator>();
+    shieldAnimator.SetTrigger("disableShield");
+
+    yield return null; // Wait one frame
+
+    AnimatorClipInfo[] clips = animator.GetCurrentAnimatorClipInfo(0);
+    yield return new WaitForSeconds(1.0f); // wait for the animation to finish
+
     _hasShield = false;
     if (shieldVisual != null) shieldVisual.SetActive(false);
     if (!_hasShield) SetInvincible(false);
