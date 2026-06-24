@@ -9,7 +9,7 @@ public class GoldenApple : AppleParent
 {
     [SerializeField] private int bonusScore = 2;
     [SerializeField] private float bonusSpeed = 1.5f;
-    [SerializeField] private float bonusDuration = 20f;
+    [SerializeField] private float bonusDuration = 10f;
     
     private static float speed;
 
