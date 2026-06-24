@@ -7,15 +7,7 @@ using System.Collections.Generic;
 ///An icon appears the instant a power-up activates and disappears the instant
 ///it ends (or its countdown finishes, whichever comes first).
 ///
-///SETUP IN UNITY:
-///1. Create an empty GameObject in your HUD Canvas, e.g. "ActivePowerUpsContainer".
-///2. Add a Horizontal Layout Group to it (for automatic spacing).
-///3. Add this script to it.
-///4. Create one prefab PER power-up type (RapidFireIcon, SpeedBoostIcon, ShieldIcon),
-///   each following the ActivePowerUpIcon setup (background Image + radial overlay child),
-///   with the correct sprite for that power-up.
-///5. Assign each prefab to its matching slot in the "Icon Prefabs" list below.
-///6. Assign "Player" with the UFO GameObject, or leave empty to auto-find it.
+
 ///</summary>
 public class ActivePowerUpsHUD : MonoBehaviour
 {
