@@ -39,6 +39,18 @@ public class UFO : MonoBehaviour
   ///</summary>
   public event Action<float, float> OnHealthChanged;
 
+  ///<summary>
+  ///Fired when a timed power-up (RapidFire, SpeedBoost, Shield) starts.
+  ///Passes (type, duration). Subscribed to by ActivePowerUpsHUD to show an icon.
+  ///</summary>
+  public event Action<PowerUpType, float> OnPowerUpActivated;
+
+  ///<summary>
+  ///Fired when a timed power-up ends. Passes the type that ended.
+  ///Subscribed to by ActivePowerUpsHUD to hide the corresponding icon.
+  ///</summary>
+  public event Action<PowerUpType> OnPowerUpDeactivated;
+
   private float nextFireTime = 0f;
   private Rigidbody2D rb;
 
@@ -169,8 +181,7 @@ public class UFO : MonoBehaviour
   {
     Debug.Log("UFO destroyed! Starting respawn sequence...");
 
-    audioSource.PlayOneShot(deathCry, 0.7f);
-
+    PlaySound(deathCry);
 
     if (RespawnManager.Instance != null)
     {
@@ -246,10 +257,6 @@ public class UFO : MonoBehaviour
     audioSource.PlayOneShot(clip);
   }
 
-  // -------------------------------------------------------------------------
-  // Power-ups
-  // -------------------------------------------------------------------------
-
   ///<summary>
   ///Dispatches a collected power-up to its corresponding effect.
   ///Called by PowerUpPickup when the UFO touches a pickup.
@@ -282,8 +289,12 @@ public class UFO : MonoBehaviour
   private IEnumerator RapidFireRoutine(float duration)
   {
     fireRate = _baseFireRate / 2f;
+    OnPowerUpActivated?.Invoke(PowerUpType.RapidFire, duration);
+
     yield return new WaitForSeconds(duration);
+
     fireRate = _baseFireRate;
+    OnPowerUpDeactivated?.Invoke(PowerUpType.RapidFire);
   }
 
   ///<summary>
@@ -292,8 +303,12 @@ public class UFO : MonoBehaviour
   private IEnumerator SpeedBoostRoutine(float duration)
   {
     speed = _baseSpeed * 1.5f;
+    OnPowerUpActivated?.Invoke(PowerUpType.SpeedBoost, duration);
+
     yield return new WaitForSeconds(duration);
+
     speed = _baseSpeed;
+    OnPowerUpDeactivated?.Invoke(PowerUpType.SpeedBoost);
   }
 
   ///<summary>
@@ -305,25 +320,14 @@ public class UFO : MonoBehaviour
     _hasShield = true;
     SetInvincible(true);
     if (shieldVisual != null) shieldVisual.SetActive(true);
+    OnPowerUpActivated?.Invoke(PowerUpType.Shield, duration);
 
     yield return new WaitForSeconds(duration);
 
     _hasShield = false;
-    if (shieldVisual != null)
-    {
-      Animator animator = shieldVisual.GetComponent<Animator>();
-
-      if (animator != null)
-      {
-        // Play the animation 
-        animator.SetTrigger("disableShield");
-        // Wait for the animation to finish      
-        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
-        // Disable the game object after animation completes         
-      }
-      shieldVisual.SetActive(false);
-    }
+    if (shieldVisual != null) shieldVisual.SetActive(false);
     if (!_hasShield) SetInvincible(false);
+    OnPowerUpDeactivated?.Invoke(PowerUpType.Shield);
   }
 
   ///<summary>
