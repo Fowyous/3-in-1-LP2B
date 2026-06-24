@@ -101,7 +101,7 @@ public class BrickSpawner : MonoBehaviour
                 levelText.SetText("level : " + level);
             }
 
-            if (level % 5 == 0)
+            if (level % 2 == 0)
             {
                 CacheChances();
             }
@@ -110,7 +110,7 @@ public class BrickSpawner : MonoBehaviour
             SpawnerBall.healLives(1);
             SpawnRandomLevel();
 
-            if (level % 5 == 0)
+            if (level % 2 == 0)
             {
                 RestoreChances();
             }
@@ -197,7 +197,7 @@ public class BrickSpawner : MonoBehaviour
     /// <summary>Adjusts spawn probabilities to ramp up difficulty as levels progress.</summary>
     private void UpdateSpawnChances()
     {
-        if (level % 2 == 0)
+        if (level % 3 == 0)
         {
             if (level < 12)
             {
