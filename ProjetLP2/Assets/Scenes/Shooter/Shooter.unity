@@ -2465,6 +2465,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BombReadyPrompt
   player: {fileID: 0}
   promptText: {fileID: 708207029}
+  blinkSpeed: 1
+  minAlpha: 0
 --- !u!114 &708207029
 MonoBehaviour:
   m_ObjectHideFlags: 0
