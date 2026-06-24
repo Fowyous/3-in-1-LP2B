@@ -1236,10 +1236,10 @@ MonoBehaviour:
   blockHeight: 0.92
   startX: -8.5
   startY: 7.2
-  chanceEmpty: 50
-  chanceSimple: 40
-  chanceHard: 0
-  chanceGigaHard: 0
+  chanceEmpty: 60
+  chanceSimple: 15
+  chanceHard: 10
+  chanceGigaHard: 5
   chanceLucky: 10
 --- !u!82 &1520911635
 AudioSource:
